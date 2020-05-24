@@ -1,6 +1,6 @@
 # Installation
 
-Make sure you have python 3 (3.8 or later) installed on the raspberry pi (RPI) and make python 3 the default version of
+Make sure you have python 3 (3.7 or later) installed on the raspberry pi (RPI) and make python 3 the default version of
 Python to run on the RPI. You can find how to do that by searching for instructions on the web. 
 
 Then install `pipenv` with either:
@@ -41,24 +41,22 @@ pipenv run flask run --port 8080
 
 To stop the server, type CTRL-C in the terminal window.
 
-## Testing the API
+## Testing the API on a regular computer
 
-In a browser, type the following URL: `http://localhost:5000/testdrive`. This will print a lot of statements to the 
-terminal for about one second. The reason is that, before the RPI is properly connected, a simulator is running. After
-connecting the RPI via the HAT to the stepper motor, edit the file `flask_api.py` and change:
+In a browser, type the following URL: `http://localhost:5000/testdrive`. This will print a statement for each step to 
+the terminal, thus simulating the steps of a stepper motor. 
 
-```Python
-# kit = MotorKit()
-kit = MotorKitSimulator()
+## Testing the API on a raspberry pi
+
+Follow the same steps as above. In addition, it's possible that you will also need to do the following:
+
+```shell script
+sudo apt-get install picap
+picap-setup
 ```
-to:
 
-```Python
-kit = MotorKit()
-# kit = MotorKitSimulator()
-```
-Stop and restart the server, and renter the above URL in a browser. This time the stepper motor should run for about a 
-second.
+After connecting the RPI via the HAT to the stepper motor, start the server, and renter the above URL in a browser. 
+This time the stepper motor should run for about a second.
 
 ### Adding arguments to the request
 
