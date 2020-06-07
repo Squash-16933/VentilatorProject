@@ -30,6 +30,11 @@ public class App extends PApplet {
     		update();
     	} else if (currentState == CHART) {
     		rect(0,0,width, height);
+    		if(mousePressed) {
+    			StepperController sc = new  StepperController();
+    			sc.blink("forward");
+    			
+    		}
     	}
     }
     
