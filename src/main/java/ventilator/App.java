@@ -6,7 +6,7 @@ public class App extends PApplet {
 	public static final int MENU = 0;
 	public static final int CHART = 1;
 	public static final int ALARMS = 2;
-    
+    public static boolean DEBUG = true;
 	Menu menu = new Menu();
 	
 	// The argument passed to main must match the class name
@@ -23,7 +23,7 @@ public class App extends PApplet {
         
     }
 
-    // identical use to draw in Prcessing IDE
+    // identical use to draw in Processing IDE
     public void draw(){
     	if(currentState == MENU) {
     		menu.display(this);
@@ -31,8 +31,13 @@ public class App extends PApplet {
     	} else if (currentState == CHART) {
     		rect(0,0,width, height);
     		if(mousePressed) {
-    			StepperController sc = new  StepperController();
-    			sc.blink("forward");
+    			StepperInterface sc;
+    			if(DEBUG) {
+    				sc = new MockStepperController();
+    			}else {
+    				 sc = new  StepperController();
+    			}
+    			sc.forward(100,2); //FIX RATE LOL
     			
     		}
     	}
