@@ -26,9 +26,9 @@ public class StepperController {
 	                for (int k = 0; k < rate*time; k++) { // rate*time = #steps in total
 	                    try {
 	                        pin13.high();//step
-	                        Thread.sleep((1/(rate*2))*1000);// rate = steps per second; 1/rate = seconds per step
+	                        Thread.sleep((int)(1.0 / (rate * 2d) * 1000));// rate = steps per second; 1/rate = seconds per step
 	                        pin13.low();
-	                        Thread.sleep((1/(rate*2))*1000);
+	                        Thread.sleep((int)(1.0 / (rate * 2d) * 1000));
 	                    } catch (InterruptedException e) {
 	                        e.printStackTrace();
 	                    }
@@ -41,9 +41,9 @@ public class StepperController {
             for (int k = 0; k < 1500; k++) {
                 try {
                     pin13.high();//step
-                    Thread.sleep((1/(rate*2))*1000);
+                    Thread.sleep((int)(1.0 / (rate * 2d) * 1000));
                     pin13.low();
-                    Thread.sleep((1/(rate*2))*1000);
+                    Thread.sleep((int)(1.0 / (rate * 2d) * 1000));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
