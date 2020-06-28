@@ -8,6 +8,7 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
+
 public class StepperController {
 	
 		 	private final GpioController gpio = GpioFactory.getInstance();
@@ -50,7 +51,4 @@ public class StepperController {
             }
         
 	    }
-	           
-	       
-        
 }

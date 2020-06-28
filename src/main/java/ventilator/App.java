@@ -31,7 +31,7 @@ public class App extends PApplet {
     	} else if (currentState == CHART) {
     		rect(0,0,width, height);
     		if(mousePressed) {
-    			StepperController sc;
+    			StepperInterface sc;
     			if(DEBUG) {
     				sc = new MockStepperController();
     			}else {

@@ -1,6 +1,7 @@
 package ventilator;
 
-public class MockStepperController extends StepperController{
+
+public class MockStepperController implements StepperInterface {
 @Override
 	 public void forward(int rate, int time){
 	   for (int k = 0; k < rate*time; k++) { // rate*time = #steps in total
@@ -11,11 +12,10 @@ public class MockStepperController extends StepperController{
            } catch (InterruptedException e) {
                e.printStackTrace();
            }
-           
        }
-	
 	}
-@Override
+
+	@Override
 	public void backward(int rate, int time) {
 	 for (int k = 0; k < rate*time; k++) {
 	try {
@@ -26,6 +26,4 @@ public class MockStepperController extends StepperController{
         e.printStackTrace();
     }
 	 }
-}
-
-}
+}}
