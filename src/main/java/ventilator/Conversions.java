@@ -13,6 +13,7 @@ public class Conversions {
 	 * 320 mil = .32 in
 	 * 1250 steps = 2 in
 	 * <strong>1250 steps = 1 breath</strong>
+	 * 
 	 */
 	
 	public static int MAX_COMPRESSION_STEPS = 1250;
