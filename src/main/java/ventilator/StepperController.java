@@ -9,7 +9,7 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
 
-public class StepperController {
+public class StepperController implements StepperInterface{
 	
 		 	private final GpioController gpio = GpioFactory.getInstance();
 		    private final GpioPinDigitalInput pin07 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07, "Raspi pin 07", PinPullResistance.PULL_UP);//
