@@ -17,8 +17,26 @@ public class Conversions {
 	 */
 	
 	public static int MAX_COMPRESSION_STEPS = 1250;
+	
 	public static int convertBPMtoSPS(int bpm) {
 // (x brths)/(1 min) * (1 min)/(60 sec) = (x brths)/(1 sec) * (y steps)/(1 brth) = (y steps)/(1 sec)
 		return (int)((bpm / 60f) * MAX_COMPRESSION_STEPS);
 	}
+	
+	public static int getRespRate(int age) {
+		// returns average breath rate for an age group given age of individual
+		// source: https://www.healthline.com/health/normal-respiratory-rate#normal-rate-in-adults
+		if(age<1) {
+			return 45;
+		}else if(age>=1 && age<3) {
+			return 32;
+		}else if(age>=3 && age<6) {
+			return 28;
+		}else if(age>=6 && age<12) {
+			return 24;
+		}else{
+			return 14;
+		}
+	}
+	
 }
