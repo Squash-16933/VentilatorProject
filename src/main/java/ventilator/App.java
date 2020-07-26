@@ -37,7 +37,8 @@ public class App extends PApplet {
     			}else {
     				 sc = new  StepperController();
     			}
-    			sc.forward(100,2); //FIX RATE LOL
+    			//System.out.println(Conversions.convertBPMtoSPS(15));
+    			sc.forward(Conversions.convertBPMtoSPS(Conversions.getRespRate(18)),2);
     			
     		}
     	}
