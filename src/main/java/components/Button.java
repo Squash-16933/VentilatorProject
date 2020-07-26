@@ -1,10 +1,8 @@
 package components;
 
 import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-import ventilator.App;
+import screens.Screen;
 
 public class Button extends Component {
     static final float DEF_BUTTON_WIDTH = 100;
@@ -15,11 +13,13 @@ public class Button extends Component {
     private float width;
     private float height;
     private String text;
+    private Listener listener;
 
     /**
      * Creates a new Button.
      * 
      * @param app      The app to pass in
+     * @param screen   State to assign the Component to
      * @param text     Text
      * @param x        X position
      * @param y        Y position
@@ -27,26 +27,29 @@ public class Button extends Component {
      * @param height   Button height
      * @param listener ActionListener when clicked
      */
-    public Button(App app, String text, float x, float y, float width, float height, ActionListener listener) {
-        super(app, app.currentState, listener);
+    public Button(Screen screen, String text, float x, float y, float width, float height, Listener listener) {
+        super(screen, listener);
 
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.listener = listener;
     }
 
     /**
      * Creates a new Button.
      * 
      * @param app      The app to pass in
+     * @param screen   State to assign the Component to
      * @param text     Text
      * @param x        X position
      * @param y        Y position
-     * @param listener ActionListener when clicked
+     * @param listener Listener for when clicked
      */
-    public Button(App app, String text, float x, float y, ActionListener listener) {
-        this(app, text, x, y, DEF_BUTTON_WIDTH, DEF_BUTTON_HEIGHT, listener);
+    // TODO change Listener to something from Java libraries, e.g. EventListener
+    public Button(Screen screen, String text, float x, float y, Listener listener) {
+        this(screen, text, x, y, DEF_BUTTON_WIDTH, DEF_BUTTON_HEIGHT, listener);
     }
 
     public void display() {
@@ -71,10 +74,15 @@ public class Button extends Component {
     public boolean checkBounds(int mouseX, int mouseY) {
         return mouseX >= x && mouseX <= mouseX + width && mouseY >= y && mouseY <= mouseY + height;
     }
-
-    public void mousePressed(ActionEvent event, int mouseX, int mouseY) {
-        if (checkBounds(mouseX, mouseY)) {
-            listener.actionPerformed(event);
-        }
+    
+    /**
+     * Runs when the mouse is pressed, if out of bounds does not trigger Listener.
+     * 
+     * @param e MouseEvent
+     * @param mouseX Mouse X position
+     * @param mouseY Mouse Y position
+     */
+    public void mousePressed(int mouseX, int mouseY) {
+        if (checkBounds(mouseX, mouseY)) listener.mousePressed(mouseX, mouseY);
     }
 }

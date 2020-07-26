@@ -1,16 +1,13 @@
 package components;
 
-import processing.core.PApplet;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import screens.Screen;
 import ventilator.App;
 
-public abstract class Component {
-    protected PApplet app;
+import java.awt.Color;
 
-    public final int currentState;
-    protected ActionListener listener;
+public abstract class Component {
+    protected App app;
+    protected Screen screen;
 
     /* Defaults */
     public static final Color DEF_PCOLOR = new Color(98, 0, 238); // Default primary color
@@ -18,14 +15,20 @@ public abstract class Component {
     /**
      * Creates a new component.
      * 
-     * @param app          The parent App
-     * @param currentState State to assign the Component to
-     * @param listener     ActionListener when event happens
+     * @param app      The parent App
+     * @param state    State to assign the Component to
+     * @param listener Listener for when event happens
      */
-    public Component(App app, int currentState, ActionListener listener) {
-        this.app = app;
-        this.currentState = currentState;
-        this.listener = listener;
+    public Component(Screen screen, Listener listener) {
+        this.app = screen.getApp();
+        this.screen = screen;
+    }
+
+    /**
+     * Returns the parent screen's ID.
+     */
+    public int getScreenID() {
+        return screen.id;
     }
 
     /**
@@ -61,11 +64,11 @@ public abstract class Component {
     public abstract void display();
 
     /**
-     * Trigger this event whenever the mouse is pressed.
+     * Runs when the mouse is pressed.
      * 
-     * @param event  ActionEvent
-     * @param mouseX Current mouse X
-     * @param mouseY Current mouse Y
+     * @param e MouseEvent
+     * @param mouseX Mouse X position
+     * @param mouseY Mouse Y position
      */
-    public abstract void mousePressed(ActionEvent event, int mouseX, int mouseY);
+    public abstract void mousePressed(int mouseX, int mouseY);
 }

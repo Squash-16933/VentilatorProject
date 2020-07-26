@@ -12,30 +12,32 @@ public class Screen {
      * Initializes a new Screen. If the screen name is not unique, throws an
      * `IllegalArgumentException`.
      * 
-     * @param id  The Screen ID (must be unique)
      * @param app The parent App
      * @param bg  Lambda that extends Background to draw the background with
      *            Processing
      */
-    public Screen(int id, App app, Background bg) throws IllegalArgumentException {
-        this.id = id;
+    public Screen(App app, Background bg) {
+        this.id = app.getNextID();
         this.app = app;
         this.bg = bg;
-
-        if (app.isUnique(id))
-            throw new IllegalArgumentException("Screen ID is not unique");
     }
 
     /**
      * Initializes a new Screen with no background. If the screen name is not
      * unique, throws an `IllegalArgumentException`.
      * 
-     * @param id  The Screen ID (must be unique)
      * @param app The parent App
      */
-    public Screen(int id, App app) throws IllegalArgumentException {
-        this(id, app, a -> {
+    public Screen(App app) throws IllegalArgumentException {
+        this(app, a -> {
         });
+    }
+
+    /**
+     * Get parent App.
+     */
+    public App getApp() {
+        return app;
     }
 
     /**
