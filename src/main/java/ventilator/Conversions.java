@@ -38,5 +38,17 @@ public class Conversions {
 			return 14;
 		}
 	}
+	public static double getIBW(double height, String sex) {
+		//Target tidal volume ranges from 6 to 8 mL/kg IBW
+		//go to https://mpog.org/files/quality/toolkit/ibw_tv_chart1.pdf for reference to see tidal volume ranges
+		if(sex.equalsIgnoreCase("female")) {
+			//IBW female = 45.5kg + 2.3 x (Height in inches – 60)
+			return 45.5 + 2.3 * (height - 60); //in kg
+		}
+		else {
+			//IBW male = 50kg + 2.3 x (Height in inches – 60)
+			return 50 + 2.3 * (height -60);
+		}
+	}
 	
 }
