@@ -1,4 +1,5 @@
-package ventilator;
+package org.jointheleague.ventilator;
+
 
 public class Conversions {
 	
