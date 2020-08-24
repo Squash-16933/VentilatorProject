@@ -14,7 +14,15 @@ The brain of the ventilator is a Raspberry Pi running Java and Adafruit, and it 
 
 ## Installation
 ```
+step 1:
 git clone https://github.com/Squash-16933/VentilatorProject.git
+
+step 2:
+mvn spring-boot:run
+
+step 3:
+Open the index.html file in your browser
+
 ```
 
 ## Project structure
