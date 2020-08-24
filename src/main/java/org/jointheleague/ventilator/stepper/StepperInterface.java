@@ -1,4 +1,4 @@
-package ventilator;
+package org.jointheleague.ventilator.stepper;
 
 public interface StepperInterface {
 	void forward(int rate, int time);

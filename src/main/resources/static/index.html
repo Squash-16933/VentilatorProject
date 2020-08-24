@@ -1,0 +1,29 @@
+<html>
+<script>
+	var exampleSocket = new WebSocket("ws://localhost:3001/socketserver");
+	
+	function sendMessage(){
+		exampleSocket.send("hello");
+	}
+	
+	
+	function getPressure(){
+		exampleSocket.send("pressure");
+	}
+	
+	exampleSocket.onmessage = function (event) {
+		  alert(event.data);
+		}
+
+</script>
+<head>
+<title>Example</title>
+</head>
+<body>
+	<h1>Hello</h1>
+	<button onclick="sendMessage()">Click me</button>
+   <button onclick="getPressure()">Pressure</button>
+	
+</body>
+
+</html>

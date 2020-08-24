@@ -1,5 +1,10 @@
-package ventilator;
+package org.jointheleague.ventilator.stepper;
 
+/**
+ * Mock Stepper Controller for testing
+ * @author keithgroves
+ *
+ */
 public class MockStepperController implements StepperInterface {
 	@Override
 	public void forward(int rate, int time) {

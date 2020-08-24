@@ -1,7 +1,7 @@
 /**
  *
  */
-package fi.jari.vl53l0x_bundle;
+package org.jointheleague.ventilator.sensors.lidar;
 
 /**
  * @author Nakki
