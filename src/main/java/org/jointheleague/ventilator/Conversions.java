@@ -48,4 +48,27 @@ public class Conversions {
 		return (float) (difmoles/.1); //X moles per second
 	}
 	
+		public static double getIBW(double height, String sex, int range) {
+		//Target tidal volume ranges from 6 to 8 mL/kg IBW
+		//go to https://mpog.org/files/quality/toolkit/ibw_tv_chart1.pdf for reference to see tidal volume ranges
+		if(sex.equalsIgnoreCase("female")) {
+			//IBW female = 45.5kg + 2.3 x (Height in inches – 60)
+			double IBW =  45.5 + 2.3 * (height - 60); //in kg
+			double TDV = IBW * range; 
+			return TDV;
+		}
+		else {
+			//IBW male = 50kg + 2.3 x (Height in inches – 60)
+			double IBW =  50 + 2.3 * (height -60);
+			double TDV = IBW * range;
+			return TDV;
+		}
+	}
+	
+	public static double getETTposition(double height) {
+		//ETT depth from front teeth (cm) (Chula formula) = 0.1 x Height in cm + 4
+		double ETT = 0.1 * height + 4;
+		return ETT;
+	}
+	
 }
