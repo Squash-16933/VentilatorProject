@@ -40,4 +40,12 @@ public class Conversions {
 		}
 	}
 	
+	public static float toMoleRate(float startp, float startv ,float endp, float endv) {
+		//all pressures given in atm, all volumes given in L
+		float startmoles = (float) ((startp * startv)/(0.0821 * 298)); // Pressure * Volume = #moles * Gas constant * Temp(K, room temp) 
+		float endmoles = (float) ((endp * endv)/(0.0821 * 298));
+		float difmoles = endmoles - startmoles;
+		return (float) (difmoles/.1); //X moles per second
+	}
+	
 }
