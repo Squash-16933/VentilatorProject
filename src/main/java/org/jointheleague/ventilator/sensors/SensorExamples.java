@@ -15,6 +15,8 @@ public class SensorExamples {
 		try {
 			//prints out readPressure reading
 			readPressure();
+			readTemperature();
+			readHumidity();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -50,24 +52,51 @@ public class SensorExamples {
 		}
 	}
 
-	static void readPressure() throws IOException {
+	static float readPressure() throws IOException {
 		BME280Driver bme280 = null;
 		try {
 			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
 			bme280.open();
-			while (true) {
-				float[] values = bme280.getSensorValues();
-				System.out.println("temperature:" + values[0]);
-				System.out.println("humidity:" + values[1]);
-				System.out.println("pressure:" + values[2]);
-				Thread.sleep(10000);
-			}
-		} catch (InterruptedException e) {
+			float[] values = bme280.getSensorValues();
+			return values[2];
 		} catch (IOException e) {
 		} finally {
 			if (bme280 != null) {
 				bme280.close();
 			}
 		}
+		return 0;
+	}
+	
+	static float readTemperature() throws IOException {
+		BME280Driver bme280 = null;
+		try {
+			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
+			bme280.open();
+			float[] values = bme280.getSensorValues();
+			return values[0];
+		} catch (IOException e) {
+		} finally {
+			if (bme280 != null) {
+				bme280.close();
+			}
+		}
+		return 0;
+	}
+	
+	static float readHumidity() throws IOException {
+		BME280Driver bme280 = null;
+		try {
+			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
+			bme280.open();
+			float[] values = bme280.getSensorValues();
+			return values[1];
+		} catch (IOException e) {
+		} finally {
+			if (bme280 != null) {
+				bme280.close();
+			}
+		}
+		return 0;
 	}
 }
