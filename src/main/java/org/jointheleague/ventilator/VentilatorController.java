@@ -1,28 +1,42 @@
 package org.jointheleague.ventilator;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.text.ParseException;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import org.jointheleague.ventilator.sensors.pressure.*;
-import org.jointheleague.ventilator.stepper.*;
-
-import com.pi4j.io.i2c.I2CBus;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
 
 public class VentilatorController extends WebSocketServer {
 	public static final boolean DEBUG = true;
+	private int connNum;
 
 	VentilatorController(int port) {
 		super(new InetSocketAddress(port));
 		setReuseAddr(true);
+
+		connNum = 0;
 	}
 
 	@Override
 	public void onOpen(WebSocket conn, ClientHandshake handshake) {
-		System.out.println("new Connection");
+		connNum++;
 
+		// Logs connection
+		System.out.println("New connection: connection "+connNum);
+
+		// Creates a handshake response
+		JSONObject response = new JSONObject();
+		response.put("status", 200);
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
+
+		// Sends response
+		conn.send(response.toString());
+
+		// Logs
+		System.out.println("Responded with 200 OK");
 	}
 
 	@Override
@@ -31,37 +45,44 @@ public class VentilatorController extends WebSocketServer {
 
 	@Override
 	public void onMessage(WebSocket conn, String message) {
-		if (message.equals("start")) {
-			StepperInterface step = null;
-			if (DEBUG) {
-				step = new MockStepperController();
-			} else {
-				step = new StepperController();
-			}
-			step.forward(Conversions.convertBPMtoSPS(Conversions.getRespRate(18)), 2);
-			conn.send("Hello from server");
-		}
-		if (message.equals("pressure")) {
-			BME280Driver bme280 = null;
-			try {
-				bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
-				bme280.open();
-				while (true) {
-					float[] values = bme280.getSensorValues();
-					System.out.println("pressure:" + values[2]);
-				}
-			} catch (IOException e) {
-			} finally {
-				if (bme280 != null) {
-					try {
-						bme280.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
+		JSONParser parser = new JSONParser();
+		
+		try {
+			// Parses message
+			JSONObject jobj = (JSONObject) parser.parse(message);
+			long reqnum = (long) jobj.get("request");
 
+			// Logs message
+			System.out.println("Logging message "+reqnum+" of connection "+connNum+":\n"+message+"\nEnd\n");
+
+			// Creates a response
+			JSONObject response = new JSONObject();
+			response.put("request", reqnum);
+			response.put("status", 200);
+			
+			// Sends response
+			conn.send(response.toString());
+
+			// Logs
+			System.out.println("Responded with 200 OK");
+		} catch (org.json.simple.parser.ParseException e) {
+			// Logs stack trace
+			e.printStackTrace();
+
+			// Logs message
+			System.out.println("Error parsing message\nLogging message from connection "+connNum+":\n"+message+"\nEnd\n");
+
+			// Creates a response
+			JSONObject response = new JSONObject();
+			response.put("status", 400);
+			
+			// Sends response
+			conn.send(response.toString());
+
+			// Logs
+			System.out.println("Responded with 400 Bad Request");
+			System.exit(0); // End program TODO remove this line
+		}
 	}
 
 	@Override
@@ -72,7 +93,6 @@ public class VentilatorController extends WebSocketServer {
 	@Override
 	public void onStart() {
 		System.out.println("Start up");
-
 	}
 
 }
