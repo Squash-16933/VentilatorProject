@@ -49,12 +49,12 @@ public class VentilatorCalcs {
 	}
 
 	/**
-	 * Returns the Expiratory (E)/inspiratory(I) Time Ratio E/I
+	 * Returns the Inspiratory (I)/Expiratory (E) Time Ratio I/E
 	 * 
 	 * @return Time Ratio
 	 */
 	public double timeRatio() {
-		return expir / inspir;
+		return inspir/expir;
 	}
 
 	/**
@@ -105,7 +105,48 @@ public class VentilatorCalcs {
 	public double expirPhaseTime() {
 		return inExCycle() - inspPhaseTime();
 	}
-
+	
+	/**
+	 * Sets the default I:E ratio to be 1:2 
+	 * 
+	 * @return Time Default Ratio
+	 */
+	
+	public double setDefaultIE() {
+		return inspir / (2*inspir);
+	}
+	
+	/**
+	 * Checks if the IE ratio is not between 1:1 and 1:4
+	 * If it is not included in the range, it is set back to the default 1:2
+	 * 
+	 */
+	
+	public void checkIEratio() {
+		if(timeRatio()>1 && timeRatio()<0.25) {
+			setDefaultIE();
+		} 
+	}
+	
+	/**
+	 * Checks if the Inspiratory pressure reaches 40 and makes it stop until it reaches 30cmH2O. (Pressure level)
+	 * The Inspiratory pressure would need to stop until the Expiratory pressure reaches zero or when the ventilatory period ends.
+	 */
+	public void checkInspPress() { 
+		if(inspiratoryPress>=40) {
+			while(!(inspiratoryPress<=30)) {
+				try {
+					//stop inspiratory-intake
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			//start expiratory phase and opens valve - patient exhales passively which is controlled by PEEP
+		}
+	}
+	
 	/**
 	 * Returns Time to hold compression (inspiratory pause) at end of inhale for
 	 * plateau pressure
