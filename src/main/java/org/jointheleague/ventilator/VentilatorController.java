@@ -9,9 +9,12 @@ import org.java_websocket.server.WebSocketServer;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
+import javax.swing.Timer;
+
 public class VentilatorController extends WebSocketServer {
 	public static final boolean DEBUG = true;
 	private int connNum;
+	private Timer[] updates; // Requests that must continuously update
 
 	VentilatorController(int port) {
 		super(new InetSocketAddress(port));
@@ -25,7 +28,7 @@ public class VentilatorController extends WebSocketServer {
 		connNum++;
 
 		// Logs connection
-		System.out.println("New connection: connection "+connNum);
+		System.out.println("New connection: connection "+connNum+"\n");
 
 		// Creates a handshake response
 		JSONObject response = new JSONObject();
@@ -36,7 +39,7 @@ public class VentilatorController extends WebSocketServer {
 		conn.send(response.toString());
 
 		// Logs
-		System.out.println("Responded with 200 OK");
+		System.out.println("Responded to connection with 200 OK\n");
 	}
 
 	@Override
@@ -49,50 +52,65 @@ public class VentilatorController extends WebSocketServer {
 		
 		try {
 			// Parses message
-			JSONObject jobj = (JSONObject) parser.parse(message);
-			long reqnum = (long) jobj.get("request");
+			JSONObject msg = (JSONObject) parser.parse(message);
 
 			// Logs message
-			System.out.println("Logging message "+reqnum+" of connection "+connNum+":\n"+message+"\nEnd\n");
+			System.out.println("Logging message "+(((long) msg.get("request"))+1)+" of connection "+connNum+":\n"+message+"\nEnd\n");
 
-			// Creates a response
-			JSONObject response = new JSONObject();
-			response.put("request", reqnum);
-			response.put("status", 200);
-			
-			// Sends response
-			conn.send(response.toString());
-
-			// Logs
-			System.out.println("Responded with 200 OK");
+			handleMessage(msg, conn);
 		} catch (org.json.simple.parser.ParseException e) {
 			// Logs stack trace
 			e.printStackTrace();
 
 			// Logs message
 			System.out.println("Error parsing message\nLogging message from connection "+connNum+":\n"+message+"\nEnd\n");
-
+			
 			// Creates a response
 			JSONObject response = new JSONObject();
 			response.put("status", 400);
+			response.put("timestamp", System.currentTimeMillis() / 1000L);
 			
 			// Sends response
 			conn.send(response.toString());
 
 			// Logs
-			System.out.println("Responded with 400 Bad Request");
-			System.exit(0); // End program TODO remove this line
-		}
+			System.out.println("Responded to message with 400 Bad Request\n");
+		} // TODO make this handle messages that don't conform to protocol
+	      // Possibly custom exception?
+	}
+
+	/**
+	 * Handles a message as a JSONObject.
+	 * @param msg Message
+	 * @param conn WebSocket connection
+	 */
+	public void handleMessage(JSONObject msg, WebSocket conn) {
+		// TODO make this method do more than just 200 OK
+
+		// Creates a response
+		JSONObject response = new JSONObject();
+
+		response.put("request", (long) msg.get("request"));
+		response.put("status", 200);
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
+		
+		// Sends response
+		conn.send(response.toString());
+
+		// Logs
+		System.out.println("Responded to message with 200 OK\n");
 	}
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
-		System.err.println("err");
+		System.err.println("Unhandlable error\nLogging error:");
+		ex.printStackTrace();
+		System.err.println("End\n");
 	}
 
 	@Override
 	public void onStart() {
-		System.out.println("Start up");
+		System.out.println("Server started\n");
 	}
 
 }
