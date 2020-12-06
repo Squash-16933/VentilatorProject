@@ -23,7 +23,7 @@ public class SensorExamples {
 		}
 	}
 
-	static void readLidar() {
+	public static void readLidar() {
 		// Using Lidar
 		VL53L0XDevice sensor = null;
 		try {
@@ -52,7 +52,7 @@ public class SensorExamples {
 		}
 	}
 
-	static float readPressure() throws IOException {
+	public static float readPressure() throws IOException {
 		BME280Driver bme280 = null;
 		try {
 			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
@@ -68,7 +68,7 @@ public class SensorExamples {
 		return 0;
 	}
 	
-	static float readTemperature() throws IOException {
+	public static float readTemperature() throws IOException {
 		BME280Driver bme280 = null;
 		try {
 			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
@@ -84,7 +84,7 @@ public class SensorExamples {
 		return 0;
 	}
 	
-	static float readHumidity() throws IOException {
+	public static float readHumidity() throws IOException {
 		BME280Driver bme280 = null;
 		try {
 			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
