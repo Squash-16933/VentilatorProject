@@ -11,6 +11,8 @@ public class VentilatorSetting {
 	double inpiritoryPressure;
 	//
 	double expiratoryPressure;
+	 
+	double peep;
 
 	
 	public VentilatorSetting(double tidalVolume, double breathRate, double ieRatio, double inpiritoryPressure,
@@ -52,6 +54,11 @@ public class VentilatorSetting {
 	}
 	public void setExpiratoryPressure(double expiratoryPressure) {
 		this.expiratoryPressure = expiratoryPressure;
+	}
+
+	public double getPeep() {
+		
+		return peep;
 	}
 	
 }
