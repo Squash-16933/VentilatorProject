@@ -1,49 +1,52 @@
 package org.jointheleague.ventilator.sensors;
 
+import java.awt.List;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.jointheleague.ventilator.stepper.MockStepperController;
 import org.jointheleague.ventilator.stepper.StepperController;
 
 public class Peep {
-public static final int MAX_PRESSURE = 5; //fix this lol
+	public static final int MAX_PRESSURE = 5; // fix this lol
+
 	public static void runPeep(float peep) {
+		float avgp = 0;
 		boolean stop = false;
-		StepperController sc = new StepperController(); 
+		StepperController sc = new StepperController();
+		ArrayList<Float> pressures = new ArrayList<Float>();
+
 		while (stop != true) {
 			try {
-				float p1 = SensorExamples.readPressure();
-				Thread.sleep(10);
-				float p2 = SensorExamples.readPressure();
-				Thread.sleep(10);
-				float p3 = SensorExamples.readPressure();
-				Thread.sleep(10);
-				float p4 = SensorExamples.readPressure();
-				Thread.sleep(10);
-				float p5 = SensorExamples.readPressure();
-				Thread.sleep(10);
-				float avgp = (p1 + p2 + p3 + p4 + p5)/5;
-				//tweak wait times to increase/decrease breathing rate (figure out later)
-				//to think abt: will this increase or decrease precision of pressure readings?
-				
-				if(avgp > peep) {
-					sc.backward(1, 1); //think abt how to put rate and time into incremental method
-				}else {
-					if(avgp < MAX_PRESSURE) {
-						sc.forward(1, 1);
+				if (pressures.size() >= 5) {
+					for (int i = 0; i < pressures.size(); i++) {
+						avgp = avgp + pressures.get(i);
 					}
+					avgp = avgp / 5;
+
+					if (avgp > peep) {
+						sc.backwardStep();
+					} else {
+						if (avgp < MAX_PRESSURE) {
+							sc.forwardStep();
+						}
+					}
+
+					pressures.remove(0);
+					pressures.add(SensorExamples.readPressure());
+				} else {
+					pressures.add(SensorExamples.readPressure());
 				}
+
+				if (1 == 0) { // stop machine or change setting
+					stop = true;
+				}
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			
 		}
-		if(1==0){ //stop machine or change setting
-				stop = true;
-		}
+
 	}
 }
