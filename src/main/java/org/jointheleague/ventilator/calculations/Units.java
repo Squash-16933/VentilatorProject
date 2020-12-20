@@ -1,4 +1,4 @@
-package org.jointheleague.ventilator;
+package org.jointheleague.ventilator.calculations;
 
 public class Units {
 

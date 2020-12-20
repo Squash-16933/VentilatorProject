@@ -23,6 +23,9 @@ mvn spring-boot:run
 step 3:
 Open the index.html file in your browser
 
+step 4:
+Run front end project
+
 ```
 
 ## Project structure
