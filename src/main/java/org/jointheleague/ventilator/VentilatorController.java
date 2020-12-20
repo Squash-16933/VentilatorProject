@@ -2,7 +2,6 @@ package org.jointheleague.ventilator;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import javax.swing.Timer;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -10,6 +9,7 @@ import org.jointheleague.ventilator.sensors.SensorExamples;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReadWriteLock;
 public class VentilatorController extends WebSocketServer {
 
 	public static final boolean DEBUG = true;
@@ -23,6 +23,7 @@ public class VentilatorController extends WebSocketServer {
 		setReuseAddr(true);
 
 		connNum = 0;
+		updates = new ArrayList<>();
 	}
 
 	@Override
@@ -125,31 +126,8 @@ public class VentilatorController extends WebSocketServer {
 				updates.add(msg); // Add to list of updating requests
 			}
 
-			// Creates a response
-			JSONObject response = new JSONObject();
-			response.put("request", reqnum);
-			response.put("status", 200);
-			response.put("timestamp", System.currentTimeMillis() / 1000L);
-			
-			JSONObject data = new JSONObject(); // "data" property of response
-
-			try {
-				data.put("humidity", SensorExamples.readHumidity());
-				data.put("pressure", SensorExamples.readPressure());
-				data.put("temperature", SensorExamples.readTemperature());
-			} catch (IOException e) {
-				throw new ProtocolException("Unable to read sensors", 500);
-			}
-
-			response.put("data", data); // Add "data" property to response
-
-			// Sends response
-			conn.send(response.toString());
-
-			// Logs
-			System.out.println("Responded to message with HTTP 200\n");
-		}
-			break;
+			VentilatorService.vs_getAll(msg, conn, reqnum);
+			} break;
 
 			case "powerOn": // TODO make this turn power on
 			{
