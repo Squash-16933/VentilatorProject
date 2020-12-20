@@ -5,5 +5,5 @@ public class PatientProfile {
 	public double height;
 	public double weight;
 	public double bmi;
-	
+	public double gender;
 }
