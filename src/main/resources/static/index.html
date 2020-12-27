@@ -1,16 +1,19 @@
 <html>
 <script>
 	var exampleSocket = new WebSocket("ws://localhost:3001/socketserver");
-	
+
 	function sendMessage(){
 		exampleSocket.send("hello");
 	}
-	
-	
+
+	function readLidar(){
+		exampleSocket.send("lidar")
+	}
+
 	function getPressure(){
 		exampleSocket.send("pressure");
 	}
-	
+
 	exampleSocket.onmessage = function (event) {
 		  alert(event.data);
 		}
@@ -23,7 +26,7 @@
 	<h1>Hello</h1>
 	<button onclick="sendMessage()">Click me</button>
    <button onclick="getPressure()">Pressure</button>
-	
+		<button onclick="readLidar()">Lidar</button>
 </body>
 
 </html>
