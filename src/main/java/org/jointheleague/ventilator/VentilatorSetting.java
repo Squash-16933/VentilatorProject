@@ -11,16 +11,20 @@ public class VentilatorSetting {
 	double inpiritoryPressure;
 	//
 	double expiratoryPressure;
+	 
+	double peep;
 
+	String ventMode;
 	
 	public VentilatorSetting(double tidalVolume, double breathRate, double ieRatio, double inpiritoryPressure,
-			double expiratoryPressure) {
+			double expiratoryPressure, String ventMode) {
 		super();
 		this.tidalVolume = tidalVolume;
 		this.breathRate = breathRate;
 		this.ieRatio = ieRatio;
 		this.inpiritoryPressure = inpiritoryPressure;
 		this.expiratoryPressure = expiratoryPressure;
+		this.ventMode = ventMode;
 	}
 	
 	public double getTidalVolume() {
@@ -52,6 +56,15 @@ public class VentilatorSetting {
 	}
 	public void setExpiratoryPressure(double expiratoryPressure) {
 		this.expiratoryPressure = expiratoryPressure;
+	}
+	public double getPeep() {
+		return peep;
+	}
+	public String getVentmode() {
+		return ventMode;
+	}
+	public void setVentMode(String ventMode) {
+		this.ventMode = ventMode;
 	}
 	
 }
