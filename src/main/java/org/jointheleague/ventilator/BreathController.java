@@ -10,7 +10,7 @@ public class BreathController {
 	Peep p = new Peep();
 
 	public BreathController(PatientProfile patientProfile) {
-		//testing
+		settings = SettingsFactory.getProfile(patientProfile);
 	}
 	
 	public void pressureCheck() {
