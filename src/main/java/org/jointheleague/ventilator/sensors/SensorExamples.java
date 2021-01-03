@@ -8,11 +8,19 @@ import org.jointheleague.ventilator.sensors.pressure.BME280Driver;
 import com.pi4j.io.i2c.I2CBus;
 
 public class SensorExamples {
+	BME280Driver bm280;
+
+	public SensorExamples() {
+		bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
+			bme280.open();
+	}
+
 	public static void main(String[] args) {
 		try {
-			System.out.println("humidity:"+readHumidity());
-			System.out.println("pressure:"+readPressure());
-			System.out.println("temperature:"+readTemperature());
+			SensorExamples se = new SensorExamples();
+			System.out.println("humidity:"+se.readHumidity());
+			System.out.println("pressure:"+se.readPressure());
+			System.out.println("temperature:"+se.readTemperature());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,8 +55,12 @@ public class SensorExamples {
 		}
 	}
 
-	public static float readPressure() throws IOException {
-		BME280Driver bme280 = null;
+	/**
+	 * Gets value of pressure sensor.
+	 * @return (Pressure in Pa)*256
+	 * @throws IOException
+	 */
+	public float readPressure() throws IOException {
 		try {
 			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
 			bme280.open();
@@ -63,7 +75,12 @@ public class SensorExamples {
 		return 0;
 	}
 	
-	public static float readTemperature() throws IOException {
+	/**
+	 * Gets value of temperature sensor.
+	 * @return (Temperature in °C)*100
+	 * @throws IOException
+	 */
+	public float readTemperature() throws IOException {
 		BME280Driver bme280 = null;
 		try {
 			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
@@ -78,8 +95,13 @@ public class SensorExamples {
 		}
 		return 0;
 	}
-	
-	public static float readHumidity() throws IOException {
+
+	/**
+	 * Gets value of humidity sensor.
+	 * @return (Humidity in %RH)*1024 (e.g. relative humidity of 34% would be 34816)
+	 * @throws IOException
+	 */
+	public float readHumidity() throws IOException {
 		BME280Driver bme280 = null;
 		try {
 			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
