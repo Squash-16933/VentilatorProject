@@ -11,7 +11,7 @@ public class VentilatorModes {
 	
 	VentilatorSetting vs;
 	VentilatorCalcs vc;
-	String VentilatorMode = vs.ventMode;
+	String VentilatorMode;
 	double IntraPress;
 	// brainstorm
 	/*
@@ -22,7 +22,11 @@ public class VentilatorModes {
 	 * delivery
 	 * 
 	 */
-
+public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String VentilatorMode, double IntraPress) {
+	this.vs = vs;
+	this.vc = vc;
+//	this.VentilatorMode = vc.ven
+}
 	// Volume Assist Control
 	public void VolumeAssist() {
 		double ftdv = (vs.getTidalVolume()) / (vc.inspPhaseTime()); //fixed tidal volume given at specific intervals
