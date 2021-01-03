@@ -1,4 +1,4 @@
-package org.jointheleague.ventilator;
+package org.jointheleague.ventilator.calculations;
 
 
 public class Conversions {
@@ -39,7 +39,15 @@ public class Conversions {
 			return 14;
 		}
 	}
-	
+    /**
+     * Returns the change in circumference of the tank when deflated by a volume <code>volumeChange</code>
+     * (assuming tank is a perfect cylinder throughout deflation.)
+     * @return Circumference change
+     */
+    public static double changeCirc(double diameter, double volumeChange, double height) {
+        return (Math.PI * diameter) - Math.sqrt(((Math.PI * diameter) * (Math.PI * diameter)) - ((4*Math.PI*volumeChange)/height));
+    }
+    
 	public static float toMoleRate(float startp, float startv ,float endp, float endv) {
 		//all pressures given in atm, all volumes given in L
 		float startmoles = (float) ((startp * startv)/(0.0821 * 298)); // Pressure * Volume = #moles * Gas constant * Temp(K, room temp) 

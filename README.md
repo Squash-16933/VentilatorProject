@@ -13,20 +13,37 @@ We're the [League of Amazing Programmers](https://jointheleague.org), a non-prof
 The brain of the ventilator is a Raspberry Pi running Java and Adafruit, and it will have a [Stepper Motor HAT](https://www.adafruit.com/product/2348) and an AMBU bag held by a 3D-printed plastic strap.
 
 ## Installation
-```
-step 1:
-git clone https://github.com/Squash-16933/VentilatorProject.git
+1. ```
+   git clone https://github.com/Squash-16933/VentilatorProject.git
+   mvn spring-boot:run
+   ```
+2. Start the front end
 
-step 2:
-mvn spring-boot:run
+## Accessing the pi
+### Accessing the pi terminal
+1. Open command line
+2. `ssh pi@<IP> -p <PORT>`
+3. Type the password
+4. This terminal opens: `pi@raspberrypi:~ $`
 
-step 3:
-Open the index.html file in your browser
+### Accessing the server program
+1. Access the pi terminal
+2. `screen -xS dev-tester` (This may fail if the screen is not named `dev-tester`)
+3. It will open the server program
+4. To get back to the main terminal, `Ctrl-A` then `Ctrl-D`
 
-```
+### Starting the server
+1. Access the pi terminal
+2. `screen`
+3. `cd ~/Desktop/VentilatorProject`
+4. `mvn spring-boot:run`
+5. Preferably, name the screen to make it easier to access
 
+### Naming the screen
+1. `Ctrl-A`
+2. `:sessionname <NAME>` (`<NAME>` preferably `dev-tester`)
 ## Project structure
-TBD...
+TBA
 
 ## Further reading
 - [**World Health Organization** Coronavirus disease (COVID-19) advice for the public](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public)
