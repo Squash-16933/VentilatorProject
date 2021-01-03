@@ -11,7 +11,7 @@ public class SensorExamples {
 	public static void main(String[] args) {
 		//print out lidar reading
 		readLidar();
-		
+
 		try {
 			//prints out readPressure reading
 			readPressure();
@@ -21,7 +21,7 @@ public class SensorExamples {
 		}
 	}
 
-	static void readLidar() {
+	static int readLidar() {
 		// Using Lidar
 		VL53L0XDevice sensor = null;
 		try {
@@ -36,6 +36,7 @@ public class SensorExamples {
 				int mm = sensor.range();
 				if (previousDist != mm) {
 					System.out.println(String.format("Distance: %d mm", mm));
+					return mm;
 				}
 				previousDist = mm;
 				try {
@@ -48,6 +49,7 @@ public class SensorExamples {
 			ioex.printStackTrace();
 			System.out.println("Fun");
 		}
+		return 0;
 	}
 
 	static void readPressure() throws IOException {
