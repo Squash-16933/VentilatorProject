@@ -10,8 +10,9 @@ import com.pi4j.io.i2c.I2CBus;
 public class SensorExamples {
 	public static void main(String[] args) {
 		//print out lidar reading
+		int previousDist = -1;
 		readLidar();
-		
+
 		try {
 			//prints out readPressure reading
 			readPressure();
@@ -23,7 +24,7 @@ public class SensorExamples {
 		}
 	}
 
-	static void readLidar() {
+	static int readLidar() {
 		// Using Lidar
 		VL53L0XDevice sensor = null;
 		try {
@@ -31,25 +32,13 @@ public class SensorExamples {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		try {
-			int previousDist = -1;
-			while (sensor != null) {
-				int mm = sensor.range();
-				if (previousDist != mm) {
-					System.out.println(String.format("Distance: %d mm", mm));
-				}
-				previousDist = mm;
-				try {
-					Thread.sleep(50L);
-				} catch (InterruptedException iex) {
-					System.out.println("exception");
-				}
-			}
-		} catch (IOException ioex) {
-			ioex.printStackTrace();
-			System.out.println("Fun");
+		int mm = sensor.range();
+		if (previousDist != mm) {
+			System.out.println(String.format("Distance: %d mm", mm));
+			return mm;
 		}
+	        previousDist = mm;
+		return 0;
 	}
 
 	static float readPressure() throws IOException {

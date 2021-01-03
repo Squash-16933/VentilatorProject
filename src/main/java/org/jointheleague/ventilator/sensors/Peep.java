@@ -15,7 +15,6 @@ public class Peep {
 	public ArrayList<Float> pressures = new ArrayList<Float>();
 	public double avgp = 0;
 	public String runPeep(double peep) {
-		
 			try {
 				if (pressures.size() >= 5) {
 					pressures.remove(0);
