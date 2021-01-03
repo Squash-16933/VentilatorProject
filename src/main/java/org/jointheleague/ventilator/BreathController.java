@@ -12,11 +12,12 @@ public class BreathController {
 	public BreathController(PatientProfile patientProfile) {
 		settings = SettingsFactory.getProfile(patientProfile);
 	}
-	
+
 	public void pressureCheck() {
 		String status = p.runPeep(settings.getPeep());
-		if(status.equals(Peep.FORWARD)) {
-			sc.forwardStep(); //change?
+		if (status.equals(Peep.FORWARD)) {
+			sc.forwardStep(); // change?
 		}
 	}
+
 }
