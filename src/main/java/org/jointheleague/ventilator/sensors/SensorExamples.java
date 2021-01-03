@@ -35,8 +35,8 @@ public class SensorExamples {
 			System.out.println(String.format("Distance: %d mm", mm));
 			return mm;
 		}
-			previousDist = mm;
-		  return 0;
+	        previousDist = mm;
+		return 0;
 	}
 
 	static void readPressure() throws IOException {
