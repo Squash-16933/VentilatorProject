@@ -9,16 +9,11 @@ import com.pi4j.io.i2c.I2CBus;
 
 public class SensorExamples {
 	public static void main(String[] args) {
-		//print out lidar reading
-		readLidar();
-		
 		try {
-			//prints out readPressure reading
-			readPressure();
-			readTemperature();
-			readHumidity();
+			System.out.println("humidity:"+readHumidity());
+			System.out.println("pressure:"+readPressure());
+			System.out.println("temperature:"+readTemperature());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

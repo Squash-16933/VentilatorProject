@@ -16,17 +16,13 @@ public class VentilatorService {
 		
 		JSONObject data = new JSONObject(); // "data" property of response
 
-		// try {
-			// data.put("humidity", SensorExamples.readHumidity());
-			// data.put("pressure", SensorExamples.readPressure());
-			// data.put("temperature", SensorExamples.readTemperature());
-		// } catch (IOException e) {
-			// throw new ProtocolException("Unable to read sensors", 500);
-		// }
-		// TODO The random data is just for testing, remove later
-		data.put("humidity", new Random().nextInt(1048576));
-		data.put("pressure", new Random().nextInt(1048576));
-		data.put("temperature", new Random().nextInt(65536));
+		try {
+			data.put("humidity", SensorExamples.readHumidity());
+			data.put("pressure", SensorExamples.readPressure());
+			data.put("temperature", SensorExamples.readTemperature());
+		} catch (IOException e) {
+			throw new ProtocolException("Unable to read sensors", 500);
+		}
 
 		response.put("data", data); // Add "data" property to response
 
