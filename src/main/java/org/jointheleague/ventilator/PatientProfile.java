@@ -5,6 +5,7 @@ public class PatientProfile {
 	public double height;
 	public double weight;
 	public double bmi;
+
 	public String gender;
 	
 	
@@ -38,7 +39,4 @@ public class PatientProfile {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
-	
-	
 }

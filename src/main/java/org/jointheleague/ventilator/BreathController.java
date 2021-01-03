@@ -19,5 +19,4 @@ public class BreathController {
 			sc.forwardStep(); //change?
 		}
 	}
-	
 }
