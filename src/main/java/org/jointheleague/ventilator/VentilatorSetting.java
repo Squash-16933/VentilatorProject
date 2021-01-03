@@ -8,22 +8,25 @@ public class VentilatorSetting {
 	//I:E ratio
 	double ieRatio;
 	//
-	double inpiritoryPressure;
+	double inspiratoryPressure;
 	//
 	double expiratoryPressure;
 	 
 	double peep;
-
+	
+	double triggersens;
+	
 	String ventMode;
 	
-	public VentilatorSetting(double tidalVolume, double breathRate, double ieRatio, double inpiritoryPressure,
-			double expiratoryPressure, String ventMode) {
+	public VentilatorSetting(double tidalVolume, double breathRate, double ieRatio, double inspiratoryPressure,
+			double expiratoryPressure,  double triggersens, String ventMode) {
 		super();
 		this.tidalVolume = tidalVolume;
 		this.breathRate = breathRate;
 		this.ieRatio = ieRatio;
-		this.inpiritoryPressure = inpiritoryPressure;
+		this.inspiratoryPressure = inspiratoryPressure;
 		this.expiratoryPressure = expiratoryPressure;
+		this.triggersens = triggersens;
 		this.ventMode = ventMode;
 	}
 	
@@ -45,11 +48,11 @@ public class VentilatorSetting {
 	public void setIeRatio(double ieRatio) {
 		this.ieRatio = ieRatio;
 	}
-	public double getInpiritoryPressure() {
-		return inpiritoryPressure;
+	public double getInspiratoryPressure() {
+		return inspiratoryPressure;
 	}
-	public void setInpiritoryPressure(double inpiritoryPressure) {
-		this.inpiritoryPressure = inpiritoryPressure;
+	public void setInspiratoryPressure(double inspiratoryPressure) {
+		this.inspiratoryPressure = inspiratoryPressure;
 	}
 	public double getExpiratoryPressure() {
 		return expiratoryPressure;
@@ -59,6 +62,12 @@ public class VentilatorSetting {
 	}
 	public double getPeep() {
 		return peep;
+	}
+	public void setTriggersens(double Triggersens) {
+		this.triggersens = Triggersens;
+	}
+	public double getTriggersens() {
+		return triggersens;
 	}
 	public String getVentmode() {
 		return ventMode;
