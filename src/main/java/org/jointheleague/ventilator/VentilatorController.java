@@ -16,12 +16,14 @@ public class VentilatorController extends WebSocketServer {
 	private int connNum;
 	private ArrayList<JSONObject> updates; // Requests that must continuously update
 								           // Contains a list of messages to refer to
-								           // TODO Add functionality to continuously update
+										   // TODO Add functionality to continuously update
+	private final int port;
 
 	VentilatorController(int port) {
 		super(new InetSocketAddress(port));
 		setReuseAddr(true);
 
+		this.port = port;
 		connNum = 0;
 		updates = new ArrayList<>();
 	}
@@ -55,12 +57,18 @@ public class VentilatorController extends WebSocketServer {
 		try {
 			handleMessage(message, conn);
 		} catch (ProtocolException e) {
-			System.err.println("Error occurred handling message:\n"+e.getMessage()+"\nEnd\n");
+			System.err.println("Error occurred handling message: "+e.getMessage()+"\n");
 
 			JSONObject response = new JSONObject();
-			response.put("status", 400);
+			response.put("status", e.statusCode);
 			response.put("timestamp", System.currentTimeMillis() / 1000L);
 			response.put("data", e.getMessage());
+
+			conn.send(response.toString());
+
+			System.out.println("Responded to message with HTTP "+e.statusCode+":");
+			System.out.println(response.toString());
+			System.out.println("End\n");
 		}
 	}
 
@@ -159,14 +167,21 @@ public class VentilatorController extends WebSocketServer {
 
 	@Override
 	public void onStart() {
-		System.out.println("Server started\n");
+		System.out.println("Server opened on port "+port+"\n");
 	}
 }
 
 class ProtocolException extends Exception {
-	int statusCode; // HTTP status code
-	public ProtocolException(String errorMessage, int status) {
+	public final int statusCode; // HTTP status code
+
+	/**
+	 * Initializes a ProtocolException.
+	 * @param errorMessage Error message
+	 * @param statusCode HTTP status code
+	 */
+	public ProtocolException(String errorMessage, int statusCode) {
 		super(errorMessage);
+		this.statusCode = statusCode;
 	}
 
 	/**

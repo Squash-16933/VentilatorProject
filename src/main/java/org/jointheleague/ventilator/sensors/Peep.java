@@ -12,13 +12,22 @@ public class Peep {
 	public static final String FORWARD = "forward";
 	public static final String BACKWARD = "backward";
 	public static final String NOT_READY = "not ready";
-	public ArrayList<Float> pressures = new ArrayList<Float>();
-	public double avgp = 0;
+
+	public ArrayList<Float> pressures;
+	public SensorExamples se;
+	public double avgp;
+	
+	public Peep() {
+		pressures = new ArrayList<Float>();
+		se = new SensorExamples();
+		avgp = 0;
+	}
+
 	public String runPeep(double peep) {
 			try {
 				if (pressures.size() >= 5) {
 					pressures.remove(0);
-					pressures.add(SensorExamples.readPressure());
+					pressures.add(se.readPressure());
 					for (int i = 0; i < pressures.size(); i++) {
 						avgp = avgp + pressures.get(i);
 					}
@@ -35,12 +44,10 @@ public class Peep {
 					}
 
 				} else {
-					pressures.add(SensorExamples.readPressure());
+					pressures.add(se.readPressure());
 					return NOT_READY;
 				}
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;
