@@ -168,6 +168,7 @@ public class VentilatorController extends WebSocketServer {
 	@Override
 	public void onStart() {
 		System.out.println("Server opened on port "+port+"\n");
+		System.out.println("This may not be the port you connect to");
 	}
 }
 

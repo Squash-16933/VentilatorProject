@@ -36,7 +36,6 @@ public class SensorExamples {
 			int mm = sensor.range();
 
 			if (previousDist != mm) {
-				System.out.println(String.format("Distance: %d mm", mm));
 				return mm;
 			}
 			previousDist = mm;
