@@ -10,7 +10,11 @@ public class SettingsFactory {
 	static VentilatorSetting ss;
 
 	public static VentilatorSetting getProfile(PatientProfile patientProfile) {
-
+		
+		
+//tbd factor in disease (maybe make use of a database??)
+		
+		
 		double minTidalVolume = (double) Conversions.getIBW(patientProfile.getHeight(), patientProfile.getGender(), 1).get(0);
 		double maxTidalVolume = (double) Conversions.getIBW(patientProfile.getHeight(), patientProfile.getGender(), 1).get(1);
 		double breathRate = Conversions.getRespRate(patientProfile.getAge());

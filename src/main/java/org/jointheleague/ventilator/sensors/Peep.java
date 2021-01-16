@@ -8,10 +8,10 @@ import org.jointheleague.ventilator.stepper.MockStepperController;
 import org.jointheleague.ventilator.stepper.StepperController;
 
 public class Peep {
-	public static final int MAX_PRESSURE = 5; // fix this lol
-	public static final String FORWARD = "forward";
-	public static final String BACKWARD = "backward";
-	public static final String NOT_READY = "not ready";
+	public static final int PIP = 40;//cmH2O 
+	public static final String FORWARD = "forward"; //inhalation
+	public static final String BACKWARD = "backward"; //exhalation
+	public static final String NOT_READY = "not ready"; //none
 	public ArrayList<Float> pressures = new ArrayList<Float>();
 	public double avgp = 0;
 
@@ -30,7 +30,7 @@ public class Peep {
 					// sc.backwardStep();
 					return BACKWARD;
 				} else {
-					if (avgp < MAX_PRESSURE) {
+					if (avgp < PIP) {
 						// sc.forwardStep();
 						return FORWARD;
 					}

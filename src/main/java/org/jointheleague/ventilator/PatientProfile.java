@@ -5,8 +5,8 @@ public class PatientProfile {
 	public double height;
 	public double weight;
 	public double bmi;
-
 	public String gender;
+	public String disease;
 	
 	
 	public int getAge() {
@@ -38,5 +38,11 @@ public class PatientProfile {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	public String getDisease() {
+		return disease;
+	}
+	public void setDisease(String disease) {
+		this.disease = disease;
 	}
 }
