@@ -41,7 +41,7 @@ public class StepperController implements StepperInterface {
 		pin15.low();// EN invalid, motor under control
 		{
 			pin11.low();// DIR backward
-			for (int k = 0; k < 1500; k++) {
+			for (int k = 0; k < rate * time; k++) {
 				try {
 					System.out.println("BACKWARD");
 					pin13.high();// step
