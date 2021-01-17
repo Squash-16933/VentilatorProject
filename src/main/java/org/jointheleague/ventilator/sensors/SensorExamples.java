@@ -8,6 +8,8 @@ import org.jointheleague.ventilator.sensors.pressure.BME280Driver;
 import com.pi4j.io.i2c.I2CBus;
 
 public class SensorExamples {
+	static int previousDist = 0;
+	static VL53L0XDevice sensor = null;
 	public static void main(String[] args) {
 		//print out lidar reading
 		int previousDist = -1;
@@ -26,18 +28,21 @@ public class SensorExamples {
 
 	static int readLidar() {
 		// Using Lidar
-		VL53L0XDevice sensor = null;
 		try {
-			sensor = new VL53L0XDevice(0x29, 30);
+			if(sensor == null) {
+				sensor = new VL53L0XDevice(0x29, 30);
+			}
+			int mm = sensor.range();
+			if (previousDist != mm) {
+				System.out.println(String.format("Distance: %d mm", mm));        
+				previousDist = mm;
+				return mm;
+			}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		int mm = sensor.range();
-		if (previousDist != mm) {
-			System.out.println(String.format("Distance: %d mm", mm));
-			return mm;
-		}
-	        previousDist = mm;
+		
 		return 0;
 	}
 
