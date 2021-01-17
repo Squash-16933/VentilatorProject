@@ -10,7 +10,9 @@ public class Test {
 	
 	void simpleStepperTest() {
 		StepperController sc = new StepperController();
-		sc.forward(100, 5);
-		sc.backward(100, 5);
+		while (1==1) {
+		sc.forward(10, 5);
+		sc.backward(10, 5);
+		}
 	}
 }
