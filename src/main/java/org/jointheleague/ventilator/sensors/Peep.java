@@ -8,7 +8,6 @@ import org.jointheleague.ventilator.stepper.MockStepperController;
 import org.jointheleague.ventilator.stepper.StepperController;
 
 public class Peep {
-	public static final int PIP = 40;//cmH2O 
 	public static final String FORWARD = "forward"; //inhalation
 	public static final String BACKWARD = "backward"; //exhalation
 	public static final String NOT_READY = "not ready"; //none
@@ -16,7 +15,7 @@ public class Peep {
 	public double avgp = 0;
 
 	public String runPeep(double peep) {
-
+		double pip = 40 + peep; //default IP = 40, PIP= IP + PEEP
 		try {
 			if (pressures.size() >= 5) {
 				pressures.remove(0);
@@ -30,7 +29,7 @@ public class Peep {
 					// sc.backwardStep();
 					return BACKWARD;
 				} else {
-					if (avgp < PIP) {
+					if (avgp < pip) {
 						// sc.forwardStep();
 						return FORWARD;
 					}
