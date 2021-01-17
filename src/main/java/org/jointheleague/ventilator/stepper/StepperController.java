@@ -36,12 +36,7 @@ public class StepperController implements StepperInterface {
 			}
 		} // 1500 steps = max inflation (TBD factoring that in)
 		pin15.high();
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 
 	public void backward(int rate, int time) {
@@ -61,12 +56,7 @@ public class StepperController implements StepperInterface {
 			}
 		}
 		pin15.high();
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	public void forwardStep() {
