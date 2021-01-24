@@ -53,7 +53,7 @@ public class SensorExamples {
 	 * Returns 0 if an error occurs.
 	 * @return (Pressure in Pa)*256
 	 */
-	public staticfloat readPressure() {
+	public float readPressure() {
 		try {
 			bme280.open();
 			float[] values = bme280.getSensorValues();

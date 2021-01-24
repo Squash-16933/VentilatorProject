@@ -17,34 +17,28 @@ public class Peep {
 
 	public String runPeep(double peep) {
 		double pip = 40 + peep; //default IP = 40, PIP= IP + PEEP
-		try {
-			if (pressures.size() >= 5) {
-				pressures.remove(0);
-				pressures.add(se.readPressure());
-				for (int i = 0; i < pressures.size(); i++) {
-					avgp = avgp + pressures.get(i);
-				}
-				avgp = avgp / 5;
-
-				if (avgp > peep) {
-					// sc.backwardStep();
-					return BACKWARD;
-				} else {
-					if (avgp < pip) {
-						// sc.forwardStep();
-						return FORWARD;
-					}
-				}
-
-			} else {
-				pressures.add(se.readPressure());
-				return NOT_READY;
+		if (pressures.size() >= 5) {
+			pressures.remove(0);
+			pressures.add(se.readPressure());
+			for (int i = 0; i < pressures.size(); i++) {
+				avgp = avgp + pressures.get(i);
 			}
+			avgp = avgp / 5;
 
-		} catch (IOException e) {
-			e.printStackTrace();
+			if (avgp > peep) {
+				// sc.backwardStep();
+				return BACKWARD;
+			} else {
+				if (avgp < pip) {
+					// sc.forwardStep();
+					return FORWARD;
+				}
+			}
+		} else {
+			pressures.add(se.readPressure());
+			return NOT_READY;
 		}
-		
+
 		return null;
 	}
 

@@ -7,7 +7,7 @@ import org.jointheleague.ventilator.server.VentilatorController;
 
 @SpringBootApplication
 public class Launcher {
-	public static boolean RUN_TEST = true;
+	public static boolean RUN_TEST = false;
 	public static final int LOCAL_PORT = 5001;
 
 	public static void main(String[] args) {
