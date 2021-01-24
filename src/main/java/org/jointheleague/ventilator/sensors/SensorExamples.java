@@ -9,11 +9,12 @@ import com.pi4j.io.i2c.I2CBus;
 
 public class SensorExamples {
 	BME280Driver bme280;
-	int previousDist;
+	static int previousDist = 0;
+	static VL53L0XDevice sensor = null;
 
 	public SensorExamples() {
 		bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
-		previousDist = 1; // TODO: Am I using previousDist right?
+		previousDist = 1;
 	}
 
 	public void test() {
@@ -30,15 +31,16 @@ public class SensorExamples {
 	 */
 	public int readLidar() {
 		// Using Lidar
-		VL53L0XDevice sensor = null;
 		try {
-			sensor = new VL53L0XDevice(0x29, 30);
+			if(sensor == null) {
+				sensor = new VL53L0XDevice(0x29, 30);
+			}
 			int mm = sensor.range();
-
 			if (previousDist != mm) {
+				previousDist = mm;
 				return mm;
 			}
-			previousDist = mm;
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,7 +53,7 @@ public class SensorExamples {
 	 * Returns 0 if an error occurs.
 	 * @return (Pressure in Pa)*256
 	 */
-	public float readPressure() {
+	public staticfloat readPressure() {
 		try {
 			bme280.open();
 			float[] values = bme280.getSensorValues();
