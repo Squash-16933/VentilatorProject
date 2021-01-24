@@ -1,4 +1,4 @@
-package org.jointheleague.ventilator;
+package org.jointheleague.ventilator.server;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;

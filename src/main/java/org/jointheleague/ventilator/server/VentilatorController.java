@@ -1,4 +1,4 @@
-package org.jointheleague.ventilator;
+package org.jointheleague.ventilator.server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -10,22 +10,27 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
-public class VentilatorController extends WebSocketServer {
+import java.util.ConcurrentModificationException;
+import javax.swing.Timer;
+import java.awt.event.*;
 
-	public static final boolean DEBUG = true;
+// TODO How to handle multiple clients?
+public class VentilatorController extends WebSocketServer implements ActionListener {
 	private int connNum;
-	private ArrayList<JSONObject> updates; // Requests that must continuously update
-								           // Contains a list of messages to refer to
-										   // TODO Add functionality to continuously update
+	private ArrayList<SavedMessage> updates; // Requests that must continuously update
+
+	private Timer updateTimer;
 	private final int port;
 
-	VentilatorController(int port) {
+	public VentilatorController(int port) {
 		super(new InetSocketAddress(port));
 		setReuseAddr(true);
 
 		this.port = port;
 		connNum = 0;
 		updates = new ArrayList<>();
+
+		updateTimer = new Timer(500, this);
 	}
 
 	@Override
@@ -52,17 +57,21 @@ public class VentilatorController extends WebSocketServer {
 
 	@Override
 	public void onMessage(WebSocket conn, String message) {
+		onMessage(conn, message, true);
+	}
+
+	public void onMessage(WebSocket conn, String message, boolean fresh) {
 		JSONParser parser = new JSONParser();
 		
 		try {
-			handleMessage(message, conn);
+			handleMessage(message, conn, fresh);
 		} catch (ProtocolException e) {
 			System.err.println("Error occurred handling message: "+e.getMessage()+"\n");
 
 			JSONObject response = new JSONObject();
 			response.put("status", e.statusCode);
 			response.put("timestamp", System.currentTimeMillis() / 1000L);
-			response.put("data", e.getMessage());
+			response.put("note", e.getMessage());
 
 			conn.send(response.toString());
 
@@ -92,7 +101,7 @@ public class VentilatorController extends WebSocketServer {
 	public void handleMessage(String message, WebSocket conn, boolean fresh) throws ProtocolException {
 		JSONParser parser = new JSONParser();
 		JSONObject msg;
-
+		
 		try {
 			msg = (JSONObject) parser.parse(message);
 		} catch (org.json.simple.parser.ParseException e) {
@@ -123,17 +132,25 @@ public class VentilatorController extends WebSocketServer {
 			throw new ProtocolException("Message \"type\" property is not a string", 400);
 		}
 
+		Boolean cont;
+		try {
+			cont = (Boolean) ((JSONObject) msg.get("flags")).get("continuous");
+		} catch (NullPointerException e) {
+			cont = null;
+		}
+
+
+		if (fresh // If has not been added already
+			&& (cont == null || cont == true) // And continuous flag enabled
+			) {
+			updates.add(new SavedMessage(conn, msg, connNum)); // Add to list of updating requests
+		}
+
 		// TODO make this handle other message types
 		// TODO move this functionality to another class (VentilatorService)
 		switch (type) {
 			case "getAll":
 			{
-			if (fresh // If has not been added already
-				&& ((Boolean) msg.get("continuous") == null || (Boolean) msg.get("continuous") == true) // And continuous flag enabled
-				) {
-				updates.add(msg); // Add to list of updating requests
-			}
-
 			VentilatorService.vs_getAll(msg, conn, reqnum);
 			} break;
 
@@ -167,8 +184,19 @@ public class VentilatorController extends WebSocketServer {
 
 	@Override
 	public void onStart() {
-		System.out.println("Server opened on port "+port+"\n");
-		System.out.println("This may not be the port you connect to");
+		System.out.println("Server opened on port "+port);
+		System.out.println("This may not be the port you connect to\n");
+
+		// Start Timer for updates
+		updateTimer.start();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent evt) {
+		for (SavedMessage update : updates) {
+			update.log(); // TODO fix logging
+			update.runMessage(this);
+		}
 	}
 }
 
