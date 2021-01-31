@@ -1,13 +1,21 @@
 package org.jointheleague.ventilator;
 
 public class PatientProfile {
+	public PatientProfile(int age, double height, double weight, double bmi, String gender, String disease) {
+		super();
+		this.age = age;
+		this.height = height;
+		this.weight = weight;
+		this.bmi = bmi;
+		this.gender = gender;
+		this.disease = disease;
+	}
 	public int age;
 	public double height;
 	public double weight;
 	public double bmi;
 	public String gender;
 	public String disease;
-	
 	
 	public int getAge() {
 		return age;

@@ -21,7 +21,7 @@ public class SettingsFactory {
 		double ieRatio = 0.5; // 1:2 simulates normal breathing pattern
 		//double inspiratoryPressure = 30; // couldnt find anything for I or E pressure being set (TBD)
 		//double expiratoryPressure = 30; // couldnt find anything for I or E pressure being set (TBD)
-		String ventMode = "idk"; // ask abt vent mode (wasnt here)
+		String ventMode = "FULL"; // ask abt vent mode (wasnt here)
 		ss = new VentilatorSetting(minTidalVolume, maxTidalVolume, breathRate, ieRatio, ventMode);
 		return ss;
 	}

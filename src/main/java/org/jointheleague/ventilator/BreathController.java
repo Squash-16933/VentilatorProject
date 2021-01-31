@@ -16,7 +16,9 @@ public class BreathController {
 	public void pressureCheck() {
 		String status = p.runPeep(settings.getPeep());
 		if (status.equals(Peep.FORWARD)) {
-			sc.forwardStep(); // change?
+			sc.forward(settings.breathRate, 0.1);
+		}else {
+			sc.backward(settings.breathRate, 0.1);
 		}
 	}
 
