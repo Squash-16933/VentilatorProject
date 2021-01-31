@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
 import org.jointheleague.ventilator.sensors.SensorExamples;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
@@ -53,7 +54,10 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 	}
 
 	@Override
-	public void onClose(WebSocket conn, int code, String reason, boolean remote) {}
+	// TODO Use this
+	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+
+	}
 
 	@Override
 	public void onMessage(WebSocket conn, String message) {
@@ -78,6 +82,9 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 			System.out.println("Responded to message with HTTP "+e.statusCode+":");
 			System.out.println(response.toString());
 			System.out.println("End\n");
+		} catch (WebsocketNotConnectedException e) {
+			System.out.println("Websocket disconnected");
+			System.out.println("Possible cause is disconnection of client #"+connNum);
 		}
 	}
 
@@ -120,7 +127,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		}
 
 		// Logs message
-		System.out.println("Logging message "+(reqnum+1)+" of connection "+connNum+":\n"+message+"\nEnd\n");
+		if (fresh) System.out.println("Logging message "+(reqnum+1)+" of connection "+connNum+":\n"+message+"\nEnd\n");
 
 		// Tests "type" property
 		String type;
@@ -147,7 +154,6 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		}
 
 		// TODO make this handle other message types
-		// TODO move this functionality to another class (VentilatorService)
 		switch (type) {
 			case "getAll":
 			{
@@ -177,7 +183,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
-		System.err.println("Unhandlable error\nLogging error:");
+		System.err.println("Unhandlable error:");
 		ex.printStackTrace();
 		System.err.println("End\n");
 	}
@@ -193,9 +199,20 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
+		ArrayList<SavedMessage> toDelete = new ArrayList<>();
 		for (SavedMessage update : updates) {
-			update.log(); // TODO fix logging
-			update.runMessage(this);
+			if (update.isRelevant()) { // If update is still relevant
+				update.log();
+				update.runMessage(this);
+			} else {
+				toDelete.add(update); // Add update to list for deletion
+			}
+		}
+
+		// Delete irrelevant updates, they have outlived their usefulness.
+		// (And their WebSocket connections)
+		for (SavedMessage update : toDelete) {
+			updates.remove(update);
 		}
 	}
 }

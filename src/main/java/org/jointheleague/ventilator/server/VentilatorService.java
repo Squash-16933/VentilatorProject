@@ -3,6 +3,7 @@ package org.jointheleague.ventilator.server;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import org.java_websocket.WebSocket;
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
 import org.jointheleague.ventilator.sensors.SensorExamples;
 import java.io.IOException;
 import java.net.http.HttpConnectTimeoutException;
@@ -12,7 +13,7 @@ public class VentilatorService {
 	private static final boolean MOCK_SENSORS = true; // if true, will generate random values
 											           // instead of checking sensors
 
-    public static void vs_getAll(JSONObject message, WebSocket conn, long reqnum) throws ProtocolException {
+    public static void vs_getAll(JSONObject message, WebSocket conn, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
 		JSONObject response = new JSONObject();
 		response.put("request", reqnum);
 		response.put("status", 200);
