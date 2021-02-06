@@ -1,31 +1,27 @@
 package org.jointheleague.ventilator.server;
 
-import org.java_websocket.WebSocket;
 import org.json.simple.JSONObject;
 
 public class SavedMessage {
-    private final WebSocket conn;     // Original connection from client
+    private final Client client;      // Client
     private final JSONObject message; // Original message from client
-    private final int connNum;        // Connection number of the client
 
     /**
      * Creates a new SavedMessage object.
-     * @param conn Original connection from client
-     * @param message Original message from client
-     * @param connNum Connection number of the client
+     * @param client Client
+     * @param message Message from client
      */
-    public SavedMessage(WebSocket conn, JSONObject message, int connNum) {
-        this.conn = conn;
+    public SavedMessage(Client client, JSONObject message) {
+        this.client = client;
         this.message = message;
-        this.connNum = connNum;
     }
 
     /**
-     * Returns whether or not the client is still connected to the server, and therefore the SavedMessage is still needed.
+     * Returns whether the client is still connected to the server, and therefore the SavedMessage is still needed.
      * @return If connected
      */
-    public boolean isRelevant() {
-        return conn.isOpen();
+    public boolean isConnected() {
+        return client.getWebSocket().isOpen();
     }
 
     /**
@@ -33,8 +29,7 @@ public class SavedMessage {
      */
     public void log() {
         long reqnum = (long) message.get("request");
-        System.out.println("Responding to continuous message "+(reqnum+1)+" of connection "+connNum+":\n"+message+"\nEnd\n");
-        System.out.println("Is "+conn.isClosed());
+        System.out.println("Responding to continuous message "+(reqnum+1)+" of connection "+client.getNum()+":\n"+message+"\nEnd\n");
     }
 
     /**
@@ -42,6 +37,6 @@ public class SavedMessage {
      * @param controller The VentilatorController
      */
     public void runMessage(VentilatorController controller) {
-        controller.onMessage(conn, message.toString(), false);
+        controller.onMessage(client.getWebSocket(), message.toString(), false);
     }
 }

@@ -13,7 +13,7 @@ public class VentilatorService {
 	private static final boolean MOCK_SENSORS = true; // if true, will generate random values
 											           // instead of checking sensors
 
-    public static void vs_getAll(JSONObject message, WebSocket conn, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
+    public static void vs_getAll(JSONObject message, Client client, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
 		JSONObject response = new JSONObject();
 		response.put("request", reqnum);
 		response.put("status", 200);
@@ -50,7 +50,7 @@ public class VentilatorService {
 		response.put("data", data); // Add "data" property to response
 
 		// Sends response
-		conn.send(response.toString());
+		client.getWebSocket().send(response.toString());
 
 		// Logs
 		System.out.println("Responded to message with HTTP 200:");
