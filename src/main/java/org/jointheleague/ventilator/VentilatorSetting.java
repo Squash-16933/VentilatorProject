@@ -120,7 +120,7 @@ public class VentilatorSetting {
 	 * Gets the ventilator mode.
 	 * @return Ventilator mode
 	 */
-	public String getVentmode() {
+	public String getVentMode() {
 		return ventMode;
 	}
 
