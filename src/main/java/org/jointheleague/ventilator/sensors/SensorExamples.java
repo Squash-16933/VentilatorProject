@@ -8,95 +8,101 @@ import org.jointheleague.ventilator.sensors.pressure.BME280Driver;
 import com.pi4j.io.i2c.I2CBus;
 
 public class SensorExamples {
-	public static void main(String[] args) {
-		//print out lidar reading
-		readLidar();
-		
-		try {
-			//prints out readPressure reading
-			readPressure();
-			readTemperature();
-			readHumidity();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	BME280Driver bme280;
+	static int previousDist = 0;
+	static VL53L0XDevice sensor = null;
+
+	public SensorExamples() {
+		bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
+		previousDist = 1;
 	}
 
-	static void readLidar() {
+	public void test() {
+		System.out.println("lidar:       "+readLidar());
+		System.out.println("humidity:    "+readHumidity());
+		System.out.println("pressure:    "+readPressure());
+		System.out.println("temperature: "+readTemperature());
+	}
+
+	/**
+	 * Reads the LIDAR distance.
+	 * Returns 0 if an error occurs.
+	 * @return LIDAR distance in mm
+	 */
+	public int readLidar() {
 		// Using Lidar
-		VL53L0XDevice sensor = null;
 		try {
-			sensor = new VL53L0XDevice(0x29, 30);
+			if(sensor == null) {
+				sensor = new VL53L0XDevice(0x29, 30);
+			}
+			int mm = sensor.range();
+			if (previousDist != mm) {
+				previousDist = mm;
+				return mm;
+			}
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		try {
-			int previousDist = -1;
-			while (sensor != null) {
-				int mm = sensor.range();
-				if (previousDist != mm) {
-					System.out.println(String.format("Distance: %d mm", mm));
-				}
-				previousDist = mm;
-				try {
-					Thread.sleep(50L);
-				} catch (InterruptedException iex) {
-					System.out.println("exception");
-				}
-			}
-		} catch (IOException ioex) {
-			ioex.printStackTrace();
-			System.out.println("Fun");
-		}
+		
+		return 0;
 	}
 
-	static float readPressure() throws IOException {
-		BME280Driver bme280 = null;
+	/**
+	 * Gets value of pressure sensor.
+	 * Returns 0 if an error occurs.
+	 * @return (Pressure in Pa)*256
+	 */
+	public float readPressure() {
 		try {
-			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
 			bme280.open();
 			float[] values = bme280.getSensorValues();
 			return values[2];
 		} catch (IOException e) {
 		} finally {
-			if (bme280 != null) {
-				bme280.close();
-			}
+			try {
+				if (bme280 != null) bme280.close();
+			} catch (IOException e) {}
 		}
 		return 0;
 	}
 	
-	static float readTemperature() throws IOException {
-		BME280Driver bme280 = null;
+	/**
+	 * Gets value of temperature sensor.
+	 * Returns 0 if an error occurs. 
+	 * @return (Temperature in °C)*100
+	 */
+	public float readTemperature() {
 		try {
-			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
 			bme280.open();
 			float[] values = bme280.getSensorValues();
 			return values[0];
 		} catch (IOException e) {
 		} finally {
-			if (bme280 != null) {
-				bme280.close();
-			}
+			try {
+				if (bme280 != null) bme280.close();
+			} catch (IOException e) {}
 		}
 		return 0;
 	}
-	
-	static float readHumidity() throws IOException {
-		BME280Driver bme280 = null;
+
+	/**
+	 * Gets value of humidity sensor.
+	 * Returns 0 if an error occurs.
+	 * @return (Humidity in %RH)*1024 (e.g. relative humidity of 34% would be 34816)
+	 */
+	public float readHumidity() {
 		try {
-			bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
 			bme280.open();
 			float[] values = bme280.getSensorValues();
 			return values[1];
 		} catch (IOException e) {
 		} finally {
-			if (bme280 != null) {
-				bme280.close();
-			}
+			try {
+				if (bme280 != null) bme280.close();
+			} catch (IOException e) {}
 		}
+
 		return 0;
 	}
 }

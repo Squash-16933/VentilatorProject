@@ -2,15 +2,18 @@ package org.jointheleague.ventilator;
 
 public class VentilatorSetting {
 	//volume in ml
-	double tidalVolume;
+	double minTidalVolume;
+	double maxTidalVolume;
 	//breaths/minute
 	double breathRate;
 	//I:E ratio
 	double ieRatio;
 	//
-	double inspiratoryPressure;
+
+	//double inpiritoryPressure;
+
 	//
-	double expiratoryPressure;
+	//double expiratoryPressure;
 	 
 	double peep;
 	
@@ -18,23 +21,31 @@ public class VentilatorSetting {
 	
 	String ventMode;
 	
-	public VentilatorSetting(double tidalVolume, double breathRate, double ieRatio, double inspiratoryPressure,
-			double expiratoryPressure,  double triggersens, String ventMode) {
+
+	public VentilatorSetting(double minTidalVolume, double maxTidalVolume, double breathRate, double ieRatio, String ventMode) {
 		super();
-		this.tidalVolume = tidalVolume;
+		this.minTidalVolume = minTidalVolume;
+		this.maxTidalVolume = maxTidalVolume;
 		this.breathRate = breathRate;
 		this.ieRatio = ieRatio;
-		this.inspiratoryPressure = inspiratoryPressure;
-		this.expiratoryPressure = expiratoryPressure;
-		this.triggersens = triggersens;
+
+		//this.inpiritoryPressure = inpiritoryPressure;
+		//this.expiratoryPressure = expiratoryPressure;
+
 		this.ventMode = ventMode;
 	}
 	
-	public double getTidalVolume() {
-		return tidalVolume;
+	public double getMinTidalVolume() {
+		return minTidalVolume;
 	}
-	public void setTidalVolume(double tidalVolume) {
-		this.tidalVolume = tidalVolume;
+	public void setMinTidalVolume(double minTidalVolume) {
+		this.minTidalVolume = minTidalVolume;
+	}
+	public double getMaxTidalVolume() {
+		return maxTidalVolume;
+	}
+	public void setMaxTidalVolume(double maxTidalVolume) {
+		this.maxTidalVolume = maxTidalVolume;
 	}
 	public double getBreathRate() {
 		return breathRate;
@@ -48,18 +59,20 @@ public class VentilatorSetting {
 	public void setIeRatio(double ieRatio) {
 		this.ieRatio = ieRatio;
 	}
-	public double getInspiratoryPressure() {
-		return inspiratoryPressure;
-	}
-	public void setInspiratoryPressure(double inspiratoryPressure) {
-		this.inspiratoryPressure = inspiratoryPressure;
-	}
-	public double getExpiratoryPressure() {
-		return expiratoryPressure;
-	}
-	public void setExpiratoryPressure(double expiratoryPressure) {
-		this.expiratoryPressure = expiratoryPressure;
-	}
+
+	//public double getInpiritoryPressure() {
+		//return inpiritoryPressure;
+	//}
+	//public void setInpiritoryPressure(double inpiritoryPressure) {
+	//	this.inpiritoryPressure = inpiritoryPressure;
+	//}
+	//public double getExpiratoryPressure() {
+	//	return expiratoryPressure;
+	//}
+	//public void setExpiratoryPressure(double expiratoryPressure) {
+	//	this.expiratoryPressure = expiratoryPressure;
+	//}
+
 	public double getPeep() {
 		return peep;
 	}
