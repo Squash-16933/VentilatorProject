@@ -23,6 +23,7 @@ public class VentilatorCalcs {
 	private double expir;
 	private double percentHold;
 
+	// TODO add docs
 	public VentilatorCalcs(double inspir, double expir, double inspiratoryPress, double expiratoryPress,
 			double respRate, double tidalVol, double volOutput, double percentHold) {
 		this.inspiratoryPress = inspiratoryPress;
@@ -49,7 +50,7 @@ public class VentilatorCalcs {
 	}
 
 	/**
-	 * Returns the Inspiratory (I)/Expiratory (E) Time Ratio I/E
+	 * Returns the Inspiratory (I)/Expiratory (E) Time Ratio I:E
 	 * 
 	 * @return Time Ratio
 	 */

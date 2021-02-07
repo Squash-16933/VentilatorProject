@@ -12,11 +12,17 @@ public class SensorExamples {
 	static int previousDist = 0;
 	static VL53L0XDevice sensor = null;
 
+	/**
+	 * Creates a SensorExamples object.
+	 */
 	public SensorExamples() {
 		bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
 		previousDist = 1;
 	}
 
+	/**
+	 * Prints the sensor values.
+	 */
 	public void test() {
 		System.out.println("lidar:       "+readLidar());
 		System.out.println("humidity:    "+readHumidity());
@@ -27,7 +33,7 @@ public class SensorExamples {
 	/**
 	 * Reads the LIDAR distance.
 	 * Returns 0 if an error occurs.
-	 * @return LIDAR distance in mm
+	 * @return LIDAR distance (mm)
 	 */
 	public int readLidar() {
 		// Using Lidar

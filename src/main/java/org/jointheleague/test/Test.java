@@ -2,8 +2,8 @@ package org.jointheleague.test;
 
 import org.jointheleague.ventilator.stepper.StepperController;
 
+// TODO what does this do
 public class Test {
-	
 	public Test() {
 		simpleStepperTest();
 	}

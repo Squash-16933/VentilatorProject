@@ -15,6 +15,11 @@ public class Peep {
 	public SensorExamples se = new SensorExamples();
 	public double avgp = 0;
 
+	/**
+	 * Checks whether the patient should be inhaling, exhaling, or doing nothing.
+	 * @param peep PEEP value (default: 40)
+	 * @return Peep.FORWARD (inhalation), Peep.BACKWARD (exhalation), or Peep.NOT_READY (none)
+	 */
 	public String runPeep(double peep) {
 		double pip = 40 + peep; //default IP = 40, PIP= IP + PEEP
 		if (pressures.size() >= 5) {
@@ -43,4 +48,3 @@ public class Peep {
 	}
 
 }
-//}

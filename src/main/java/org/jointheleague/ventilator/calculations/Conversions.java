@@ -2,6 +2,7 @@ package org.jointheleague.ventilator.calculations;
 
 import java.util.ArrayList;
 
+// TODO add more docs
 public class Conversions {
 
 	/**
@@ -20,10 +21,13 @@ public class Conversions {
 		return (int) ((bpm / 60f) * MAX_COMPRESSION_STEPS);
 	}
 
+	/**
+	 * Returns average breath rate for an age group given age of individual.
+	 * Source: https://www.healthline.com/health/normal-respiratory-rate#normal-rate-in-adults
+	 * @param age Age
+	 * @return Breath rate
+	 */
 	public static int getRespRate(int age) {
-		// returns average breath rate for an age group given age of individual
-		// source:
-		// https://www.healthline.com/health/normal-respiratory-rate#normal-rate-in-adults
 		if (age < 1) {
 			return 45;
 		} else if (age >= 1 && age < 3) {
