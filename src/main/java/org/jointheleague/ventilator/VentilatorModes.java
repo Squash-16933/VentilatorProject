@@ -4,9 +4,9 @@ import org.jointheleague.ventilator.calculations.VentilatorCalcs;
 
 public class VentilatorModes {
 	// Volume Assist Control (ACV)
-	// SIMV - irregular breaths and adjusts based on patient
-	// Pressure-Controlled Ventilation (PCV)
-	// Pressure Support Ventilation (PSV)
+	// SIMV - irregular breaths and adjusts based on patient, add a psv, must monitor the pressure-support breath (what tidal vol it is generating)
+	// Pressure-Controlled Ventilation (PCV) - the selection of inspiratory pressure to control peak pressure (pip) - does not take tidal vol into account
+	// Pressure Support Ventilation (PSV) - spontaneous breathing
 	// Dynamic Mode
 	
 	VentilatorSetting vs;
@@ -54,6 +54,15 @@ public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String Ventilat
 				atv = 0; //check pressure class???
 			}
 		}
+	}
+	public void SimV() {
+		
+	}
+	public void PCV() {
+		
+	}
+	public void PSV() {
+		
 	}
 
 }
