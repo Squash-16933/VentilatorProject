@@ -173,6 +173,21 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 			VentilatorService.vs_getAll(msg, client, reqnum);
 			} break;
 
+			case "getHumidity":
+			{
+			VentilatorService.vs_getHumidity(msg, client, reqnum);
+			} break;
+
+			case "getPressure":
+			{
+			VentilatorService.vs_getPressure(msg, client, reqnum);
+			} break;
+
+			case "getTemp":
+			{
+			VentilatorService.vs_getTemp(msg, client, reqnum);
+			} break;
+
 			default:
 			throw new ProtocolException("Unknown \"type\" property", 400);
 		}

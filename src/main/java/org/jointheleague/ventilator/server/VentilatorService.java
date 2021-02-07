@@ -13,6 +13,14 @@ public class VentilatorService {
 	private static final boolean MOCK_SENSORS = true; // if true, will generate random values
 											           // instead of checking sensors
 
+	/**
+	 * Responds to a getAll request message.
+	 * @param message Message
+	 * @param client Client
+	 * @param reqnum Request number
+	 * @throws ProtocolException
+	 * @throws WebsocketNotConnectedException
+	 */
     public static void vs_getAll(JSONObject message, Client client, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
 		JSONObject response = new JSONObject();
 		response.put("request", reqnum);
@@ -48,6 +56,129 @@ public class VentilatorService {
 		}
 
 		response.put("data", data); // Add "data" property to response
+
+		// Sends response
+		client.getWebSocket().send(response.toString());
+
+		// Logs
+		System.out.println("Responded to message with HTTP 200:");
+		System.out.println(response.toString());
+		System.out.println("End\n");
+    }
+
+	/**
+	 * Responds to a getHumidity request message.
+	 * @param message Message
+	 * @param client Client
+	 * @param reqnum Request number
+	 * @throws ProtocolException
+	 * @throws WebsocketNotConnectedException
+	 */
+    public static void vs_getHumidity(JSONObject message, Client client, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
+		JSONObject response = new JSONObject();
+		response.put("request", reqnum);
+		response.put("status", 200);
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
+
+		try {
+			if (MOCK_SENSORS) {
+				Random r = new Random();
+				response.put("data", r.nextInt(1048576));
+			} else {
+				SensorExamples se = new SensorExamples();
+				float hum = se.readHumidity();
+
+				if (hum == 0) { // If getting error values
+					throw new Exception();
+				} else {
+					response.put("data", hum);
+				}
+			}
+		} catch (Exception e) {
+			throw new ProtocolException("Unable to read sensors", 500);
+		}
+
+		// Sends response
+		client.getWebSocket().send(response.toString());
+
+		// Logs
+		System.out.println("Responded to message with HTTP 200:");
+		System.out.println(response.toString());
+		System.out.println("End\n");
+    }
+
+	/**
+	 * Responds to a getPressure request message.
+	 * @param message Message
+	 * @param client Client
+	 * @param reqnum Request number
+	 * @throws ProtocolException
+	 * @throws WebsocketNotConnectedException
+	 */
+    public static void vs_getPressure(JSONObject message, Client client, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
+		JSONObject response = new JSONObject();
+		response.put("request", reqnum);
+		response.put("status", 200);
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
+
+		try {
+			if (MOCK_SENSORS) {
+				Random r = new Random();
+				response.put("data", r.nextInt(1048576));
+			} else {
+				SensorExamples se = new SensorExamples();
+				float pre = se.readPressure();
+
+				if (pre == 0) { // If getting error values
+					throw new Exception();
+				} else {
+					response.put("data", pre);
+				}
+			}
+		} catch (Exception e) {
+			throw new ProtocolException("Unable to read sensors", 500);
+		}
+
+		// Sends response
+		client.getWebSocket().send(response.toString());
+
+		// Logs
+		System.out.println("Responded to message with HTTP 200:");
+		System.out.println(response.toString());
+		System.out.println("End\n");
+    }
+
+	/**
+	 * Responds to a getTemp request message.
+	 * @param message Message
+	 * @param client Client
+	 * @param reqnum Request number
+	 * @throws ProtocolException
+	 * @throws WebsocketNotConnectedException
+	 */
+    public static void vs_getTemp(JSONObject message, Client client, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
+		JSONObject response = new JSONObject();
+		response.put("request", reqnum);
+		response.put("status", 200);
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
+
+		try {
+			if (MOCK_SENSORS) {
+				Random r = new Random();
+				response.put("data", r.nextInt(65536));
+			} else {
+				SensorExamples se = new SensorExamples();
+				float tem = se.readTemperature();
+
+				if (tem == 0) { // If getting error values
+					throw new Exception();
+				} else {
+					response.put("data", tem);
+				}
+			}
+		} catch (Exception e) {
+			throw new ProtocolException("Unable to read sensors", 500);
+		}
 
 		// Sends response
 		client.getWebSocket().send(response.toString());
