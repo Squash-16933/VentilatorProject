@@ -29,7 +29,7 @@ public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String Ventilat
 }
 	// Volume Assist Control
 	public void VolumeAssist() {
-		double ftdv = (vs.getTidalVolume()) / (vc.inspPhaseTime()); //fixed tidal volume given at specific intervals
+		double ftdv = (vs.getMaxTidalVolume()) / (vc.inspPhaseTime()); //fixed tidal volume given at specific intervals
 		double atv = 0; //accumulated tidal volume
 		while (VentilatorMode.equals("Volume Assist Control")) {
 			try {
@@ -40,7 +40,7 @@ public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String Ventilat
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (atv == vs.getTidalVolume()) { // tells us that all the air in a cycle is delivered to the patient
+			if (atv == vs.getMaxTidalVolume()) { // tells us that all the air in a cycle is delivered to the patient
 				// go to expiratory which means to pause this code and activate peep
 				try {
 					//activate expiratory phase and peep
