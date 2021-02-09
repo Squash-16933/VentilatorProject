@@ -12,7 +12,7 @@ public class Peep {
 	public static final String BACKWARD = "backward"; //exhalation
 	public static final String NOT_READY = "not ready"; //none
 	public ArrayList<Float> pressures = new ArrayList<Float>();
-	public SensorExamples se = new SensorExamples();
+	public SensorReader sr = new SensorReader();
 	public double avgp = 0;
 
 	/**
@@ -24,7 +24,7 @@ public class Peep {
 		double pip = 40 + peep; //default IP = 40, PIP= IP + PEEP
 		if (pressures.size() >= 5) {
 			pressures.remove(0);
-			pressures.add(se.readPressure());
+			pressures.add(sr.readPressure());
 			for (int i = 0; i < pressures.size(); i++) {
 				avgp = avgp + pressures.get(i);
 			}
@@ -40,7 +40,7 @@ public class Peep {
 				}
 			}
 		} else {
-			pressures.add(se.readPressure());
+			pressures.add(sr.readPressure());
 			return NOT_READY;
 		}
 

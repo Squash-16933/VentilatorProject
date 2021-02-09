@@ -15,8 +15,8 @@ public class VentilatorSetting {
 	
 	/**
 	 * Creates a new VentilatorSetting object.
-	 * @param minTidalVolume Minimum tidal volume
-	 * @param maxTidalVolume Maximum tidal volume
+	 * @param minTidalVolume Minimum tidal volume (mL)
+	 * @param maxTidalVolume Maximum tidal volume (mL)
 	 * @param breathRate Breaths per minute
 	 * @param ieRatio I:E ratio
 	 * @param ventMode Ventilation mode

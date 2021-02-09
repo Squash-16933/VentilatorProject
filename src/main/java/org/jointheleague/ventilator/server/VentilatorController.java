@@ -6,7 +6,6 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
-import org.jointheleague.ventilator.sensors.SensorExamples;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import java.util.ArrayList;

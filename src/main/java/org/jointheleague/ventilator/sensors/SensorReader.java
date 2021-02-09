@@ -7,15 +7,15 @@ import org.jointheleague.ventilator.sensors.pressure.BME280Driver;
 
 import com.pi4j.io.i2c.I2CBus;
 
-public class SensorExamples {
+public class SensorReader {
 	BME280Driver bme280;
 	static int previousDist = 0;
 	static VL53L0XDevice sensor = null;
 
 	/**
-	 * Creates a SensorExamples object.
+	 * Creates a SensorReader object.
 	 */
-	public SensorExamples() {
+	public SensorReader() {
 		bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
 		previousDist = 1;
 	}

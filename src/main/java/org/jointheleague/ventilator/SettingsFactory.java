@@ -7,10 +7,10 @@ import org.jointheleague.ventilator.calculations.Conversions;
 
 public class SettingsFactory {
 	// http://www.meddean.luc.edu/lumen/MedEd/MEDICINE/PULMONAR/lecture/mvent.htm
-	static VentilatorSetting vs;
 
 	public static VentilatorSetting getProfile(PatientProfile patientProfile) {
 		//TODO tbd factor in disease (maybe make use of a database??)
+		VentilatorSetting vs;
 		
 		double minTidalVolume = (double) Conversions.getIBW(patientProfile.getHeight(), patientProfile.getGender(), 1).get(0);
 		double maxTidalVolume = (double) Conversions.getIBW(patientProfile.getHeight(), patientProfile.getGender(), 1).get(1);

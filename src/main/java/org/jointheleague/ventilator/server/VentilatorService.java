@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import org.java_websocket.WebSocket;
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
-import org.jointheleague.ventilator.sensors.SensorExamples;
+import org.jointheleague.ventilator.sensors.SensorReader;
 import java.io.IOException;
 import java.net.http.HttpConnectTimeoutException;
 import java.util.Random;
@@ -37,11 +37,11 @@ public class VentilatorService {
 				data.put("pressure", r.nextInt(1048576));
 				data.put("temperature", r.nextInt(65536));
 			} else {
-				SensorExamples se = new SensorExamples();
+				SensorReader sr = new SensorReader();
 
-				float hum = se.readHumidity();
-				float pre = se.readPressure();
-				float tem = se.readTemperature();
+				float hum = sr.readHumidity();
+				float pre = sr.readPressure();
+				float tem = sr.readTemperature();
 
 				if (hum == 0 || pre == 0 || tem == 0) { // If getting error values
 					throw new Exception();
@@ -85,8 +85,8 @@ public class VentilatorService {
 				Random r = new Random();
 				response.put("data", r.nextInt(1048576));
 			} else {
-				SensorExamples se = new SensorExamples();
-				float hum = se.readHumidity();
+				SensorReader sr = new SensorReader();
+				float hum = sr.readHumidity();
 
 				if (hum == 0) { // If getting error values
 					throw new Exception();
@@ -126,8 +126,8 @@ public class VentilatorService {
 				Random r = new Random();
 				response.put("data", r.nextInt(1048576));
 			} else {
-				SensorExamples se = new SensorExamples();
-				float pre = se.readPressure();
+				SensorReader sr = new SensorReader();
+				float pre = sr.readPressure();
 
 				if (pre == 0) { // If getting error values
 					throw new Exception();
@@ -167,8 +167,8 @@ public class VentilatorService {
 				Random r = new Random();
 				response.put("data", r.nextInt(65536));
 			} else {
-				SensorExamples se = new SensorExamples();
-				float tem = se.readTemperature();
+				SensorReader sr = new SensorReader();
+				float tem = sr.readTemperature();
 
 				if (tem == 0) { // If getting error values
 					throw new Exception();
