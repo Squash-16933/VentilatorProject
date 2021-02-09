@@ -14,7 +14,7 @@ public class PatientProfile { // TODO test this class
 		this.age = age;
 		this.height = height;
 		this.weight = weight;
-		this.bmi = weight/(height*height);
+		this.bmi = (weight/Units.KILOGRAM)/((height*height)/(Units.METER*Units.METER));
 		this.gender = gender;
 		this.disease = disease;
 	}
@@ -49,7 +49,7 @@ public class PatientProfile { // TODO test this class
 	 */
 	public void setHeight(double height) {
 		this.height = height;
-		this.bmi = weight/(height*height);
+		this.bmi = (weight/Units.KILOGRAM)/((height*height)/(Units.METER*Units.METER));
 	}
 
 	/**
