@@ -61,7 +61,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 	@Override
 	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
 		System.out.println("Client "+(clients.indexOf(conn)+1)+" disconnected");
-		System.out.println("Reason:\n"+reason+"End\n");
+		System.out.println("Reason:\n"+reason+"<END>\n");
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 			System.out.println("Responded to message with HTTP "+e.statusCode+":");
 			System.out.println(response.toString());
-			System.out.println("End\n");
+			System.out.println("<END>\n");
 		} catch (WebsocketNotConnectedException e) {
 			System.out.println("Cannot send message, client "+connNum+" disconnected");
 		}
@@ -139,7 +139,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		}
 
 		// Logs message
-		if (fresh) System.out.println("Logging message "+(reqnum+1)+" of connection "+client.getNum()+":\n"+message+"\nEnd\n");
+		if (fresh) System.out.println("Logging message "+(reqnum+1)+" of connection "+client.getNum()+":\n"+message+"\n<END>\n");
 
 		// Tests "type" property
 		String type;
@@ -199,7 +199,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 	public void onError(WebSocket conn, Exception ex) {
 		System.err.println("Unhandlable error:");
 		ex.printStackTrace();
-		System.err.println("End\n");
+		System.err.println("<END>\n");
 	}
 
 	@Override

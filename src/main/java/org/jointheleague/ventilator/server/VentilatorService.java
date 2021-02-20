@@ -67,7 +67,7 @@ public class VentilatorService {
 		// Logs
 		System.out.println("Responded to message with HTTP 200:");
 		System.out.println(response.toString());
-		System.out.println("End\n");
+		System.out.println("<END>\n");
     }
 
 	/**
@@ -109,7 +109,7 @@ public class VentilatorService {
 		// Logs
 		System.out.println("Responded to message with HTTP 200:");
 		System.out.println(response.toString());
-		System.out.println("End\n");
+		System.out.println("<END>\n");
     }
 
 	/**
@@ -151,7 +151,7 @@ public class VentilatorService {
 		// Logs
 		System.out.println("Responded to message with HTTP 200:");
 		System.out.println(response.toString());
-		System.out.println("End\n");
+		System.out.println("<END>\n");
     }
 
 	/**
@@ -193,7 +193,7 @@ public class VentilatorService {
 		// Logs
 		System.out.println("Responded to message with HTTP 200:");
 		System.out.println(response.toString());
-		System.out.println("End\n");
+		System.out.println("<END>\n");
     }
 
 	/**
@@ -230,6 +230,6 @@ public class VentilatorService {
 		// Logs
 		System.out.println("Responded to message with HTTP 200:");
 		System.out.println(response.toString());
-		System.out.println("End\n");
+		System.out.println("<END>\n");
     }
 }

@@ -29,7 +29,7 @@ public class SavedMessage {
      */
     public void log() {
         long reqnum = (long) message.get("request");
-        System.out.println("Responding to continuous message "+(reqnum+1)+" of connection "+client.getNum()+":\n"+message+"\nEnd\n");
+        System.out.println("Responding to continuous message "+(reqnum+1)+" of connection "+client.getNum()+":\n"+message+"\n<END>\n");
     }
 
     /**

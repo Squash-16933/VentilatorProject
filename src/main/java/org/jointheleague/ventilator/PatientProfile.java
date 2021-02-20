@@ -2,7 +2,7 @@ package org.jointheleague.ventilator;
 
 import org.jointheleague.ventilator.calculations.Units;
 
-public class PatientProfile { // TODO test this class
+public class PatientProfile {
 	public int age;
 	public double height;
 	public double weight;
@@ -12,7 +12,7 @@ public class PatientProfile { // TODO test this class
 
 	/**
 	 * Creates a PatientProfile object: the configuration for a patient.
-	 * @param age Age (years)
+	 * @param age Age (months)
 	 * @param height Height (in)
 	 * @param weight Weight (lb)
 	 * @param gender Biological gender (<code>male</code> or <code>female</code>)
@@ -23,7 +23,7 @@ public class PatientProfile { // TODO test this class
 
 	/**
 	 * Creates a PatientProfile object: the configuration for a patient.
-	 * @param age Age (years)
+	 * @param age Age (months)
 	 * @param height Height (in)
 	 * @param weight Weight (lb)
 	 * @param gender Biological gender (<code>male</code> or <code>female</code>)
@@ -40,7 +40,7 @@ public class PatientProfile { // TODO test this class
 	
 	/**
 	 * Gets age of patient.
-	 * @return Age (years)
+	 * @return Age (months)
 	 */
 	public int getAge() {
 		return age;
@@ -48,7 +48,7 @@ public class PatientProfile { // TODO test this class
 
 	/**
 	 * Sets age of patient.
-	 * @param age Age (years)
+	 * @param age Age (months)
 	 */
 	public void setAge(int age) {
 		this.age = age;
@@ -131,9 +131,9 @@ public class PatientProfile { // TODO test this class
 	@Override
 	public String toString() {
 		if (disease == null) {
-			return age+"-year-old "+height+"-inch-tall "+weight+"lb "+gender;
+			return (age/12)+"-year-old "+height+"-inch-tall "+weight+"lb "+gender;
 		} else {
-			return age+"-year-old "+height+"-inch-tall "+weight+"lb "+gender+" with "+disease;
+			return (age/12)+"-year-old "+height+"-inch-tall "+weight+"lb "+gender+" with "+disease;
 		}
 	}
 }
