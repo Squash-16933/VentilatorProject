@@ -26,7 +26,7 @@ public class SensorExamples {
 		}
 	}
 
-	static int readLidar() {
+	public static int readLidar() {
 		// Using Lidar
 		try {
 			if(sensor == null) {
