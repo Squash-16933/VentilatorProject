@@ -1,10 +1,13 @@
 package org.jointheleague.ventilator.server;
 
 import org.java_websocket.WebSocket;
+import org.jointheleague.ventilator.PatientProfile;
 
 public class Client {
     private final WebSocket conn; // The WebSocket connection
     private final int connNum; // Client's connection number
+
+    private PatientProfile profile; // The client's patient
 
     /**
      * Creates a new Client object.
@@ -39,5 +42,21 @@ public class Client {
      */
     public int getNum() {
         return connNum;
+    }
+
+    /**
+     * Sets the client's patient settings.
+     * @param profile Patient profile
+     */
+    public void setProfile(PatientProfile profile) {
+        this.profile = profile;
+    }
+
+    /**
+     * Gets the client's patient settings.
+     * @return Patient profile
+     */
+    public PatientProfile getProfile() {
+        return profile;
     }
 }

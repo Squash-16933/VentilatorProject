@@ -10,6 +10,25 @@ public class PatientProfile { // TODO test this class
 	public String gender;
 	public String disease;
 
+	/**
+	 * Creates a PatientProfile object: the configuration for a patient.
+	 * @param age Age (years)
+	 * @param height Height (in)
+	 * @param weight Weight (lb)
+	 * @param gender Biological gender (<code>male</code> or <code>female</code>)
+	 */
+	public PatientProfile(int age, double height, double weight, String gender) {
+		this(age, height, weight, gender, (String) null);
+	}
+
+	/**
+	 * Creates a PatientProfile object: the configuration for a patient.
+	 * @param age Age (years)
+	 * @param height Height (in)
+	 * @param weight Weight (lb)
+	 * @param gender Biological gender (<code>male</code> or <code>female</code>)
+	 * @param disease Disease
+	 */
 	public PatientProfile(int age, double height, double weight, String gender, String disease) {
 		this.age = age;
 		this.height = height;
@@ -107,5 +126,14 @@ public class PatientProfile { // TODO test this class
 	 */
 	public void setDisease(String disease) {
 		this.disease = disease;
+	}
+
+	@Override
+	public String toString() {
+		if (disease == null) {
+			return age+"-year-old "+height+"-inch-tall "+weight+"lb "+gender;
+		} else {
+			return age+"-year-old "+height+"-inch-tall "+weight+"lb "+gender+" with "+disease;
+		}
 	}
 }

@@ -35,7 +35,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		updates = new ArrayList<>();
 		clients = new ArrayList<>();
 
-		updateTimer = new Timer(2000, this); // TODO change to 500 (2000 is for testing)
+		updateTimer = new Timer(500, this);
 	}
 
 	@Override
@@ -154,10 +154,9 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		Boolean cont;
 		try {
 			cont = (Boolean) ((JSONObject) msg.get("flags")).get("continuous");
-		} catch (NullPointerException e) {
+		} catch (NullPointerException e) { // If "continuous" does not exist
 			cont = null;
 		}
-
 
 		if (fresh // If has not been added already
 			&& (cont == null || cont == true) // And continuous flag enabled
@@ -165,7 +164,6 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 			updates.add(new SavedMessage(client, msg)); // Add to list of updating requests
 		}
 
-		// TODO make this handle other message types
 		switch (type) {
 			case "getAll":
 			{
@@ -185,6 +183,11 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 			case "getTemp":
 			{
 			VentilatorService.vs_getTemp(msg, client, reqnum);
+			} break;
+
+			case "setProfile":
+			{
+			VentilatorService.vs_setProfile(msg, client, reqnum);
 			} break;
 
 			default:

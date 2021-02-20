@@ -4,6 +4,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import org.java_websocket.WebSocket;
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
+import org.jointheleague.ventilator.SettingsFactory;
+import org.jointheleague.ventilator.VentilatorSetting;
+import org.jointheleague.ventilator.PatientProfile;
 import org.jointheleague.ventilator.sensors.SensorReader;
 import java.io.IOException;
 import java.net.http.HttpConnectTimeoutException;
@@ -25,7 +28,6 @@ public class VentilatorService {
 		JSONObject response = new JSONObject();
 		response.put("request", reqnum);
 		response.put("status", 200);
-		response.put("timestamp", System.currentTimeMillis() / 1000L);
 		
 		JSONObject data = new JSONObject(); // "data" property of response
 
@@ -56,6 +58,8 @@ public class VentilatorService {
 		}
 
 		response.put("data", data); // Add "data" property to response
+		
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
 
 		// Sends response
 		client.getWebSocket().send(response.toString());
@@ -78,7 +82,6 @@ public class VentilatorService {
 		JSONObject response = new JSONObject();
 		response.put("request", reqnum);
 		response.put("status", 200);
-		response.put("timestamp", System.currentTimeMillis() / 1000L);
 
 		try {
 			if (MOCK_SENSORS) {
@@ -97,6 +100,8 @@ public class VentilatorService {
 		} catch (Exception e) {
 			throw new ProtocolException("Unable to read sensors", 500);
 		}
+		
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
 
 		// Sends response
 		client.getWebSocket().send(response.toString());
@@ -119,7 +124,6 @@ public class VentilatorService {
 		JSONObject response = new JSONObject();
 		response.put("request", reqnum);
 		response.put("status", 200);
-		response.put("timestamp", System.currentTimeMillis() / 1000L);
 
 		try {
 			if (MOCK_SENSORS) {
@@ -138,6 +142,8 @@ public class VentilatorService {
 		} catch (Exception e) {
 			throw new ProtocolException("Unable to read sensors", 500);
 		}
+		
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
 
 		// Sends response
 		client.getWebSocket().send(response.toString());
@@ -160,7 +166,6 @@ public class VentilatorService {
 		JSONObject response = new JSONObject();
 		response.put("request", reqnum);
 		response.put("status", 200);
-		response.put("timestamp", System.currentTimeMillis() / 1000L);
 
 		try {
 			if (MOCK_SENSORS) {
@@ -179,6 +184,45 @@ public class VentilatorService {
 		} catch (Exception e) {
 			throw new ProtocolException("Unable to read sensors", 500);
 		}
+
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
+
+		// Sends response
+		client.getWebSocket().send(response.toString());
+
+		// Logs
+		System.out.println("Responded to message with HTTP 200:");
+		System.out.println(response.toString());
+		System.out.println("End\n");
+    }
+
+	/**
+	 * Responds to a setProfile request message.
+	 * @param message Message
+	 * @param client Client
+	 * @param reqnum Request number
+	 * @throws ProtocolException
+	 * @throws WebsocketNotConnectedException
+	 */
+    public static void vs_setProfile(JSONObject message, Client client, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
+		JSONObject response = new JSONObject();
+		response.put("request", reqnum);
+		response.put("status", 200);
+
+		JSONObject data = (JSONObject) response.get("data");
+
+		// Set client patient settings
+		try {
+			client.setProfile(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"), (String) data.get("disease")));
+		} catch (NullPointerException e) { // If "disease" does not exist
+			try {
+				client.setProfile(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"))); // Try it without "disease"
+			} catch (NullPointerException e1) { // If some other variable doesn't exist
+				throw new ProtocolException("Required data missing from request", 400);
+			}
+		}
+
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
 
 		// Sends response
 		client.getWebSocket().send(response.toString());
