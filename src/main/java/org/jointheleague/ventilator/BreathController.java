@@ -5,13 +5,8 @@ import org.jointheleague.ventilator.stepper.StepperController;
 
 public class BreathController {
 	StepperController sc = new StepperController();
-	PatientProfile profile;
 	VentilatorSetting settings;
 	Peep p = new Peep();
-	
-	public BreathController() {
-		
-	}
 
 	/**
 	 * Creates a BreathController object.
@@ -21,28 +16,24 @@ public class BreathController {
 		settings = SettingsFactory.getProfile(patientProfile);
 	}
 	
-	public void initialize() {
-		settings = SettingsFactory.getProfile(this.profile);
-	}
-	
 	/**
      * Sets the client's patient settings.
      * @param profile Patient profile
-     */
+    */
 	
-	 public void setProfile(PatientProfile profile) {
-	        this.profile = profile;
-	        settings = SettingsFactory.getProfile(profile);
-	    }
+	public void setProfile(PatientProfile profile) {
+		this.profile = profile;
+		settings = SettingsFactory.getProfile(profile);
+	}
 	 
-	 /**
-	     * Gets the client's patient settings.
-	     * @return Patient profile
-	     */
-	   
-	    public PatientProfile getProfile() {
-	        return profile;
-	    }
+	/**
+	 * Gets the client's patient settings.
+	 * @return Patient profile
+	*/
+	
+	public PatientProfile getProfile() {
+		return profile;
+	}
 
 	/**
 	 * Makes the patient breathe.
