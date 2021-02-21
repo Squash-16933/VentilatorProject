@@ -9,11 +9,18 @@ public class BreathController {
 	VentilatorSetting settings;
 	Peep p = new Peep();
 
+	/**
+	 * Creates a BreathController object.
+	 * @param patientProfile Patient settings
+	 */
 	public BreathController(PatientProfile patientProfile) {
 		settings = SettingsFactory.getProfile(patientProfile);
 	}
 
-	public void pressureCheck() {
+	/**
+	 * Makes the patient breathe.
+	 */
+	public void breathe() {
 		String status = p.runPeep(settings.getPeep());
 		if (status.equals(Peep.FORWARD)) {
 			sc.forward(settings.breathRate, 0.1);

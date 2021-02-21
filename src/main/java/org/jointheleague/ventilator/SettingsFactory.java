@@ -7,23 +7,22 @@ import org.jointheleague.ventilator.calculations.Conversions;
 
 public class SettingsFactory {
 	// http://www.meddean.luc.edu/lumen/MedEd/MEDICINE/PULMONAR/lecture/mvent.htm
-	static VentilatorSetting ss;
 
 	public static VentilatorSetting getProfile(PatientProfile patientProfile) {
-		
-		
-//tbd factor in disease (maybe make use of a database??)
-		
+		//TODO tbd factor in disease (maybe make use of a database??)
+		VentilatorSetting vs;
 		
 		double minTidalVolume = (double) Conversions.getIBW(patientProfile.getHeight(), patientProfile.getGender(), 1).get(0);
 		double maxTidalVolume = (double) Conversions.getIBW(patientProfile.getHeight(), patientProfile.getGender(), 1).get(1);
 		double breathRate = Conversions.getRespRate(patientProfile.getAge());
 		double ieRatio = 0.5; // 1:2 simulates normal breathing pattern
-		//double inspiratoryPressure = 30; // couldnt find anything for I or E pressure being set (TBD)
-		//double expiratoryPressure = 30; // couldnt find anything for I or E pressure being set (TBD)
-		String ventMode = "FULL"; // ask abt vent mode (wasnt here)
-		ss = new VentilatorSetting(minTidalVolume, maxTidalVolume, breathRate, ieRatio, ventMode);
-		return ss;
+		
+		//double inspiratoryPressure = 30; // TODO couldnt find anything for I or E pressure being set (TBD)
+		//double expiratoryPressure = 30; // TODO couldnt find anything for I or E pressure being set (TBD)
+		
+		String ventMode = "FULL"; // TODO ask abt vent mode (wasnt here)
+		vs = new VentilatorSetting(minTidalVolume, maxTidalVolume, breathRate, ieRatio, ventMode);
+		return vs;
 	}
 
 }
