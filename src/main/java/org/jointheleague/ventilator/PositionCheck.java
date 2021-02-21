@@ -11,13 +11,12 @@ public class PositionCheck {
 		String setting = "";
 		if(distance >=100 && distance<=140) { // 100-140 range given by Vic, guess and check to fix 
 			setting = "SET";
-		}else {
-			if(distance > 140) {
+		}else if(distance > 140) {
 				setting = "TOO HIGH";
-			}else {
+		}else {
 				setting = "TOO LOW";
-			}
 		}
+		
 		System.out.println(setting);
 		return setting;
 	}
