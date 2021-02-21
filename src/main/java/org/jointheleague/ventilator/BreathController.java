@@ -20,9 +20,7 @@ public class BreathController {
      * Sets the client's patient settings.
      * @param profile Patient profile
     */
-	
-	public void setProfile(PatientProfile profile) {
-		this.profile = profile;
+	public void init(PatientProfile profile) {
 		settings = SettingsFactory.getProfile(profile);
 	}
 	 
@@ -42,11 +40,10 @@ public class BreathController {
 		String status = p.runPeep(settings.getPeep());
 		if (status.equals(Peep.FORWARD)) {
 			sc.forward(settings.breathRate, 0.1);
-		}else if(status.equals(Peep.BACKWARD)){
+		} else if (status.equals(Peep.BACKWARD)){
 			sc.backward(settings.breathRate, 0.1);
-		}else{
+		} else {
 			System.out.println("waiting");
 		}
 	}
-
 }
