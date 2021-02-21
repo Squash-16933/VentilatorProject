@@ -1,23 +1,25 @@
 package org.jointheleague.ventilator;
 
-import org.jointheleague.ventilator.sensors.SensorExamples;
+import org.jointheleague.ventilator.sensors.SensorReader;
 import org.jointheleague.ventilator.stepper.StepperController;
 
 public class PositionCheck {
 	//checkPosition() and moveToTop() to run before EVERY START!!
-	
-	int distance = SensorExamples.readLidar();
+	SensorReader sensorReader;
+	public PositionCheck(SensorReader r) {
+		 sensorReader = r;
+	}
+	int distance = sensorReader.readLidar();
 	public String checkPosition() {
 		String setting = "";
 		if(distance >=100 && distance<=140) { // 100-140 range given by Vic, guess and check to fix 
 			setting = "SET";
-		}else {
-			if(distance > 140) {
+		}else if(distance > 140) {
 				setting = "TOO HIGH";
-			}else {
+		}else {
 				setting = "TOO LOW";
-			}
 		}
+		
 		System.out.println(setting);
 		return setting;
 	}
@@ -26,13 +28,13 @@ public class PositionCheck {
 		if(checkPosition().equals("TOO HIGH")){
 			while(distance > 140) {
 				sc.forwardStep();
-				distance = SensorExamples.readLidar();
+				distance = sensorReader.readLidar();
 			}
 			System.out.println("CALIBRATED");
 		}else if(checkPosition().equals("TOO LOW")){
 			while(distance <100) {
 				sc.backwardStep();
-				distance = SensorExamples.readLidar();
+				distance = sensorReader.readLidar();
 			}
 			System.out.println("CALIBRATED");
 		}else {

@@ -1,21 +1,17 @@
 package org.jointheleague.ventilator.server;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.*;
-import org.java_websocket.WebSocket;
+import java.util.Random;
+
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
-import org.jointheleague.ventilator.SettingsFactory;
-import org.jointheleague.ventilator.VentilatorSetting;
+import org.jointheleague.ventilator.BreathController;
 import org.jointheleague.ventilator.PatientProfile;
 import org.jointheleague.ventilator.sensors.SensorReader;
-import java.io.IOException;
-import java.net.http.HttpConnectTimeoutException;
-import java.util.Random;
+import org.json.simple.JSONObject;
 
 public class VentilatorService {
 	private static final boolean MOCK_SENSORS = true; // if true, will generate random values
 											           // instead of checking sensors
-
+	
 	/**
 	 * Responds to a getAll request message.
 	 * @param message Message
@@ -204,7 +200,7 @@ public class VentilatorService {
 	 * @throws ProtocolException
 	 * @throws WebsocketNotConnectedException
 	 */
-    public static void vs_setProfile(JSONObject message, Client client, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
+    public static void vs_setProfile(JSONObject message, Client client, BreathController breathController, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
 		JSONObject response = new JSONObject();
 		response.put("request", reqnum);
 		response.put("status", 200);
@@ -213,10 +209,10 @@ public class VentilatorService {
 
 		// Set client patient settings
 		try {
-			client.setProfile(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"), (String) data.get("disease")));
+			breathController.setProfile(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"), (String) data.get("disease")));
 		} catch (NullPointerException e) { // If "disease" does not exist
 			try {
-				client.setProfile(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"))); // Try it without "disease"
+				breathController.setProfile(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"))); // Try it without "disease"
 			} catch (NullPointerException e1) { // If some other variable doesn't exist
 				throw new ProtocolException("Required data missing from request", 400);
 			}

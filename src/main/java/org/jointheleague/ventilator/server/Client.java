@@ -7,7 +7,7 @@ public class Client {
     private final WebSocket conn; // The WebSocket connection
     private final int connNum; // Client's connection number
 
-    private PatientProfile profile; // The client's patient
+    //private PatientProfile profile; 
 
     /**
      * Creates a new Client object.
@@ -44,19 +44,5 @@ public class Client {
         return connNum;
     }
 
-    /**
-     * Sets the client's patient settings.
-     * @param profile Patient profile
-     */
-    public void setProfile(PatientProfile profile) {
-        this.profile = profile;
-    }
-
-    /**
-     * Gets the client's patient settings.
-     * @return Patient profile
-     */
-    public PatientProfile getProfile() {
-        return profile;
-    }
+    
 }
