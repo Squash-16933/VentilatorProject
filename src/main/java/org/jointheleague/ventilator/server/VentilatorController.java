@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
+import org.jointheleague.ventilator.BreathController;
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
@@ -18,7 +19,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 	private int connNum;
 	private ArrayList<SavedMessage> updates; // Requests that must continuously update
 	private ArrayList<Client> clients;
-
+	private BreathController breathController = new BreathController();
 	private Timer updateTimer;
 	private final int port;
 
@@ -187,7 +188,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 			case "setProfile":
 			{
-			VentilatorService.vs_setProfile(msg, client, reqnum);
+			VentilatorService.vs_setProfile(msg, client, breathController, reqnum);
 			} break;
 
 			default:
