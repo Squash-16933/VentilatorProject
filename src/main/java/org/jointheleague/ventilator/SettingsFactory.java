@@ -20,7 +20,7 @@ public class SettingsFactory {
 		//double inspiratoryPressure = 30; // TODO couldnt find anything for I or E pressure being set (TBD)
 		//double expiratoryPressure = 30; // TODO couldnt find anything for I or E pressure being set (TBD)
 		
-		String ventMode = "idk"; // TODO ask abt vent mode (wasnt here)
+		String ventMode = "FULL"; // TODO ask abt vent mode (wasnt here)
 		vs = new VentilatorSetting(minTidalVolume, maxTidalVolume, breathRate, ieRatio, ventMode);
 		return vs;
 	}

@@ -23,7 +23,11 @@ public class BreathController {
 	public void breathe() {
 		String status = p.runPeep(settings.getPeep());
 		if (status.equals(Peep.FORWARD)) {
-			sc.forwardStep(); // TODO change?
+			sc.forward(settings.breathRate, 0.1);
+		}else if(status.equals(Peep.BACKWARD)){
+			sc.backward(settings.breathRate, 0.1);
+		}else{
+			System.out.println("waiting");
 		}
 	}
 

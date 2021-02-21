@@ -22,7 +22,7 @@ public class StepperController implements StepperInterface {
 	 * @param rate Rate in steps per second
 	 * @param time Time in seconds
 	 */
-	public void forward(int rate, int time) {
+	public void forward(double rate, double time) {
 		// TODO TBD converting breaths per min to steps per sec
 		pin15.low();// EN invalid, motor under control
 		{
@@ -33,7 +33,7 @@ public class StepperController implements StepperInterface {
 					pin13.high();// step
 					Thread.sleep((int) (1.0 / (rate * 2d) * 1000));// rate = steps per second; 1/rate = seconds per step
 					pin13.low();
-					Thread.sleep((int) (1.0 / (rate * 2d) * 1000));
+					Thread.sleep((int) (1.0 / (rate * 2d) * 1000)); //LOSSY??
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -49,7 +49,7 @@ public class StepperController implements StepperInterface {
 	 * @param rate Rate in steps per second
 	 * @param time Time in seconds
 	 */
-	public void backward(int rate, int time) {
+	public void backward(double rate, double time) {
 		pin15.low();// EN invalid, motor under control
 		{
 			pin11.low();// DIR backward
@@ -57,7 +57,7 @@ public class StepperController implements StepperInterface {
 				try {
 					System.out.println("BACKWARD");
 					pin13.high();// step
-					Thread.sleep((int) (1.0 / (rate * 2d) * 1000));
+					Thread.sleep((int) (1.0 / (rate * 2d) * 1000)); //LOSSY??
 					pin13.low();
 					Thread.sleep((int) (1.0 / (rate * 2d) * 1000));
 				} catch (InterruptedException e) {
