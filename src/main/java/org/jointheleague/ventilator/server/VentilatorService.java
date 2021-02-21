@@ -1,16 +1,11 @@
 package org.jointheleague.ventilator.server;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.*;
-import org.java_websocket.WebSocket;
+import java.util.Random;
+
 import org.java_websocket.exceptions.WebsocketNotConnectedException;
-import org.jointheleague.ventilator.SettingsFactory;
-import org.jointheleague.ventilator.VentilatorSetting;
 import org.jointheleague.ventilator.PatientProfile;
 import org.jointheleague.ventilator.sensors.SensorReader;
-import java.io.IOException;
-import java.net.http.HttpConnectTimeoutException;
-import java.util.Random;
+import org.json.simple.JSONObject;
 
 public class VentilatorService {
 	private static final boolean MOCK_SENSORS = true; // if true, will generate random values
