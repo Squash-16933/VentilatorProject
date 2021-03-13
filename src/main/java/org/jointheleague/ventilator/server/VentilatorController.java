@@ -5,7 +5,8 @@ import java.net.InetSocketAddress;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import org.jointheleague.ventilator.sensors.SensorExamples;
+import org.jointheleague.ventilator.BreathController;
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import java.util.ArrayList;
@@ -14,14 +15,18 @@ import java.util.ConcurrentModificationException;
 import javax.swing.Timer;
 import java.awt.event.*;
 
-// TODO How to handle multiple clients?
 public class VentilatorController extends WebSocketServer implements ActionListener {
 	private int connNum;
 	private ArrayList<SavedMessage> updates; // Requests that must continuously update
-
+	private ArrayList<Client> clients;
+	private BreathController breathController = new BreathController();
 	private Timer updateTimer;
 	private final int port;
 
+	/**
+	 * Starts a new VentilatorController on a specific port.
+	 * @param port Port number
+	 */
 	public VentilatorController(int port) {
 		super(new InetSocketAddress(port));
 		setReuseAddr(true);
@@ -29,6 +34,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		this.port = port;
 		connNum = 0;
 		updates = new ArrayList<>();
+		clients = new ArrayList<>();
 
 		updateTimer = new Timer(500, this);
 	}
@@ -38,7 +44,8 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		connNum++;
 
 		// Logs connection
-		System.out.println("New connection: connection "+connNum+"\n");
+		System.out.println("New connection: client "+connNum+"\n");
+		clients.add(new Client(conn, connNum)); // Adds to list of connections
 
 		// Creates a handshake response
 		JSONObject response = new JSONObject();
@@ -53,7 +60,10 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 	}
 
 	@Override
-	public void onClose(WebSocket conn, int code, String reason, boolean remote) {}
+	public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+		System.out.println("Client "+(clients.indexOf(conn)+1)+" disconnected");
+		System.out.println("Reason:\n"+reason+"<END>\n");
+	}
 
 	@Override
 	public void onMessage(WebSocket conn, String message) {
@@ -64,7 +74,15 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		JSONParser parser = new JSONParser();
 		
 		try {
-			handleMessage(message, conn, fresh);
+			Client c = null;
+			for (Client c1 : clients) {
+				if (c1.isWebSocket(conn)) {
+					c = c1;
+					break;
+				}
+			}
+
+			handleMessage(message, c, fresh);
 		} catch (ProtocolException e) {
 			System.err.println("Error occurred handling message: "+e.getMessage()+"\n");
 
@@ -77,28 +95,30 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 			System.out.println("Responded to message with HTTP "+e.statusCode+":");
 			System.out.println(response.toString());
-			System.out.println("End\n");
+			System.out.println("<END>\n");
+		} catch (WebsocketNotConnectedException e) {
+			System.out.println("Cannot send message, client "+connNum+" disconnected");
 		}
 	}
 
 	/**
 	 * Handles a websocket message from the client (assumes it is a new message).
 	 * @param message Message
-	 * @param conn WebSocket connection
+	 * @param client Client
 	 * @throws ParseException
 	 */
-	public void handleMessage(String message, WebSocket conn) throws ProtocolException {
-		handleMessage(message, conn, true);
+	public void handleMessage(String message, Client client) throws ProtocolException {
+		handleMessage(message, client, true);
 	}
 
 	/**
 	 * Handles a websocket message from the client.
 	 * @param message Message
-	 * @param conn WebSocket connection
-	 * @param fresh true if the message is new, false if it's just another update to the message
+	 * @param client Client
+	 * @param fresh if the message was just recieved, not a continuous update
 	 * @throws ParseException
 	 */
-	public void handleMessage(String message, WebSocket conn, boolean fresh) throws ProtocolException {
+	public void handleMessage(String message, Client client, boolean fresh) throws ProtocolException {
 		JSONParser parser = new JSONParser();
 		JSONObject msg;
 		
@@ -120,7 +140,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		}
 
 		// Logs message
-		System.out.println("Logging message "+(reqnum+1)+" of connection "+connNum+":\n"+message+"\nEnd\n");
+		if (fresh) System.out.println("Logging message "+(reqnum+1)+" of connection "+client.getNum()+":\n"+message+"\n<END>\n");
 
 		// Tests "type" property
 		String type;
@@ -135,40 +155,41 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		Boolean cont;
 		try {
 			cont = (Boolean) ((JSONObject) msg.get("flags")).get("continuous");
-		} catch (NullPointerException e) {
+		} catch (NullPointerException e) { // If "continuous" does not exist
 			cont = null;
 		}
-
 
 		if (fresh // If has not been added already
 			&& (cont == null || cont == true) // And continuous flag enabled
 			) {
-			updates.add(new SavedMessage(conn, msg, connNum)); // Add to list of updating requests
+			updates.add(new SavedMessage(client, msg)); // Add to list of updating requests
 		}
 
-		// TODO make this handle other message types
-		// TODO move this functionality to another class (VentilatorService)
 		switch (type) {
 			case "getAll":
 			{
-			VentilatorService.vs_getAll(msg, conn, reqnum);
+			VentilatorService.vs_getAll(msg, client, reqnum);
 			} break;
 
-			case "powerOn": // TODO make this turn power on
+			case "getHumidity":
 			{
-			// Creates a response
-			JSONObject response = new JSONObject();
-			response.put("request", reqnum);
-			response.put("status", 200);
-			response.put("timestamp", System.currentTimeMillis() / 1000L);
+			VentilatorService.vs_getHumidity(msg, client, reqnum);
+			} break;
 
-			// Sends response
-			conn.send(response.toString());
+			case "getPressure":
+			{
+			VentilatorService.vs_getPressure(msg, client, reqnum);
+			} break;
 
-			// Logs
-			System.out.println("Responded to message with HTTP 200\n");
-			}
-			break;
+			case "getTemp":
+			{
+			VentilatorService.vs_getTemp(msg, client, reqnum);
+			} break;
+
+			case "setProfile":
+			{
+			VentilatorService.vs_setProfile(msg, client, breathController, reqnum);
+			} break;
 
 			default:
 			throw new ProtocolException("Unknown \"type\" property", 400);
@@ -177,9 +198,9 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
-		System.err.println("Unhandlable error\nLogging error:");
+		System.err.println("Unhandlable error:");
 		ex.printStackTrace();
-		System.err.println("End\n");
+		System.err.println("<END>\n");
 	}
 
 	@Override
@@ -193,9 +214,20 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 	@Override
 	public void actionPerformed(ActionEvent evt) {
+		ArrayList<SavedMessage> toDelete = new ArrayList<>();
 		for (SavedMessage update : updates) {
-			update.log(); // TODO fix logging
-			update.runMessage(this);
+			if (update.isConnected()) { // If update is still relevant
+				update.log();
+				update.runMessage(this);
+			} else {
+				toDelete.add(update); // Add update to list for deletion
+			}
+		}
+
+		// Delete irrelevant updates, they have outlived their usefulness.
+		// (And their WebSocket connections)
+		for (SavedMessage update : toDelete) {
+			updates.remove(update);
 		}
 	}
 }

@@ -1,7 +1,6 @@
 package org.jointheleague.ventilator.stepper;
 
 public interface StepperInterface {
-	void forward(int rate, int time);
-	
-	void backward(int rate, int time);
+	void forward(double rate, double time);
+	void backward(double rate, double time);
 }
