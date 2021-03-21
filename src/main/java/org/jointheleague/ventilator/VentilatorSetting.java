@@ -1,20 +1,10 @@
 package org.jointheleague.ventilator;
 
 public class VentilatorSetting {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	//volume in ml
-	double minTidalVolume;
-	double maxTidalVolume;
-	//breaths/minute
-	double breathRate;
-	//I:E ratio
-	double ieRatio;
-	//
-=======
+
 	double minTidalVolume; // Minimum tidal volume (mL)
 	double maxTidalVolume; // Maximum tidal volume (mL)
->>>>>>> ce606dd97c711f82f2abd7f438728ee35bb13808
+
 
 	double breathRate; // breaths/minute
 	double ieRatio; // I:E ratio
@@ -23,20 +13,7 @@ public class VentilatorSetting {
 	 
 	double peep; // PEEP
 
-<<<<<<< HEAD
-=======
-	double minTidalVolume; // Minimum tidal volume (mL)
-	double maxTidalVolume; // Maximum tidal volume (mL)
 
-	double breathRate; // breaths/minute
-	double ieRatio; // I:E ratio
-	//double inpiritoryPressure;
-	//double expiratoryPressure;
-	 
-	double peep; // PEEP
-
-=======
->>>>>>> ce606dd97c711f82f2abd7f438728ee35bb13808
 	String ventMode; // Ventilation mode
 	
 	/**
@@ -47,10 +24,7 @@ public class VentilatorSetting {
 	 * @param ieRatio I:E ratio
 	 * @param ventMode Ventilation mode
 	 */
-<<<<<<< HEAD
->>>>>>> origin/main
-=======
->>>>>>> ce606dd97c711f82f2abd7f438728ee35bb13808
+
 	public VentilatorSetting(double minTidalVolume, double maxTidalVolume, double breathRate, double ieRatio, String ventMode) {
 		super();
 		this.minTidalVolume = minTidalVolume;
@@ -124,14 +98,9 @@ public class VentilatorSetting {
 		this.ieRatio = ieRatio;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 	// TODO add reason for why commented out
->>>>>>> origin/main
-=======
-	// TODO add reason for why commented out
->>>>>>> ce606dd97c711f82f2abd7f438728ee35bb13808
+
 	//public double getInpiritoryPressure() {
 		//return inpiritoryPressure;
 	//}
@@ -145,19 +114,8 @@ public class VentilatorSetting {
 	//	this.expiratoryPressure = expiratoryPressure;
 	//}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	public double getPeep() {
-		return peep;
-	}
-	public void setTriggersens(double Triggersens) {
-		this.triggersens = Triggersens;
-	}
-	public double getTriggersens() {
-		return triggersens;
-	}
-	public String getVentmode() {
-=======
+
+
 	/**
 	 * Gets the PEEP.
 	 * @return PEEP
@@ -165,25 +123,14 @@ public class VentilatorSetting {
 	public double getPeep() {
 		return peep;
 	}
-=======
-	/**
-	 * Gets the PEEP.
-	 * @return PEEP
-	 */
-	public double getPeep() {
-		return peep;
-	}
->>>>>>> ce606dd97c711f82f2abd7f438728ee35bb13808
+
 
 	/**
 	 * Gets the ventilator mode.
 	 * @return Ventilator mode
 	 */
 	public String getVentMode() {
-<<<<<<< HEAD
->>>>>>> origin/main
-=======
->>>>>>> ce606dd97c711f82f2abd7f438728ee35bb13808
+
 		return ventMode;
 	}
 
