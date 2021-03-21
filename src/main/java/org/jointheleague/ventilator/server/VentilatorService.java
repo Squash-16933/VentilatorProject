@@ -209,10 +209,10 @@ public class VentilatorService {
 
 		// Set client patient settings
 		try {
-			breathController.setProfile(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"), (String) data.get("disease")));
+			breathController.init(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"), (String) data.get("disease")));
 		} catch (NullPointerException e) { // If "disease" does not exist
 			try {
-				breathController.setProfile(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"))); // Try it without "disease"
+				breathController.init(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"))); // Try it without "disease"
 			} catch (NullPointerException e1) { // If some other variable doesn't exist
 				throw new ProtocolException("Required data missing from request", 400);
 			}

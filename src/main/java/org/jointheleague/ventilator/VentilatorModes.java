@@ -57,9 +57,9 @@ public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String Ventilat
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else if (IntraPress < vs.getTriggersens()) { // if Intrathoracic pressure is negative, then it restarts the current cycle - could use the BME280Driver to check pressure at all times
+			}/* else if (IntraPress < vs.getTriggersens()) { // if Intrathoracic pressure is negative, then it restarts the current cycle - could use the BME280Driver to check pressure at all times
 				atv = 0; //check pressure class???
-			}
+			}*/
 		}
 	}
 	public void SimV() {

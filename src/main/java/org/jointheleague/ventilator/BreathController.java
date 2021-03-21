@@ -10,6 +10,13 @@ public class BreathController {
 
 	/**
 	 * Creates a BreathController object.
+	*/
+	public BreathController() {
+		
+	}
+
+	/**
+	 * Creates a BreathController object.
 	 * @param patientProfile Patient settings
 	 */
 	public BreathController(PatientProfile patientProfile) {
@@ -26,11 +33,11 @@ public class BreathController {
 	 
 	/**
 	 * Gets the client's patient settings.
-	 * @return Patient profile
+	 * @return Patient settings
 	*/
 	
-	public PatientProfile getProfile() {
-		return profile;
+	public VentilatorSetting getSettings() {
+		return settings;
 	}
 
 	/**
