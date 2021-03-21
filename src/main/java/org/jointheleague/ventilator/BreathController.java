@@ -1,18 +1,25 @@
 package org.jointheleague.ventilator;
 
 import org.jointheleague.ventilator.sensors.Peep;
+import org.jointheleague.ventilator.stepper.StepperInterface;
 import org.jointheleague.ventilator.stepper.StepperController;
+import org.jointheleague.ventilator.stepper.MockStepperController;
 
 public class BreathController {
-	StepperController sc = new StepperController();
+	StepperInterface sc;
 	VentilatorSetting settings;
-	Peep p = new Peep();
+	Peep p;
 
 	/**
 	 * Creates a BreathController object.
 	*/
 	public BreathController() {
-		
+		if (!Launcher.CONNECTED_VENTILATOR) {
+			sc = new MockStepperController();
+		} else {
+			sc = new StepperController();
+			p = new Peep();
+		}
 	}
 
 	/**
@@ -20,6 +27,7 @@ public class BreathController {
 	 * @param patientProfile Patient settings
 	 */
 	public BreathController(PatientProfile patientProfile) {
+		this();
 		settings = SettingsFactory.getProfile(patientProfile);
 	}
 	

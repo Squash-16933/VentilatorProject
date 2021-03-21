@@ -2,6 +2,7 @@ package org.jointheleague.ventilator;
 
 import org.jointheleague.ventilator.sensors.SensorReader;
 import org.jointheleague.ventilator.stepper.StepperController;
+import org.jointheleague.ventilator.stepper.StepperInterface;
 
 public class PositionCheck {
 	//checkPosition() and moveToTop() to run before EVERY START!!
@@ -24,7 +25,7 @@ public class PositionCheck {
 		return setting;
 	}
 	
-	public void moveToTop(StepperController sc) {
+	public void moveToTop(StepperInterface sc) {
 		if(checkPosition().equals("TOO HIGH")){
 			while(distance > 140) {
 				sc.forwardStep();

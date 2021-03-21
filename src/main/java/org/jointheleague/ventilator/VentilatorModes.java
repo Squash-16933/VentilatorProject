@@ -24,12 +24,12 @@ public class VentilatorModes {
 	 * delivery
 	 * 
 	 */
-public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String VentilatorMode, double IntraPress, BreathController bc) {
-	this.vs = vs;
-	this.vc = vc;
-	//bc = new BreathController();
-//	this.VentilatorMode = vc.ven
-}
+	public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String VentilatorMode, double IntraPress, BreathController bc) {
+		this.vs = vs;
+		this.vc = vc;
+		//bc = new BreathController();
+		//this.VentilatorMode = vc.ven
+	}
 	// Volume Assist Control
 	public void VolumeAssist() {
 		double ftdv = (vs.getMaxTidalVolume()) / (vc.inspPhaseTime()); //fixed tidal volume given at specific intervals
@@ -43,7 +43,6 @@ public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String Ventilat
 				//change phase to expiratory
 				atv = atv + ftdv;
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (phase.equals("expiratory") || atv == vs.getMaxTidalVolume()) { // tells us that all the air in a cycle is delivered to the patient
@@ -54,12 +53,9 @@ public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String Ventilat
 					//keep running for a certain amount of time based off I&E ratio
 					atv = 0;
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}/* else if (IntraPress < vs.getTriggersens()) { // if Intrathoracic pressure is negative, then it restarts the current cycle - could use the BME280Driver to check pressure at all times
-				atv = 0; //check pressure class???
-			}*/
+			}
 		}
 	}
 	public void SimV() {

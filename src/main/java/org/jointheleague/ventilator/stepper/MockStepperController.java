@@ -20,6 +20,14 @@ public class MockStepperController implements StepperInterface {
 	}
 
 	@Override
+	/**
+	 * Placeholder method, doesn't do anything
+	 */
+	public void forwardStep() {
+
+	}
+
+	@Override
 	public void backward(double rate, double time) {
 		for (int k = 0; k < rate * time; k++) {
 			try {
@@ -30,5 +38,13 @@ public class MockStepperController implements StepperInterface {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	/**
+	 * Placeholder method, doesn't do anything
+	 */
+	public void backwardStep() {
+
 	}
 }

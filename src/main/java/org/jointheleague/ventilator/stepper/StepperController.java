@@ -17,11 +17,6 @@ public class StepperController implements StepperInterface {
 	private final GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "BCM 27", PinState.LOW);// Pul
 	private final GpioPinDigitalOutput pin15 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "BCM 22", PinState.LOW);// En
 
-	/**
-	 * TODO explain what does
-	 * @param rate Rate in steps per second
-	 * @param time Time in seconds
-	 */
 	public void forward(double rate, double time) {
 		// TODO TBD converting breaths per min to steps per sec
 		pin15.low();// EN invalid, motor under control
@@ -44,11 +39,6 @@ public class StepperController implements StepperInterface {
 
 	}
 
-	/**
-	 * TODO explain what does
-	 * @param rate Rate in steps per second
-	 * @param time Time in seconds
-	 */
 	public void backward(double rate, double time) {
 		pin15.low();// EN invalid, motor under control
 		{
@@ -69,7 +59,7 @@ public class StepperController implements StepperInterface {
 		
 	}
 
-	// TODO add docs
+	@Override
 	public void forwardStep() {
 		pin15.low();// EN invalid, motor under control
 		{
@@ -86,7 +76,7 @@ public class StepperController implements StepperInterface {
 		}
 	}
 
-	// TODO add docs
+	@Override
 	public void backwardStep() {
 		pin15.low();// EN invalid, motor under control
 		{
