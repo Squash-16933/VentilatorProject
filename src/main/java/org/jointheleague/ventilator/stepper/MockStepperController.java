@@ -20,14 +20,6 @@ public class MockStepperController implements StepperInterface {
 	}
 
 	@Override
-	/**
-	 * Placeholder method, doesn't do anything
-	 */
-	public void forwardStep() {
-
-	}
-
-	@Override
 	public void backward(double rate, double time) {
 		for (int k = 0; k < rate * time; k++) {
 			try {
@@ -39,12 +31,24 @@ public class MockStepperController implements StepperInterface {
 			}
 		}
 	}
-
-	@Override
-	/**
-	 * Placeholder method, doesn't do anything
-	 */
+	
+	public void forwardStep() {
+		try {
+			Thread.sleep(1000);
+			System.out.println("STEP FORWARD");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // arbitrary aka this method sucks
+	}
+	
 	public void backwardStep() {
-
+		try {
+			Thread.sleep(1000);
+			System.out.println("STEP BACKWARD");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // arbitrary aka this method sucks
 	}
 }
