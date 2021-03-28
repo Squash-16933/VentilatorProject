@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import org.jointheleague.ventilator.stepper.MockStepperController;
 import org.jointheleague.ventilator.stepper.StepperController;
 
+/**
+ * Determines where to inhale or exhale.
+ */
 public class Peep {
 	public static final String FORWARD = "forward"; //inhalation
 	public static final String BACKWARD = "backward"; //exhalation

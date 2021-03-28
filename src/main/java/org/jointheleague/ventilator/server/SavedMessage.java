@@ -2,6 +2,9 @@ package org.jointheleague.ventilator.server;
 
 import org.json.simple.JSONObject;
 
+/**
+ * Wrapper object for a sent message.
+ */
 public class SavedMessage {
     private final Client client;      // Client
     private final JSONObject message; // Original message from client
@@ -25,7 +28,7 @@ public class SavedMessage {
     }
 
     /**
-     * Logs that it is responding to the message.
+     * Logs that the server is responding to the message.
      */
     public void log() {
         long reqnum = (long) message.get("request");

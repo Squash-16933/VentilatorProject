@@ -15,13 +15,16 @@ import java.util.ConcurrentModificationException;
 import javax.swing.Timer;
 import java.awt.event.*;
 
+/**
+ * Central manager for server-client interactions.
+ */
 public class VentilatorController extends WebSocketServer implements ActionListener {
-	private int connNum;
+	private int connNum; // How many connections there have been
 	private ArrayList<SavedMessage> updates; // Requests that must continuously update
-	private ArrayList<Client> clients;
-	private BreathController breathController = new BreathController();
-	private Timer updateTimer;
-	private final int port;
+	private ArrayList<Client> clients; // List of clients
+	private BreathController breathController = new BreathController(); // Breath controller for ventilator
+	private Timer updateTimer; // Interval to resend continuous messages
+	private final int port; // Port number
 
 	/**
 	 * Starts a new VentilatorController on a specific port.
@@ -191,6 +194,11 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 			VentilatorService.vs_setProfile(msg, client, breathController, reqnum);
 			} break;
 
+			case "getTime":
+			{
+			VentilatorService.vs_getTime(msg, client, reqnum);
+			} break;
+
 			default:
 			throw new ProtocolException("Unknown \"type\" property", 400);
 		}
@@ -232,6 +240,9 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 	}
 }
 
+/**
+ * Exception related to server-client interactions.
+ */
 class ProtocolException extends Exception {
 	public final int statusCode; // HTTP status code
 

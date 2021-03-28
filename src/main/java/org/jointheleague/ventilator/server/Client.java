@@ -3,6 +3,9 @@ package org.jointheleague.ventilator.server;
 import org.java_websocket.WebSocket;
 import org.jointheleague.ventilator.PatientProfile;
 
+/**
+ * Wrapper object for a connecting client.
+ */
 public class Client {
     private final WebSocket conn; // The WebSocket connection
     private final int connNum; // Client's connection number

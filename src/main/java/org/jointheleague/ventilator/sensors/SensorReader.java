@@ -7,6 +7,9 @@ import org.jointheleague.ventilator.sensors.pressure.BME280Driver;
 
 import com.pi4j.io.i2c.I2CBus;
 
+/**
+ * Reads the sensors.
+ */
 public class SensorReader {
 	BME280Driver bme280;
 	static int previousDist = 0;

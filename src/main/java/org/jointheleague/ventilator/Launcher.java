@@ -9,16 +9,26 @@ import org.jointheleague.ventilator.server.VentilatorController;
 public class Launcher {
 	public static boolean RUN_TEST = false; // Flag for if test run of stepper motor
 	public static boolean CONNECTED_VENTILATOR = false; // Flag for if connected to actual ventilator
-	public static final int LOCAL_PORT = 5001;
+	public static final int LOCAL_PORT = 5001; // Port to connect on
+	private static long LAUNCH_TIME;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Launcher.class, args);
 
+		LAUNCH_TIME = System.currentTimeMillis();
 		if (RUN_TEST) {
 			Test test = new Test();
 		} else {
 			VentilatorController e = new VentilatorController(LOCAL_PORT);
 			e.start();
 		}
+	}
+
+	/**
+	 * Gets amount of time since launched.
+	 * @return Time (seconds)
+	 */
+	public static int getTime() {
+		return (int) ((System.currentTimeMillis() - LAUNCH_TIME)/1000L);
 	}
 }

@@ -1,5 +1,8 @@
 package org.jointheleague.ventilator.calculations;
 
+/**
+ * File containing constants for unit conversions.
+ */
 public class Units {
 	public static final double METER = 39.3701;
 	public static final double LITER = 61.0237;

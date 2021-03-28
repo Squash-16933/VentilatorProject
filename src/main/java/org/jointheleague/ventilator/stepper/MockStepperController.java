@@ -1,7 +1,7 @@
 package org.jointheleague.ventilator.stepper;
 
 /**
- * Mock Stepper Controller for testing
+ * Mock Stepper Controller for replacing stepper controller when testing, see StepperInterface.
  * @author keithgroves
  *
  */

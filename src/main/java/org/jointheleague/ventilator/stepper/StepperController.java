@@ -8,6 +8,9 @@ import com.pi4j.io.gpio.PinPullResistance;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 
+/**
+ * Manages the stepper motor, see StepperInterface.
+ */
 public class StepperController implements StepperInterface {
 
 	private final GpioController gpio = GpioFactory.getInstance();

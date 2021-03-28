@@ -6,7 +6,7 @@ import org.jointheleague.ventilator.stepper.StepperController;
 import org.jointheleague.ventilator.stepper.MockStepperController;
 
 public class BreathController {
-	StepperInterface sc;
+	StepperInterface sc; // Stepper controller
 	VentilatorSetting settings;
 	Peep p;
 
@@ -14,9 +14,9 @@ public class BreathController {
 	 * Creates a BreathController object.
 	*/
 	public BreathController() {
-		if (!Launcher.CONNECTED_VENTILATOR) {
+		if (!Launcher.CONNECTED_VENTILATOR) { // If is mock run
 			sc = new MockStepperController();
-		} else {
+		} else { // If connected to ventilator
 			sc = new StepperController();
 			p = new Peep();
 		}
