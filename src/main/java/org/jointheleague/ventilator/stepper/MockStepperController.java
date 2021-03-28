@@ -31,4 +31,30 @@ public class MockStepperController implements StepperInterface {
 			}
 		}
 	}
+	
+	public void forwardStep() {
+		
+				try {
+					Thread.sleep(1000);
+					System.out.println("STEP FORWARD");
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} // arbitrary aka this method sucks
+				
+		
+	}
+	
+	public void backwardStep() {
+		
+		try {
+			Thread.sleep(1000);
+			System.out.println("STEP BACKWARD");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // arbitrary aka this method sucks
+		
+
+}
 }
