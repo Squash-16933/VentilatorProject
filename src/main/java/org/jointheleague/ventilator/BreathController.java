@@ -1,13 +1,13 @@
 package org.jointheleague.ventilator;
 
-import org.jointheleague.ventilator.sensors.Peep;
+import org.jointheleague.ventilator.sensors.BreathState;
 import org.jointheleague.ventilator.stepper.StepperController;
 
 public class BreathController {
 	StepperController sc = new StepperController();
 	PatientProfile profile;
 	VentilatorSetting settings;
-	Peep p = new Peep();
+	BreathState p = new BreathState();
 	
 	public BreathController() {
 		
@@ -49,9 +49,9 @@ public class BreathController {
 	 */
 	public void breathe() {
 		String status = p.runPeep(settings.getPeep());
-		if (status.equals(Peep.FORWARD)) {
+		if (status.equals(BreathState.FORWARD)) {
 			sc.forward(settings.breathRate, 0.1);
-		}else if(status.equals(Peep.BACKWARD)){
+		}else if(status.equals(BreathState.BACKWARD)){
 			sc.backward(settings.breathRate, 0.1);
 		}else{
 			System.out.println("waiting");
