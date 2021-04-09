@@ -223,7 +223,9 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent evt) {
 		ArrayList<SavedMessage> toDelete = new ArrayList<>();
-		for (SavedMessage update : updates) {
+		ArrayList<SavedMessage> safeUpdates = (ArrayList<SavedMessage>) updates.clone(); // To prevent java.util.ConcurrentModificationException
+		
+		for (SavedMessage update : safeUpdates) {
 			if (update.isConnected()) { // If update is still relevant
 				update.log();
 				update.runMessage(this);
@@ -235,7 +237,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		// Delete irrelevant updates, they have outlived their usefulness.
 		// (And their WebSocket connections)
 		for (SavedMessage update : toDelete) {
-			updates.remove(update);
+			safeUpdates.remove(update);
 		}
 	}
 }
