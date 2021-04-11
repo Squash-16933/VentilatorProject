@@ -1,6 +1,6 @@
 package org.jointheleague.ventilator;
 
-import org.jointheleague.ventilator.sensors.Peep;
+import org.jointheleague.ventilator.sensors.BreathState;
 import org.jointheleague.ventilator.stepper.StepperInterface;
 import org.jointheleague.ventilator.sensors.BreathState;
 import org.jointheleague.ventilator.stepper.StepperController;
@@ -9,17 +9,19 @@ import org.jointheleague.ventilator.stepper.MockStepperController;
 public class BreathController {
 	StepperInterface sc; // Stepper controller
 	VentilatorSetting settings;
-	BreathState p = new BreathState();
+	BreathState p;
 	
 	/**
 	 * Creates a BreathController object.
 	*/
 	public BreathController() {
-		if (!Launcher.CONNECTED_VENTILATOR) { // If is mock run
-			sc = new MockStepperController();
-		} else { // If connected to ventilator
+		if (Launcher.CONNECTED_VENTILATOR) { // If connected to ventilator
+			System.out.println("Running real ventilator: will connect to sensors");
 			sc = new StepperController();
-			p = new Peep();
+			p = new BreathState();
+		} else { // If is mock run
+			System.out.println("Running mock ventilator: will not connect to sensors");
+			sc = new MockStepperController();
 		}
 	}
 
