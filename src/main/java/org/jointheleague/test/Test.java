@@ -14,8 +14,9 @@ import org.jointheleague.ventilator.sensors.SensorReader;
 // TODO add javadocs
 public class Test {
 	public Test() {
-		//simpleStepperTest();
-		comprehensiveStepperTest();
+		System.out.println("running simple tests");
+		simpleStepperTest();
+		//comprehensiveStepperTest();
 	}
 	
 	private void comprehensiveStepperTest() {
