@@ -1,6 +1,8 @@
 package org.jointheleague.ventilator;
 
 import org.jointheleague.ventilator.calculations.VentilatorCalcs;
+import org.jointheleague.ventilator.sensors.BreathState;
+import org.jointheleague.ventilator.sensors.SensorReader;
 
 public class VentilatorModes {
 	// Volume Assist Control (ACV)
@@ -15,6 +17,9 @@ public class VentilatorModes {
 	double IntraPress;
 	BreathController bc;
 	String phase = "inspiratory";
+	int Triggersens = 0;
+	SensorReader sr;
+	BreathState p;
 	// brainstorm
 	/*
 	 * What I need: volume of breath per interval of time = tidal vol/inspiratory
@@ -24,37 +29,36 @@ public class VentilatorModes {
 	 * delivery
 	 * 
 	 */
-	public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String VentilatorMode, double IntraPress, BreathController bc) {
+	public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String ventilatorMode, double intraPress, BreathController bc, SensorReader sr, BreathState p) {
 		this.vs = vs;
 		this.vc = vc;
 		//bc = new BreathController();
-		//this.VentilatorMode = vc.ven
+		//this.ventilatorMode = vc.ven
+		sr = new SensorReader();
+		p = new BreathState();
 	}
 	// Volume Assist Control
 	public void VolumeAssist() {
 		double ftdv = (vs.getMaxTidalVolume()) / (vc.inspPhaseTime()); //fixed tidal volume given at specific intervals
 		double atv = 0; //accumulated tidal volume
-		if (VentilatorMode.equals("Volume Assist Control")) {
+		if (VentilatorMode.equals("Volume Assist Control")|| phase.equals("inspiratory")){
 			try {
-				//delay for inhale time
-				//step forward steppercontroller to input air (compress)
-				//Thread.sleep(Double.valueOf(vc.inhaleTime()).longValue());
-				//or once that volume is pushed to patient, continue to inhale
-				//change phase to expiratory
-				atv = atv + ftdv;
+				bc.breathe(); //continues to provide air and a check in pressure or volume should lead to the expiratory phase once a threshold is reached 
+								//give patient air in a certain time period
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			if (phase.equals("expiratory") || atv == vs.getMaxTidalVolume()) { // tells us that all the air in a cycle is delivered to the patient
-				// go to expiratory which means to pause this code and activate peep
+			if (phase.equals("expiratory")) { //once threshold is reached NOTE: could add pressure checker to see when patient initiates a breath
 				try {
-					//activate peep, stop giving patient air, step backward?
-					//Thread.sleep(Double.valueOf(vc.expirPhaseTime()).longValue());
-					//keep running for a certain amount of time based off I&E ratio
-					atv = 0;
+					if(p.runPeep(vs.peep).equals("forward")) {
+						phase = "inspiratory";
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			} else if (sr.readPressure() < Triggersens) { // if Intrathoracic pressure is negative, then it restarts the current cycle - could use the BME280Driver to check pressure at all times
+				phase = "inspiratory";
 			}
 		}
 	}

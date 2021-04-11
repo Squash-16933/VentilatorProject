@@ -1,8 +1,10 @@
 package org.jointheleague.ventilator;
 
 public class VentilatorSetting {
+
 	double minTidalVolume; // Minimum tidal volume (mL)
 	double maxTidalVolume; // Maximum tidal volume (mL)
+
 
 	double breathRate; // breaths/minute
 	double ieRatio; // I:E ratio
@@ -10,6 +12,7 @@ public class VentilatorSetting {
 	//double expiratoryPressure;
 	 
 	double peep; // PEEP
+
 
 	String ventMode; // Ventilation mode
 	
@@ -21,6 +24,7 @@ public class VentilatorSetting {
 	 * @param ieRatio I:E ratio
 	 * @param ventMode Ventilation mode
 	 */
+
 	public VentilatorSetting(double minTidalVolume, double maxTidalVolume, double breathRate, double ieRatio, String ventMode) {
 		super();
 		this.minTidalVolume = minTidalVolume;
@@ -94,7 +98,9 @@ public class VentilatorSetting {
 		this.ieRatio = ieRatio;
 	}
 
+
 	// TODO add reason for why commented out
+
 	//public double getInpiritoryPressure() {
 		//return inpiritoryPressure;
 	//}
@@ -108,6 +114,8 @@ public class VentilatorSetting {
 	//	this.expiratoryPressure = expiratoryPressure;
 	//}
 
+
+
 	/**
 	 * Gets the PEEP.
 	 * @return PEEP
@@ -116,11 +124,13 @@ public class VentilatorSetting {
 		return peep;
 	}
 
+
 	/**
 	 * Gets the ventilator mode.
 	 * @return Ventilator mode
 	 */
 	public String getVentMode() {
+
 		return ventMode;
 	}
 

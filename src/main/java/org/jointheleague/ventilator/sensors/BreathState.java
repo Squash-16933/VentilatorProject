@@ -10,7 +10,7 @@ import org.jointheleague.ventilator.stepper.StepperController;
 /**
  * Determines where to inhale or exhale.
  */
-public class Peep {
+public class BreathState {
 	public static final String FORWARD = "forward"; //inhalation
 	public static final String BACKWARD = "backward"; //exhalation
 	public static final String NOT_READY = "not ready"; //none

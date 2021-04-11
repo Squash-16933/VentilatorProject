@@ -1,6 +1,6 @@
 package org.jointheleague.ventilator;
 
-import org.jointheleague.ventilator.sensors.Peep;
+import org.jointheleague.ventilator.sensors.BreathState;
 import org.jointheleague.ventilator.stepper.StepperController;
 import org.jointheleague.ventilator.VentilatorSetting;
 import org.jointheleague.ventilator.calculations.Conversions;
