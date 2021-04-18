@@ -1,5 +1,6 @@
 package org.jointheleague.ventilator;
 
+import org.jointheleague.test.Test;
 import org.jointheleague.ventilator.sensors.BreathState;
 import org.jointheleague.ventilator.stepper.StepperController;
 
@@ -48,6 +49,7 @@ public class BreathController {
 	 * Makes the patient breathe.
 	 */
 	public void breathe() {
+		
 		String status = p.runPeep(settings.getPeep());
 		if (status.equals(BreathState.FORWARD)) {
 			sc.forward(settings.breathRate, 0.1);
@@ -57,7 +59,7 @@ public class BreathController {
 			System.out.println("waiting");
 		}
 	}
-	
+	//don't use this
 	public int getRespRateAnyTime() {
 		//breaths per minute (checks every 30 seconds)
 		String status;
@@ -84,5 +86,14 @@ public class BreathController {
 		return numBreaths*2;
 		
 	}
+	
+	public int calculateRespRate(double[] lidarVals) {
+		int numSeconds = (int)(System.currentTimeMillis()-Test.startTime)/1000;
+		//tbd figure out how to count breaths from lidar numbers
+		double numBreaths=0.0;
+		return (int)(numBreaths/numSeconds);
+	}
+	
+	
 
 }
