@@ -2,16 +2,28 @@ package org.jointheleague.ventilator;
 
 import org.jointheleague.test.Test;
 import org.jointheleague.ventilator.sensors.BreathState;
+import org.jointheleague.ventilator.stepper.StepperInterface;
+import org.jointheleague.ventilator.sensors.BreathState;
 import org.jointheleague.ventilator.stepper.StepperController;
+import org.jointheleague.ventilator.stepper.MockStepperController;
 
 public class BreathController {
-	StepperController sc = new StepperController();
-	PatientProfile profile;
+	StepperInterface sc; // Stepper controller
 	VentilatorSetting settings;
-	BreathState p = new BreathState();
+	BreathState p;
 	
+	/**
+	 * Creates a BreathController object.
+	*/
 	public BreathController() {
-		
+		if (Launcher.CONNECTED_VENTILATOR) { // If connected to ventilator
+			System.out.println("Running real ventilator: will connect to sensors");
+			sc = new StepperController();
+			p = new BreathState();
+		} else { // If is mock run
+			System.out.println("Running mock ventilator: will not connect to sensors");
+			sc = new MockStepperController();
+		}
 	}
 
 	/**
@@ -19,31 +31,26 @@ public class BreathController {
 	 * @param patientProfile Patient settings
 	 */
 	public BreathController(PatientProfile patientProfile) {
+		this();
 		settings = SettingsFactory.getProfile(patientProfile);
-	}
-	
-	public void initialize() {
-		settings = SettingsFactory.getProfile(this.profile);
 	}
 	
 	/**
      * Sets the client's patient settings.
      * @param profile Patient profile
-     */
-	
-	 public void setProfile(PatientProfile profile) {
-	        this.profile = profile;
-	        settings = SettingsFactory.getProfile(profile);
-	    }
+    */
+	public void init(PatientProfile profile) {
+		settings = SettingsFactory.getProfile(profile);
+	}
 	 
-	 /**
-	     * Gets the client's patient settings.
-	     * @return Patient profile
-	     */
-	   
-	    public PatientProfile getProfile() {
-	        return profile;
-	    }
+	/**
+	 * Gets the client's patient settings.
+	 * @return Patient settings
+	*/
+	
+	public VentilatorSetting getSettings() {
+		return settings;
+	}
 
 	/**
 	 * Makes the patient breathe.
@@ -55,7 +62,7 @@ public class BreathController {
 			sc.forward(settings.breathRate, 0.1);
 		}else if(status.equals(BreathState.BACKWARD)){
 			sc.backward(settings.breathRate, 0.1);
-		}else{
+		} else {
 			System.out.println("waiting");
 		}
 	}

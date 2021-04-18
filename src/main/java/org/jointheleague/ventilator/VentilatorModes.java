@@ -29,14 +29,14 @@ public class VentilatorModes {
 	 * delivery
 	 * 
 	 */
-public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String VentilatorMode, double IntraPress, BreathController bc, SensorReader sr, BreathState p) {
-	this.vs = vs;
-	this.vc = vc;
-	//bc = new BreathController();
-//	this.VentilatorMode = vc.ven
-	sr = new SensorReader();
-	p = new BreathState();
-}
+	public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String ventilatorMode, double intraPress, BreathController bc, SensorReader sr, BreathState p) {
+		this.vs = vs;
+		this.vc = vc;
+		//bc = new BreathController();
+		//this.ventilatorMode = vc.ven
+		sr = new SensorReader();
+		p = new BreathState();
+	}
 	// Volume Assist Control
 	public void VolumeAssist() {
 		double ftdv = (vs.getMaxTidalVolume()) / (vc.inspPhaseTime()); //fixed tidal volume given at specific intervals
@@ -47,7 +47,6 @@ public VentilatorModes(VentilatorSetting vs, VentilatorCalcs vc, String Ventilat
 								//give patient air in a certain time period
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			if (phase.equals("expiratory")) { //once threshold is reached NOTE: could add pressure checker to see when patient initiates a breath

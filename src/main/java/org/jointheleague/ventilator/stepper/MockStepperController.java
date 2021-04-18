@@ -1,7 +1,7 @@
 package org.jointheleague.ventilator.stepper;
 
 /**
- * Mock Stepper Controller for testing
+ * Mock Stepper Controller for replacing stepper controller when testing, see StepperInterface.
  * @author keithgroves
  *
  */
@@ -33,20 +33,16 @@ public class MockStepperController implements StepperInterface {
 	}
 	
 	public void forwardStep() {
-		
-				try {
-					Thread.sleep(1000);
-					System.out.println("STEP FORWARD");
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} // arbitrary aka this method sucks
-				
-		
+		try {
+			Thread.sleep(1000);
+			System.out.println("STEP FORWARD");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // arbitrary aka this method sucks
 	}
 	
 	public void backwardStep() {
-		
 		try {
 			Thread.sleep(1000);
 			System.out.println("STEP BACKWARD");
@@ -54,7 +50,5 @@ public class MockStepperController implements StepperInterface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // arbitrary aka this method sucks
-		
-
-}
+	}
 }

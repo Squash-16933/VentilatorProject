@@ -1,5 +1,6 @@
 package org.jointheleague.test;
 
+import org.jointheleague.ventilator.stepper.StepperInterface;
 import org.jointheleague.ventilator.stepper.StepperController;
 
 import java.util.Date;
@@ -11,18 +12,23 @@ import org.jointheleague.ventilator.PatientProfile;
 import org.jointheleague.ventilator.PositionCheck;
 import org.jointheleague.ventilator.sensors.SensorReader;
 
-// TODO what does this do
+/**
+ * Tests the stepper controller, moves motor back and forth.
+ */
+
+// TODO add javadocs
 public class Test {
 	public static double startTime = System.currentTimeMillis();
 	public Test() {
-		//simpleStepperTest();
-		comprehensiveStepperTest();
+		System.out.println("running simple tests");
+		simpleStepperTest();
+		//comprehensiveStepperTest();
 	}
 	
 	private void comprehensiveStepperTest() {
 		// TODO Auto-generated method stub
 		PositionCheck pc = new PositionCheck(new SensorReader());
-		StepperController sc = new StepperController();
+		StepperInterface sc = new StepperController();
 		pc.moveToTop(sc);
 		PatientProfile testP = new PatientProfile(16,(double)64,(double)120,(double)20.6,"female","COVID-19");
 		BreathController bc = new BreathController(testP);
@@ -34,12 +40,10 @@ public class Test {
 			bc.breathe();
 			//use calculateBreathRate() here whenever you need to display or use it?
 		}
-		
-		
 	}
 
 	void simpleStepperTest() {
-		StepperController sc = new StepperController();
+		StepperInterface sc = new StepperController();
 		while (true) {
 			sc.forward(10, 5);
 			try {
