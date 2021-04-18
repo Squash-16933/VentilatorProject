@@ -34,14 +34,14 @@ public class Test {
 	void simpleStepperTest() {
 		StepperInterface sc = new StepperController();
 		while (true) {
-			sc.forward(10, 5);
+			sc.forward(100, 15);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
-			sc.backward(10, 5);
+			sc.backward(100, 15);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
