@@ -96,9 +96,16 @@ public class BreathController {
 	
 	public int calculateRespRate(double[] lidarVals) {
 		int numSeconds = (int)(System.currentTimeMillis()-Test.startTime)/1000;
-		//tbd figure out how to count breaths from lidar numbers
-		double numBreaths=0.0;
-		return (int)(numBreaths/numSeconds);
+		final int breathSize = 0; //1 full breath = ? millimeters
+		
+		//calculate absolute value of change in lidar 
+		double sum = 0;
+		for(int i = 1; i < lidarVals.length; i++) {
+			sum += (double)Math.abs(lidarVals[i]-lidarVals[i-1]);
+		}
+		//divide by full breath size to get decimal for number of breaths
+		double numBreaths=sum/breathSize;
+		return (int)(numBreaths/numSeconds)*60;
 	}
 	
 	
