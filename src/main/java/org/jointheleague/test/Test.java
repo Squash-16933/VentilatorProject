@@ -81,6 +81,7 @@ class TimerTask2 extends TimerTask{
 			lidNums[i-1]=lidNums[i];
 		}
 		lidNums[lidNums.length-1]= sr.readLidar();
+		System.out.println("READING LIDAR: "+ lidNums[lidNums.length-1]);
 	}
 	
 	public double[] getLidarVals(){
