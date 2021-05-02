@@ -39,6 +39,8 @@ public class Test {
 		while (1==1) {
 			bc.breathe();
 			//use calculateBreathRate() here whenever you need to display or use it?
+			System.out.println(bc.calculateRespRate(((TimerTask2) tt).getLidarVals()));
+			
 		}
 	}
 
@@ -79,7 +81,10 @@ class TimerTask2 extends TimerTask{
 			lidNums[i-1]=lidNums[i];
 		}
 		lidNums[lidNums.length-1]= sr.readLidar();
-		
+	}
+	
+	public double[] getLidarVals(){
+		return lidNums;
 	}
 	
 }
