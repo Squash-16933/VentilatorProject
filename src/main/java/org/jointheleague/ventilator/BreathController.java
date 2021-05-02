@@ -107,6 +107,11 @@ public class BreathController {
 		double numBreaths=sum/breathSize;
 		return (int)(numBreaths/numSeconds)*60;
 	}
+
+	public StepperController getStepperController() {
+		// TODO Auto-generated method stub
+		return (StepperController) sc;
+	}
 	
 	
 

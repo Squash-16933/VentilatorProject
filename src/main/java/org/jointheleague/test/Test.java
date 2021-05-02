@@ -28,10 +28,10 @@ public class Test {
 	private void comprehensiveStepperTest() {
 		// TODO Auto-generated method stub
 		PositionCheck pc = new PositionCheck(new SensorReader());
-		StepperInterface sc = new StepperController();
-		pc.moveToTop(sc);
 		PatientProfile testP = new PatientProfile(16,(double)64,(double)120,(double)20.6,"female","COVID-19");
 		BreathController bc = new BreathController(testP);
+		StepperInterface sc = bc.getStepperController();
+		pc.moveToTop(sc);
 		double[] lidarNumbers = new double[10];
 		Timer t = new Timer();
 		TimerTask tt = new TimerTask2(lidarNumbers);
