@@ -7,12 +7,15 @@ import org.jointheleague.ventilator.stepper.StepperInterface;
 public class PositionCheck {
 	//checkPosition() and moveToTop() to run before EVERY START!!
 	SensorReader sensorReader;
+	int distance = 0;
 	public PositionCheck(SensorReader r) {
 		 sensorReader = r;
 	}
-	int distance = sensorReader.readLidar();
+	
 	public String checkPosition() {
 		String setting = "";
+		distance = sensorReader.readLidar();
+		
 		if(distance >=100 && distance<=140) { // 100-140 range given by Vic, guess and check to fix 
 			setting = "SET";
 		}else if(distance > 140) {
