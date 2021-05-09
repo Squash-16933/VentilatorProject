@@ -27,7 +27,7 @@ public class StepperController implements StepperInterface {
 			pin11.high();// DIR forward
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
 				try {
-					System.out.println("FORWARD");
+					//System.out.println("FORWARD");
 					pin13.high();// step
 					Thread.sleep((int) (1.0 / (rate * 2d) * 1000));// rate = steps per second; 1/rate = seconds per step
 					pin13.low();
@@ -48,7 +48,7 @@ public class StepperController implements StepperInterface {
 			pin11.low();// DIR backward
 			for (int k = 0; k < rate * time; k++) {
 				try {
-					System.out.println("BACKWARD");
+					//System.out.println("BACKWARD");
 					pin13.high();// step
 					Thread.sleep((int) (1.0 / (rate * 2d) * 1000)); //LOSSY??
 					pin13.low();

@@ -60,6 +60,7 @@ public class BreathController {
 		String status = p.runPeep(settings.getPeep());
 		if (status.equals(BreathState.FORWARD)) {
 			sc.forward(settings.breathRate, 0.1);
+			
 		}else if(status.equals(BreathState.BACKWARD)){
 			sc.backward(settings.breathRate, 0.1);
 		} else {
