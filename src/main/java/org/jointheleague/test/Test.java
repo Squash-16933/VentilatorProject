@@ -22,7 +22,15 @@ public class Test {
 	public Test() {
 		System.out.println("running simple tests");
 		//simpleStepperTest();
-		comprehensiveStepperTest();
+		//comprehensiveStepperTest();
+		pressureTest();
+	}
+	
+	private void pressureTest() {
+		SensorReader sr = new SensorReader();
+		while(1==1) {
+			System.out.println("PRESSURE: " + sr.readPressure());
+		}
 	}
 	
 	private void comprehensiveStepperTest() {
