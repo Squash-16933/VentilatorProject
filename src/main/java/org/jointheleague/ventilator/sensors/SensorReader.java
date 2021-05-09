@@ -21,6 +21,12 @@ public class SensorReader {
 	public SensorReader() {
 		bme280 = BME280Driver.getInstance(I2CBus.BUS_1, BME280Driver.I2C_ADDRESS_76);
 		previousDist = 1;
+		try {
+			bme280.open();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -64,7 +70,6 @@ public class SensorReader {
 	 */
 	public float readPressure() {
 		try {
-			bme280.open();
 			float[] values = bme280.getSensorValues();
 			return values[2];
 		} catch (IOException e) {
@@ -83,7 +88,7 @@ public class SensorReader {
 	 */
 	public float readTemperature() {
 		try {
-			bme280.open();
+			
 			float[] values = bme280.getSensorValues();
 			return values[0];
 		} catch (IOException e) {
@@ -102,7 +107,7 @@ public class SensorReader {
 	 */
 	public float readHumidity() {
 		try {
-			bme280.open();
+			
 			float[] values = bme280.getSensorValues();
 			return values[1];
 		} catch (IOException e) {
