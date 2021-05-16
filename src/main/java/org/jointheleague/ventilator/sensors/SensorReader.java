@@ -73,11 +73,7 @@ public class SensorReader {
 			float[] values = bme280.getSensorValues();
 			return values[2];
 		} catch (IOException e) {
-		} finally {
-			try {
-				if (bme280 != null) bme280.close();
-			} catch (IOException e) {}
-		}
+		} 
 		return 0;
 	}
 	
@@ -92,11 +88,7 @@ public class SensorReader {
 			float[] values = bme280.getSensorValues();
 			return values[0];
 		} catch (IOException e) {
-		} finally {
-			try {
-				if (bme280 != null) bme280.close();
-			} catch (IOException e) {}
-		}
+		} 
 		return 0;
 	}
 
@@ -111,12 +103,17 @@ public class SensorReader {
 			float[] values = bme280.getSensorValues();
 			return values[1];
 		} catch (IOException e) {
-		} finally {
-			try {
-				if (bme280 != null) bme280.close();
-			} catch (IOException e) {}
-		}
+		} 
 
 		return 0;
+	}
+	
+	public void closeSensors() {
+		try {
+			bme280.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
