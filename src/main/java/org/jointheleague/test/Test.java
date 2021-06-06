@@ -21,8 +21,8 @@ public class Test {
 	public static double startTime = System.currentTimeMillis();
 	public Test() {
 		System.out.println("running simple tests");
-		//setPin();
-		simpleStepperTest();
+		setPin();
+		//simpleStepperTest();
 		//comprehensiveStepperTest();
 		//pressureTest();
 	}
