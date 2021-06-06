@@ -22,7 +22,7 @@ public class StepperController implements StepperInterface {
 
 	public void forward(double rate, double time) {
 		// TODO TBD converting breaths per min to steps per sec
-		pin15.low();// EN invalid, motor under control
+		pin15.high();// EN invalid, motor under control
 		{
 			pin11.high();// DIR forward
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
@@ -44,7 +44,7 @@ public class StepperController implements StepperInterface {
 	}
 
 	public void backward(double rate, double time) {
-		pin15.low();// EN invalid, motor under control
+		pin15.high();// EN invalid, motor under control
 		{
 			pin11.low();// DIR backward
 			for (int k = 0; k < rate * time; k++) {
