@@ -6,6 +6,11 @@ package org.jointheleague.ventilator.stepper;
  *
  */
 public class MockStepperController implements StepperInterface {
+	
+	public void setPin15High() {
+		System.out.println("Set pin 15 high");
+	}
+	
 	@Override
 	public void forward(double rate, double time) {
 		for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total

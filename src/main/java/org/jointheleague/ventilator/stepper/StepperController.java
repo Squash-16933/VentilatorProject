@@ -20,8 +20,15 @@ public class StepperController implements StepperInterface {
 	private final GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "BCM 27", PinState.LOW);// Pul
 	private final GpioPinDigitalOutput pin15 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "BCM 22", PinState.LOW);// En
 
+	
+	public void setPin15High() {
+		pin15.high();
+		System.out.println("Set pin 15 high");
+	}
+	
 	public void forward(double rate, double time) {
 		// TODO TBD converting breaths per min to steps per sec
+		
 		pin15.high();// EN invalid, motor under control
 		{
 			pin11.high();// DIR forward

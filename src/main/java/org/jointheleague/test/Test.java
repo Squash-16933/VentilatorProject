@@ -21,9 +21,16 @@ public class Test {
 	public static double startTime = System.currentTimeMillis();
 	public Test() {
 		System.out.println("running simple tests");
-		simpleStepperTest();
+		setPin();
+		//simpleStepperTest();
 		//comprehensiveStepperTest();
 		//pressureTest();
+	}
+	
+	private void setPin() {
+		PositionCheck pc = new PositionCheck(new SensorReader());
+		StepperInterface sc = new StepperController();
+		sc.setPin15High();
 	}
 	
 	private void pressureTest() {

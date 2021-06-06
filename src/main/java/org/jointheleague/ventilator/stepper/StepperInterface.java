@@ -23,4 +23,6 @@ public interface StepperInterface {
 
 	// TODO add docs
 	void backwardStep();
+	
+	void setPin15High();
 }
