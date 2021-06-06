@@ -60,9 +60,9 @@ public class Test {
 	}
 
 	void simpleStepperTest() {
-		PositionCheck pc = new PositionCheck(new SensorReader());
+		//PositionCheck pc = new PositionCheck(new SensorReader());
 		StepperInterface sc = new StepperController();
-		pc.moveToTop(sc);
+		//pc.moveToTop(sc);
 		while (true) {
 			sc.forward(10, 15);
 			try {
