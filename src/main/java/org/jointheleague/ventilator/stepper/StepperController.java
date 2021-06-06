@@ -22,8 +22,19 @@ public class StepperController implements StepperInterface {
 
 	
 	public void setPin15High() {
-		pin15.low();
-		System.out.println("Set pin 15 low");
+		while(1==1) {
+			try {
+			pin15.low();
+			System.out.println("Set pin 15 low");
+			Thread.sleep(500);
+			pin15.high();
+			System.out.println("Set pin 15 high");
+			Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void forward(double rate, double time) {
