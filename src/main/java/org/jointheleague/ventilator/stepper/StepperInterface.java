@@ -25,4 +25,5 @@ public interface StepperInterface {
 	void backwardStep();
 	
 	void setPin15High();
+	void stop();
 }

@@ -56,4 +56,7 @@ public class MockStepperController implements StepperInterface {
 			e.printStackTrace();
 		} // arbitrary aka this method sucks
 	}
+	public void stop(){
+
+	}
 }
