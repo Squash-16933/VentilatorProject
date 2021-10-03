@@ -78,7 +78,7 @@ public class Test {
 // 				e.printStackTrace();
 // 			}
 		}
-		sc.stop();
+	//	sc.stop();
 	}
 }
 
