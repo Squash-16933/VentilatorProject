@@ -20,7 +20,7 @@ import org.jointheleague.ventilator.sensors.SensorReader;
 public class Test {
 	public static double startTime = System.currentTimeMillis();
 	public Test() {
-		System.out.println("running simple tests v100");
+		System.out.println("running simple tests v102");
 		//setPin();
 		simpleStepperTest();
 		//comprehensiveStepperTest();
@@ -64,19 +64,19 @@ public class Test {
 		StepperInterface sc = new StepperController();
 		//pc.moveToTop(sc);
 		for(int i = 0; i < 10; i++) {
-			sc.forward(800, 10);
+			sc.forward(400, 10);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
-			sc.backward(800,10);
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+// 			sc.backward(400,10);
+// 			try {
+// 				Thread.sleep(200);
+// 			} catch (InterruptedException e) {
+// 				e.printStackTrace();
+// 			}
 		}
 		sc.stop();
 	}
