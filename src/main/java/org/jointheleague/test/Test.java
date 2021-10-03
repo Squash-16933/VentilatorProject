@@ -71,12 +71,12 @@ public class Test {
 // 				e.printStackTrace();
 // 			}
 
-			sc.backward(600,10);
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			sc.backward(400,10);
+// 			try {
+// 				Thread.sleep(200);
+// 			} catch (InterruptedException e) {
+// 				e.printStackTrace();
+// 			}
 		}
 		sc.stop();
 	}
