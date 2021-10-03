@@ -63,15 +63,15 @@ public class Test {
 		//PositionCheck pc = new PositionCheck(new SensorReader());
 		StepperInterface sc = new StepperController();
 		//pc.moveToTop(sc);
-		for(int i = 0; i < 5; i++) {
-			sc.forward(800, 5);
+		for(int i = 0; i < 10; i++) {
+			sc.forward(800, 10);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
-			sc.backward(800,5);
+			sc.backward(800,10);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
