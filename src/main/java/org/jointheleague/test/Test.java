@@ -65,18 +65,18 @@ public class Test {
 		//pc.moveToTop(sc);
 		for(int i = 0; true; i++) {
  			sc.forward(600, 10);
-// 			try {
-// 				Thread.sleep(200);
-// 			} catch (InterruptedException e) {
-// 				e.printStackTrace();
-// 			}
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 
-			//sc.backward(600,10);
-// 			try {
-// 				Thread.sleep(200);
-// 			} catch (InterruptedException e) {
-// 				e.printStackTrace();
-// 			}
+			sc.backward(600,10);
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	//	sc.stop();
 	}
