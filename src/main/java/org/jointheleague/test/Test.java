@@ -64,7 +64,7 @@ public class Test {
 		StepperInterface sc = new StepperController();
 		//pc.moveToTop(sc);
 		for(int i = 0; true; i++) {
- 			sc.forward(500, 100);
+ 			sc.backward(500, 100);
 // 			try {
 // 				Thread.sleep(500);
 // 			} catch (InterruptedException e) {
