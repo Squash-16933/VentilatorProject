@@ -41,11 +41,12 @@ public class StepperController implements StepperInterface {
 		// TODO TBD converting breaths per min to steps per sec
 		
 		pin15.low();// EN invalid, motor under control
-		{
+		
 			pin11.high();// DIR forward
+		System.out.println((int) (1.0 / (rate * 2d) * 1000));
+		System.out.println("forward");
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
 				try {
-					System.out.println("RUNNING FORWARD");
 					//System.out.println("FORWARD");
 					pin13.high();// step
 					Thread.sleep((int) (1.0 / (rate * 2d) * 1000));// rate = steps per second; 1/rate = seconds per step
@@ -56,18 +57,19 @@ public class StepperController implements StepperInterface {
 				}
 
 			}
-		} // 1500 steps = max inflation (TODO TBD factoring that in)
+		 // 1500 steps = max inflation (TODO TBD factoring that in)
 		//pin15.high();
 
 	}
 
 	public void backward(double rate, double time) {
 		pin15.low();// EN invalid, motor under control
-		{
+		
 			pin11.low();// DIR backward
+		System.out.println((int) (1.0 / (rate * 2d) * 1000));
+		System.out.println("backward");
 			for (int k = 0; k < rate * time; k++) {
 				try {
-					System.out.println("RUNNING BACKWARD");
 					//System.out.println("BACKWARD");
 					pin13.high();// step
 					Thread.sleep((int) (1.0 / (rate * 2d) * 1000)); //LOSSY??
@@ -77,7 +79,7 @@ public class StepperController implements StepperInterface {
 					e.printStackTrace();
 				}
 			}
-		}
+		
 		//pin15.high();
 		
 	}
@@ -102,7 +104,7 @@ public class StepperController implements StepperInterface {
 	@Override
 	public void backwardStep() {
 		pin15.low();// EN invalid, motor under control
-		{
+		
 			pin11.low();// DIR backward
 			try {
 				pin13.high();// step
@@ -113,7 +115,7 @@ public class StepperController implements StepperInterface {
 				e.printStackTrace();
 			}
 
-		}
+		
 	}
 	public void stop(){
 
