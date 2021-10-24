@@ -45,7 +45,7 @@ public class StepperController implements StepperInterface {
 			pin11.high();// DIR forward
 		System.out.println("forward");
 		//long nanos = (long)(1.0 / (rate * 2d) * 1000*1000);
-		long nanos = 1000000;
+		long nanos = 100000;
 		System.out.println("Sleep time:" + nanos);
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
 					//System.out.println("FORWARD");
@@ -63,18 +63,15 @@ public class StepperController implements StepperInterface {
 		pin15.low();// EN invalid, motor under control
 		
 			pin11.low();// DIR backward
-		System.out.println((int) (1.0 / (rate * 2d) * 1000));
-		System.out.println("backward");
-			for (int k = 0; k < rate * time; k++) {
-				try {
-					//System.out.println("BACKWARD");
+		//long nanos = (long)(1.0 / (rate * 2d) * 1000*1000);
+		long nanos = 100000;
+		System.out.println("Sleep time:" + nanos);
+			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
+					//System.out.println("FORWARD");
 					pin13.high();// step
-					Thread.sleep((int) (1.0 / (rate * 2d) * 1000)); //LOSSY??
+					nanoSleep(nanos);
 					pin13.low();
-					Thread.sleep((int) (1.0 / (rate * 2d) * 1000));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+					nanoSleep(nanos);
 			}
 		
 		//pin15.high();
