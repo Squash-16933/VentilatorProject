@@ -45,17 +45,12 @@ public class StepperController implements StepperInterface {
 			pin11.high();// DIR forward
 		System.out.println("forward");
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
-				try {
 					//System.out.println("FORWARD");
 					pin13.high();// step
 					long nanos = (long)(1.0 / (rate * 2d) * 1000*1000);
 					nanoSleep(nanos);
 					pin13.low();
 					nanoSleep(nanos);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
 			}
 		 // 1500 steps = max inflation (TODO TBD factoring that in)
 		//pin15.high();
