@@ -19,12 +19,19 @@ import org.jointheleague.ventilator.sensors.SensorReader;
 // TODO add javadocs
 public class Test {
 	public static double startTime = System.currentTimeMillis();
-	public Test() {
+	public Test(String... args) {
+		
 		System.out.println("running simple tests v102");
 		//setPin();
-		simpleStepperTest();
-		//comprehensiveStepperTest();
-		//pressureTest();
+		if(args.length > 0){
+			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");	
+			simpleStepperTest(args);
+		}else{
+			simpleStepperTest();
+			//comprehensiveStepperTest();
+			//pressureTest();
+		}
+		
 	}
 	
 	private void setPin() {
@@ -80,6 +87,25 @@ public class Test {
 		}
 		sc.stop();
 	//	sc.stop();
+	}
+	
+	void simpleStepperTest(String[] args) {
+		int rate = Integer.parseInt(args[0]);
+		int time = Integer.parseInt(args[1]);
+		StepperInterface sc = new StepperController();
+		for( ; ; ) {
+ 			sc.forward(rate, time);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			sc.backward(rate, time);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 	}
 }
 
