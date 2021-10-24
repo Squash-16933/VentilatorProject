@@ -84,10 +84,11 @@ public class BreathController {
 			Thread.sleep(100);
 			numMilliSeconds+=100;
 		}
-		} catch (InterruptedException e) {
+		} catch (InterruptedException ie) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ie.printStackTrace();
 		}
+		
 		return numBreaths*2;
 		
 	}

@@ -8,6 +8,8 @@ import org.jointheleague.ventilator.PatientProfile;
 import org.jointheleague.ventilator.sensors.SensorReader;
 import org.jointheleague.ventilator.Launcher;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.springframework.boot.json.JsonParser;
 
 /**
  * Processes client requests.
@@ -214,17 +216,21 @@ public class VentilatorService {
 		response.put("request", reqnum);
 		response.put("status", 200);
 
-		JSONObject data = (JSONObject) response.get("data");
+		JSONParser parser = new JSONParser();
+		JSONObject data = (JSONObject) message.get("data");
 
 		// Set client patient settings
 		try {
 			breathController.init(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"), (String) data.get("disease")));
-		} catch (NullPointerException e) { // If "disease" does not exist
-			try {
-				breathController.init(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"))); // Try it without "disease"
-			} catch (NullPointerException e1) { // If some other variable doesn't exist
-				throw new ProtocolException("Required data missing from request", 400);
-			}
+		} catch (NullPointerException e) {
+			// Find source of exception
+			if (breathController == null) throw new ProtocolException("breathController is null on server side", 500);
+			if (data == null) throw new ProtocolException("Must include \"data\" in request", 400);
+			if (data.get("age") == null) throw new ProtocolException("Must include \"data\".\"age\" in request", 400);
+			if (data.get("height") == null) throw new ProtocolException("Must include \"data\".\"height\" in request", 400);
+			if (data.get("weight") == null) throw new ProtocolException("Must include \"data\".\"weight\" in request", 400);
+			if (data.get("gender") == null) throw new ProtocolException("Must include \"data\".\"gender\" in request", 400);
+			if (data.get("disease") == null) breathController.init(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender")));
 		}
 
 		response.put("timestamp", System.currentTimeMillis() / 1000L);
@@ -252,6 +258,72 @@ public class VentilatorService {
 		response.put("request", reqnum);
 		response.put("status", 200);
 		response.put("data", Launcher.getTime());
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
+
+		// Sends response
+		client.getWebSocket().send(response.toString());
+
+		// Logs
+		System.out.println("Responded to message with HTTP 200:");
+		System.out.println(response.toString());
+		System.out.println("<END>\n");
+    }
+
+	/**
+	 * Responds to a getResp request message.
+	 * @param message Message
+	 * @param client Client
+	 * @param reqnum Request number
+	 * @throws ProtocolException
+	 * @throws WebsocketNotConnectedException
+	 */
+    public static void vs_getResp(JSONObject message, Client client, BreathController breathController, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
+		// Initializes a response
+		JSONObject response = new JSONObject();
+		response.put("request", reqnum);
+		response.put("status", 200);
+
+		try {
+			response.put("data", breathController.getRespRateAnyTime());
+		} catch (NullPointerException e) {
+			if (breathController.getSettings() == null) {
+				throw new ProtocolException("No settings found, client must setProfile", 400);
+			}
+		}
+
+		response.put("timestamp", System.currentTimeMillis() / 1000L);
+
+		// Sends response
+		client.getWebSocket().send(response.toString());
+
+		// Logs
+		System.out.println("Responded to message with HTTP 200:");
+		System.out.println(response.toString());
+		System.out.println("<END>\n");
+    }
+
+	/**
+	 * Responds to a getIE request message.
+	 * @param message Message
+	 * @param client Client
+	 * @param reqnum Request number
+	 * @throws ProtocolException
+	 * @throws WebsocketNotConnectedException
+	 */
+    public static void vs_getIE(JSONObject message, Client client, BreathController breathController, long reqnum) throws ProtocolException, WebsocketNotConnectedException {
+		// Initializes a response
+		JSONObject response = new JSONObject();
+		response.put("request", reqnum);
+		response.put("status", 200);
+
+		try {
+			response.put("data", breathController.getSettings().getIeRatio());
+		} catch (NullPointerException e) {
+			if (breathController.getSettings() == null) {
+				throw new ProtocolException("No settings found, client must setProfile", 400);
+			}
+		}
+
 		response.put("timestamp", System.currentTimeMillis() / 1000L);
 
 		// Sends response

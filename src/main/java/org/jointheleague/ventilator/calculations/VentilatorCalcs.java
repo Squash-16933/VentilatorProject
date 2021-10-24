@@ -34,7 +34,15 @@ public class VentilatorCalcs {
 		this.inspir = inspir;
 		this.expir = expir;
 		this.percentHold = percentHold;
+	}
 
+	/**
+	 * Gets respiration rate.
+	 * 6-40 Breaths/min -- input: 40.00
+	 * @return Respiration rate
+	 */
+	public double getRespRate() {
+		return respRate;
 	}
 
 	/**
