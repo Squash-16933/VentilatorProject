@@ -13,12 +13,13 @@ public class Launcher {
 	private static long LAUNCH_TIME;
 
 	public static void main(String[] args) {
-		SpringApplication.run(Launcher.class, args);
+		String[] springArgs = new String[0];
+		SpringApplication.run(Launcher.class, springArgs);
 
 		LAUNCH_TIME = System.currentTimeMillis();
 		if (RUN_TEST) {
 			System.out.println("running tests");
-			Test test = new Test();
+			Test test = new Test(args);
 		} else {
 			VentilatorController e = new VentilatorController(LOCAL_PORT);
 			e.start();
