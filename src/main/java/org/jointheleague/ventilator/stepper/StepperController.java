@@ -48,7 +48,7 @@ public class StepperController implements StepperInterface {
 				try {
 					//System.out.println("FORWARD");
 					pin13.high();// step
-					long nanos = (long)(1.0 / (rate * 2d) * 1000*1000)
+					long nanos = (long)(1.0 / (rate * 2d) * 1000*1000);
 					nanoSleep(nanos);
 					pin13.low();
 					nanoSleep(nanos);
