@@ -71,7 +71,7 @@ public class Test {
 // 				e.printStackTrace();
 // 			}
 
- 			sc.backward(500,100);
+ 			sc.forward(600,100);
 // 			try {
 // 				Thread.sleep(200);
 // 			} catch (InterruptedException e) {
