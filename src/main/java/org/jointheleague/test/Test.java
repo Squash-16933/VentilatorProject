@@ -84,14 +84,14 @@ public class Test {
 			    	System.exit(0);
 			    });
 		for(int i = 0; i<5; i++) {
- 			sc.forward(600, 100);
+ 			sc.forward(600, 10);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
- 			sc.backward(600,100);
+ 			sc.backward(600,10);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
