@@ -11,16 +11,19 @@ import org.jointheleague.ventilator.BreathController;
 import org.jointheleague.ventilator.PatientProfile;
 import org.jointheleague.ventilator.PositionCheck;
 import org.jointheleague.ventilator.sensors.SensorReader;
-
+import sun.misc.Signal;
 /**
  * Tests the stepper controller, moves motor back and forth.
  */
 
 // TODO add javadocs
 public class Test {
+	
 	public static double startTime = System.currentTimeMillis();
+	@SuppressWarnings("restriction")
 	public Test(String... args) {
 		
+
 		System.out.println("running simple tests v102");
 		//setPin();
 		if(args.length > 0){
@@ -28,6 +31,8 @@ public class Test {
 			simpleStepperTest(args);
 		}else{
 			simpleStepperTest();
+			
+			
 			//comprehensiveStepperTest();
 			//pressureTest();
 		}
@@ -67,9 +72,17 @@ public class Test {
 	}
 
 	void simpleStepperTest() {
+		
+		
 		//PositionCheck pc = new PositionCheck(new SensorReader());
 		StepperInterface sc = new StepperController();
 		//pc.moveToTop(sc);
+		Signal.handle(new Signal("INT"),  // SIGINT
+			    signal -> {
+			    	System.out.println("ctrl c pressed");
+			    	sc.stop();
+			    	System.exit(0);
+			    });
 		for(int i = 0; i<5; i++) {
  			sc.forward(600, 100);
 			try {
