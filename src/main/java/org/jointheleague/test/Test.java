@@ -84,13 +84,14 @@ public class Test {
 			    	System.exit(0);
 			    });
 		for(int i = 0; i<5; i++) {
- 			sc.forward(600, 10);
+			System.out.println("running forward");
+ 			sc.forward(600, 100);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
+			System.out.println("running backward");
  			sc.backward(600,10);
 			try {
 				Thread.sleep(200);
@@ -99,8 +100,8 @@ public class Test {
 			}
 		}
 		sc.stop();
-	//	sc.stop();
-	}
+		System.out.println("stopped ventilator");
+		}
 	
 	void simpleStepperTest(String[] args) {
 		int rate = Integer.parseInt(args[0]);
