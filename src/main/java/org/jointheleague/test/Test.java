@@ -107,19 +107,27 @@ public class Test {
 		int rate = Integer.parseInt(args[0]);
 		int time = Integer.parseInt(args[1]);
 		StepperInterface sc = new StepperController();
+		Signal.handle(new Signal("INT"),  // SIGINT
+			    signal -> {
+			    	System.out.println("ctrl c pressed");
+			    	sc.stop();
+			    	System.exit(0);
+			    });
 		for( ; ; ) {
- 			sc.forward(rate, time);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			//down first
 			sc.backward(rate, time);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+ 			sc.forward(rate, time);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 	}
 }
 }
