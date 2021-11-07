@@ -71,19 +71,19 @@ public class Test {
 		StepperInterface sc = new StepperController();
 		//pc.moveToTop(sc);
 		for(int i = 0; i<5; i++) {
- 			//sc.forward(500, 100);
-// 			try {
-// 				Thread.sleep(500);
-// 			} catch (InterruptedException e) {
-// 				e.printStackTrace();
-// 			}
+ 			sc.forward(600, 100);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 
  			sc.backward(600,100);
-// 			try {
-// 				Thread.sleep(200);
-// 			} catch (InterruptedException e) {
-// 				e.printStackTrace();
-// 			}
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		sc.stop();
 	//	sc.stop();
