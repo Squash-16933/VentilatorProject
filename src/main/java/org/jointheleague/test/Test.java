@@ -114,7 +114,7 @@ public class Test {
 			    	sc.stop();
 			    	System.exit(0);
 			    });
-		if(direction == "forward"){
+		if(direction.equals("forward")){
 			for( ; ; ) {
 				//down first
 				sc.forward(rate, time);
