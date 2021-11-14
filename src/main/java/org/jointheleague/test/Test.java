@@ -104,7 +104,7 @@ public class Test {
 		}
 	
 	void simpleStepperTest(String[] args) {
-		String direction = Integer.parseInt(args[0]);
+		String direction = args[0];
 		int rate = Integer.parseInt(args[1]);
 		int time = Integer.parseInt(args[2]);
 		StepperInterface sc = new StepperController();
