@@ -104,8 +104,9 @@ public class Test {
 		}
 	
 	void simpleStepperTest(String[] args) {
-		int rate = Integer.parseInt(args[0]);
-		int time = Integer.parseInt(args[1]);
+		String direction = Integer.parseInt(args[0]);
+		int rate = Integer.parseInt(args[1]);
+		int time = Integer.parseInt(args[2]);
 		StepperInterface sc = new StepperController();
 		Signal.handle(new Signal("INT"),  // SIGINT
 			    signal -> {
@@ -113,24 +114,43 @@ public class Test {
 			    	sc.stop();
 			    	System.exit(0);
 			    });
-		for( ; ; ) {
-			//down first
-			sc.backward(rate, time);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		if(direction == "forward"){
+			for( ; ; ) {
+				//down first
+				sc.forward(rate, time);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				sc.backward(rate, time);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
 			}
- 			sc.forward(rate, time);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		}else{
+			for( ; ; ) {
+				//up first
+				sc.backward(rate, time);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				sc.forward(rate, time);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
 			}
 			
-	}
-}
-}
+		}
+}}
 
 class TimerTask2 extends TimerTask{
 	double[] lidNums;
