@@ -173,6 +173,6 @@ class TimerTask2 extends TimerTask{
 	public double[] getLidarVals(){
 		return lidNums;
 	}
-	#mvn command mvn spring-boot:run -Dspring-boot.run.arguments="forward 500 200"
+	//mvn command mvn spring-boot:run -Dspring-boot.run.arguments="forward 500 200"
 	
 }
