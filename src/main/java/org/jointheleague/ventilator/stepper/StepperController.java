@@ -20,14 +20,14 @@ public class StepperController implements StepperInterface {
 	private final GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "BCM 27", PinState.LOW);// Pul
 	private final GpioPinDigitalOutput pin15 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "BCM 22", PinState.LOW);// En
 
-	public void forward(double rate, double time) {
+	public void down(double rate, double time) {
 		// TODO TBD converting breaths per min to steps per sec
 		pin15.low();// EN invalid, motor under control
 		{
-			pin11.high();// DIR forward
+			pin11.high();// DIR down
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
 				try {
-					System.out.println("FORWARD");
+					System.out.println("DOWN");
 					pin13.high();// step
 					Thread.sleep((int) (1.0 / (rate * 2d) * 1000));// rate = steps per second; 1/rate = seconds per step
 					pin13.low();
@@ -42,13 +42,13 @@ public class StepperController implements StepperInterface {
 
 	}
 
-	public void backward(double rate, double time) {
+	public void up(double rate, double time) {
 		pin15.low();// EN invalid, motor under control
 		{
-			pin11.low();// DIR backward
+			pin11.low();// DIR up
 			for (int k = 0; k < rate * time; k++) {
 				try {
-					System.out.println("BACKWARD");
+					System.out.println("UP");
 					pin13.high();// step
 					Thread.sleep((int) (1.0 / (rate * 2d) * 1000)); //LOSSY??
 					pin13.low();
@@ -63,10 +63,10 @@ public class StepperController implements StepperInterface {
 	}
 
 	@Override
-	public void forwardStep() {
+	public void downStep() {
 		pin15.low();// EN invalid, motor under control
 		{
-			pin11.high();// DIR forward
+			pin11.high();// DIR down
 			try {
 				pin13.high();// step
 				Thread.sleep(500);// arbitrary aka this method sucks
@@ -80,10 +80,10 @@ public class StepperController implements StepperInterface {
 	}
 
 	@Override
-	public void backwardStep() {
+	public void upStep() {
 		pin15.low();// EN invalid, motor under control
 		{
-			pin11.low();// DIR backward
+			pin11.low();// DIR up
 			try {
 				pin13.high();// step
 				Thread.sleep(500);// arbitrary aka this method sucks

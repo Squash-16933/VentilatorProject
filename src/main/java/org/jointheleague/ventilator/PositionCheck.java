@@ -28,13 +28,13 @@ public class PositionCheck {
 	public void moveToTop(StepperInterface sc) {
 		if(checkPosition().equals("TOO HIGH")){
 			while(distance > 140) {
-				sc.forwardStep();
+				sc.downStep();
 				distance = sensorReader.readLidar();
 			}
 			System.out.println("CALIBRATED");
 		}else if(checkPosition().equals("TOO LOW")){
 			while(distance <100) {
-				sc.backwardStep();
+				sc.upStep();
 				distance = sensorReader.readLidar();
 			}
 			System.out.println("CALIBRATED");

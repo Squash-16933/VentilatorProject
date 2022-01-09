@@ -56,10 +56,10 @@ public class BreathController {
 	 */
 	public void breathe() {
 		String status = p.runPeep(settings.getPeep());
-		if (status.equals(BreathState.FORWARD)) {
-			sc.forward(settings.breathRate, 0.1);
-		}else if(status.equals(BreathState.BACKWARD)){
-			sc.backward(settings.breathRate, 0.1);
+		if (status.equals(BreathState.DOWN)) {
+			sc.down(settings.breathRate, 0.1);
+		}else if(status.equals(BreathState.UP)){
+			sc.up(settings.breathRate, 0.1);
 		} else {
 			System.out.println("waiting");
 		}

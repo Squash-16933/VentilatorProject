@@ -5,22 +5,26 @@ package org.jointheleague.ventilator.stepper;
  */
 public interface StepperInterface {
 	/**
-	 * TODO explain what does
+	 * Moves screw downwards.
 	 * @param rate Rate in steps per second
 	 * @param time Time in seconds
 	 */
-	void forward(double rate, double time);
+	void down(double rate, double time);
 
 	/**
-	 * TODO explain what does
+	 * Moves screw upwards.
 	 * @param rate Rate in steps per second
 	 * @param time Time in seconds
 	 */
-	void backward(double rate, double time);
+	void up(double rate, double time);
 
-	// TODO add docs
-	void forwardStep();
+	/**
+	 * Moves screw downwards a single step.
+	 */
+	void downStep();
 
-	// TODO add docs
-	void backwardStep();
+	/**
+	 * Moves screw upwards a single step.
+	 */
+	void upStep();
 }

@@ -8,8 +8,6 @@ import org.jointheleague.ventilator.PatientProfile;
 import org.jointheleague.ventilator.sensors.SensorReader;
 import org.jointheleague.ventilator.Launcher;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.springframework.boot.json.JsonParser;
 
 /**
  * Processes client requests.
@@ -216,12 +214,11 @@ public class VentilatorService {
 		response.put("request", reqnum);
 		response.put("status", 200);
 
-		JSONParser parser = new JSONParser();
 		JSONObject data = (JSONObject) message.get("data");
 
 		// Set client patient settings
 		try {
-			breathController.init(new PatientProfile((int) data.get("age"), (double) data.get("height"), (double) data.get("weight"), (String) data.get("gender"), (String) data.get("disease")));
+			breathController.init(new PatientProfile(Integer.valueOf(data.get("age").toString()), Double.valueOf(data.get("height").toString()), Double.valueOf(data.get("weight").toString()), (String) data.get("gender"), (String) data.get("disease")));
 		} catch (NullPointerException e) {
 			// Find source of exception
 			if (breathController == null) throw new ProtocolException("breathController is null on server side", 500);

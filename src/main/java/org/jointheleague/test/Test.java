@@ -33,14 +33,14 @@ public class Test {
 	void simpleStepperTest() {
 		StepperInterface sc = new StepperController();
 		while (true) {
-			sc.forward(10, 5);
+			sc.down(10, 5);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 
-			sc.backward(10, 5);
+			sc.up(10, 5);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {

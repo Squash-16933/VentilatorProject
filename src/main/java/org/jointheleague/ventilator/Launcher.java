@@ -7,7 +7,7 @@ import org.jointheleague.ventilator.server.VentilatorController;
 
 @SpringBootApplication
 public class Launcher {
-	public static boolean RUN_TEST = true; // Flag for if test run of stepper motor
+	public static boolean RUN_TEST = false; // Flag for if test run of stepper motor
 	public static boolean CONNECTED_VENTILATOR = false; // Flag for if connected to actual ventilator
 	public static final int LOCAL_PORT = 5001; // Port to connect on
 	private static long LAUNCH_TIME;
