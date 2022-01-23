@@ -124,7 +124,7 @@ public class StepperController implements StepperInterface {
 
 		pin15.high();
 
-
+		System.out.println("SOUT");
 
 		
 		
