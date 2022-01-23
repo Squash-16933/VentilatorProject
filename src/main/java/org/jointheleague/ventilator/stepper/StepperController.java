@@ -123,8 +123,8 @@ public class StepperController implements StepperInterface {
 	public void stop(){
 
 		pin15.high();
-
-		System.out.println("SOUT");
+		System.out.println(pin15);
+		System.out.println("motor disabled");
 
 		
 		
