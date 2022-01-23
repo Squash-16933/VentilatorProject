@@ -124,7 +124,7 @@ public class StepperController implements StepperInterface {
 
 		pin15.high();
 		System.out.println(pin15);
-		System.out.println("motor disabled");
+		System.out.println(pin15.getState());
 
 		
 		
