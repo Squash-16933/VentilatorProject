@@ -12,10 +12,9 @@ import com.pi4j.io.gpio.RaspiPin;
  * Manages the stepper motor, see StepperInterface.
  */
 public class StepperController implements StepperInterface {
-
+	// http://wiringpi.com/pins/
 	private final GpioController gpio = GpioFactory.getInstance();
-	private final GpioPinDigitalInput pin07 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07, "Raspi pin 07",
-			PinPullResistance.PULL_UP);//
+	private final GpioPinDigitalInput pin07 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07, "Raspi pin 07", PinPullResistance.PULL_UP);//
 	private final GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "BCM 17", PinState.LOW);// Dir (low=backward=up)
 	private final GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "BCM 27", PinState.LOW);// Pul
 	private final GpioPinDigitalOutput pin15 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "BCM 22", PinState.LOW);// En (low=enabled)
