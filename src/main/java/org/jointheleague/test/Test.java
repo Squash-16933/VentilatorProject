@@ -66,7 +66,8 @@ public class Test {
 		while (1==1) {
 			bc.breathe();
 			//use calculateBreathRate() here whenever you need to display or use it?
-			System.out.println("RESP RATE: " + bc.calculateRespRate(((TimerTask2) tt).getLidarVals()));
+			//System.out.println("RESP RATE: " + bc.calculateRespRate(((TimerTask2) tt).getLidarVals()));
+			System.out.println((TimerTask2) tt).getLidarVals());
 			
 		}
 	}
