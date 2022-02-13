@@ -30,11 +30,11 @@ public class Test {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");	
 			simpleStepperTest(args);
 		}else{
-			simpleStepperTest();
+			//simpleStepperTest();
 			
 			
 			//comprehensiveStepperTest();
-			//pressureTest();
+			pressureTest();
 		}
 		
 	}
