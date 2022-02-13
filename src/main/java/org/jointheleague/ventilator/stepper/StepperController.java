@@ -45,7 +45,7 @@ public class StepperController implements StepperInterface {
 		System.out.println("forward");
 		//long nanos = (long)(1.0 / (rate * 2d) * 1000*1000);
 		long nanos = 100000;
-		System.out.println("Sleep time:" + nanos);
+		//System.out.println("Sleep time:" + nanos);
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
 					//System.out.println("FORWARD");
 					pin13.high();// step
@@ -64,7 +64,7 @@ public class StepperController implements StepperInterface {
 			pin11.low();// DIR backward
 		//long nanos = (long)(1.0 / (rate * 2d) * 1000*1000);
 		long nanos = 100000;
-		System.out.println("Sleep time:" + nanos);
+		//System.out.println("Sleep time:" + nanos);
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
 					//System.out.println("FORWARD");
 					pin13.high();// step
