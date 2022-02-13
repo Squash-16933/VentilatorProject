@@ -33,8 +33,8 @@ public class Test {
 			//simpleStepperTest();
 			
 			
-			//comprehensiveStepperTest();
-			pressureTest();
+			comprehensiveStepperTest();
+			//pressureTest();
 		}
 		
 	}
