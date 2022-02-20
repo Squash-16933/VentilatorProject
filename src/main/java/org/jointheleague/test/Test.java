@@ -25,7 +25,7 @@ public class Test {
 	@SuppressWarnings("restriction")
 	public Test(String... args) {
 
-		System.out.println("running simple tests v20220220B");
+		System.out.println("running simple tests v20220220C");
 		// setPin();
 		if (args.length > 0) {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
@@ -85,11 +85,6 @@ public class Test {
 		StepperInterface sc = new StepperController();
 		// pc.moveToTop(sc);
 
-		Runnable r = () -> lidarTest();
-
-		Thread t = new Thread(r);
-		t.start();
-
 		Signal.handle(new Signal("INT"), // SIGINT
 				signal -> {
 					System.out.println("ctrl c pressed");
@@ -121,6 +116,12 @@ public class Test {
 		int rate = Integer.parseInt(args[1]);
 		int time = Integer.parseInt(args[2]);
 		StepperInterface sc = new StepperController();
+
+		Runnable r = () -> lidarTest();
+
+		Thread t = new Thread(r);
+		t.start();
+
 		Signal.handle(new Signal("INT"), // SIGINT
 				signal -> {
 					System.out.println("ctrl c pressed");
