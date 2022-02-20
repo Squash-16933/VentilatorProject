@@ -11,7 +11,7 @@ import org.jointheleague.ventilator.BreathController;
 import org.jointheleague.ventilator.PatientProfile;
 import org.jointheleague.ventilator.PositionCheck;
 import org.jointheleague.ventilator.sensors.SensorReader;
-import sun.misc.Signal;1
+import sun.misc.Signal;
 
 /**
  * Tests the stepper controller, moves motor back and forth.
@@ -25,7 +25,7 @@ public class Test {
 	@SuppressWarnings("restriction")
 	public Test(String... args) {
 
-		System.out.println("running simple tests v20220220A");
+		System.out.println("running simple tests v20220220B");
 		// setPin();
 		if (args.length > 0) {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
