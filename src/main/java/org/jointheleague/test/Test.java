@@ -25,7 +25,7 @@ public class Test {
 	@SuppressWarnings("restriction")
 	public Test(String... args) {
 
-		System.out.println("running simple tests v20220220C");
+		System.out.println("running simple tests v20220220D");
 		// setPin();
 		if (args.length > 0) {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
@@ -48,13 +48,30 @@ public class Test {
 		SensorReader sr = new SensorReader();
 		while (1 == 1) {
 			System.out.println("PRESSURE: " + sr.readPressure());
-		}
+		}s
 	}
 
+	/**
+	 * Prints an average of the last four LIDAR values read, dropping any zeroes.
+	*/
 	private void lidarTest() {
 		SensorReader sr = new SensorReader();
 		while (1 == 1) {
-			System.out.println("LIDAR: " + sr.readLidar());
+			int sum = 0;
+			int count = 0;
+			for (int i = 0; i < 4; i++) {
+				int reading = sr.readLidar();
+				if (reading != 0) {
+					sum += reading;
+					count++;
+				}
+			}
+
+			if (count == 0) {
+				System.out.println("AaaaAAAAAaagh! My _LIDAR_ is on FIRE");
+			} else {
+				System.out.println("LIDAR: " + sum/count);
+			}
 		}
 	}
 
@@ -113,6 +130,7 @@ public class Test {
 
 	void simpleStepperTest(String[] args) {
 		String direction = args[0];
+
 		int rate = Integer.parseInt(args[1]);
 		int time = Integer.parseInt(args[2]);
 		StepperInterface sc = new StepperController();
