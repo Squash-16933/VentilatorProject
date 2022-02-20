@@ -73,10 +73,12 @@ public class Test {
 				System.out.println("AaaaAAAAAaagh! My _LIDAR_ is on FIRE");
 			} else {
 				if (sum/count > lastValue) {
-					System.out.println("LIDAR: \u001B[32m🔼" + sum/count + "\u001B[0m");
+					System.out.println("LIDAR: \u001B[32m⬆" + sum/count + "\u001B[0m");
 				} else {
-					System.out.println("LIDAR: \u001B[31m🔽" + sum/count + "\u001B[0m");
+					System.out.println("LIDAR: \u001B[31m⬇" + sum/count + "\u001B[0m");
 				}
+
+				lastValue = sum/count;
 			}
 		}
 	}
