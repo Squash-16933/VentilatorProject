@@ -25,7 +25,7 @@ public class Test {
 	@SuppressWarnings("restriction")
 	public Test(String... args) {
 
-		System.out.println("running simple tests v20220220E");
+		System.out.println("running simple tests v20220220F");
 		// setPin();
 		if (args.length > 0) {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
@@ -56,6 +56,8 @@ public class Test {
 	*/
 	private void lidarTest() {
 		SensorReader sr = new SensorReader();
+
+		int lastValue = -1;
 		while (1 == 1) {
 			int sum = 0;
 			int count = 0;
@@ -70,7 +72,11 @@ public class Test {
 			if (count == 0) {
 				System.out.println("AaaaAAAAAaagh! My _LIDAR_ is on FIRE");
 			} else {
-				System.out.println("LIDAR: " + sum/count);
+				if (sum/count > lastValue) {
+					System.out.println("LIDAR: \u001B[32m🔼" + sum/count + "\u001B[0m");
+				} else {
+					System.out.println("LIDAR: \u001B[31m🔽" + sum/count + "\u001B[0m");
+				}
 			}
 		}
 	}
