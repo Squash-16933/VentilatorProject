@@ -25,7 +25,7 @@ public class Test {
 	@SuppressWarnings("restriction")
 	public Test(String... args) {
 
-		System.out.println("running simple tests v20220220D");
+		System.out.println("running simple tests v20220220E");
 		// setPin();
 		if (args.length > 0) {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
