@@ -48,7 +48,7 @@ public class Test {
 		SensorReader sr = new SensorReader();
 		while (1 == 1) {
 			System.out.println("PRESSURE: " + sr.readPressure());
-		}s
+		}
 	}
 
 	/**
