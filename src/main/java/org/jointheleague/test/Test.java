@@ -102,7 +102,7 @@ public class Test {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-x				e.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 		sc.stop();
