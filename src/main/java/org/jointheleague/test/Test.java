@@ -31,14 +31,12 @@ public class Test {
 			simpleStepperTest(args);
 		}else{
 			//simpleStepperTest();
-			
-			
-			comprehensiveStepperTest();
+			lidarTest();	
 			//pressureTest();
 		}
 		
 	}
-	
+
 	private void setPin() {
 		PositionCheck pc = new PositionCheck(new SensorReader());
 		StepperInterface sc = new StepperController();
@@ -49,6 +47,13 @@ public class Test {
 		SensorReader sr = new SensorReader();
 		while(1==1) {
 			System.out.println("PRESSURE: " + sr.readPressure());
+		}
+	}
+
+	private void lidarTest() {
+		SensorReader sr = new SensorReader();
+		while(1==1) {
+			System.out.println("LIDAR: " + sr.readLidar());
 		}
 	}
 	
@@ -97,7 +102,7 @@ public class Test {
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+x				e.printStackTrace();
 			}
 		}
 		sc.stop();
