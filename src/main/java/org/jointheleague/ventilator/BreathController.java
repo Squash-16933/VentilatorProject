@@ -2,7 +2,6 @@ package org.jointheleague.ventilator;
 
 import org.jointheleague.ventilator.sensors.BreathState;
 import org.jointheleague.ventilator.stepper.StepperInterface;
-import org.jointheleague.ventilator.sensors.BreathState;
 import org.jointheleague.ventilator.stepper.StepperController;
 import org.jointheleague.ventilator.stepper.MockStepperController;
 

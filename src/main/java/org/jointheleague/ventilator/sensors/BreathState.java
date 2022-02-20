@@ -33,6 +33,8 @@ public class BreathState {
 		if (pressures.size() >= 5) {
 			pressures.remove(0);
 			pressures.add(sr.readPressure());
+
+			System.out.println("Pressure: "+sr.readPressure());
 			for (int i = 0; i < pressures.size(); i++) {
 				avgp = avgp + pressures.get(i);
 			}

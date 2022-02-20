@@ -22,7 +22,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 	private int connNum; // How many connections there have been
 	private ArrayList<SavedMessage> updates; // Requests that must continuously update
 	private ArrayList<Client> clients; // List of clients
-	private BreathController breathController = new BreathController(); // Breath controller for ventilator
+	private BreathController breathCtrl = new BreathController(); // Breath controller for ventilator
 	private Timer updateTimer; // Interval to resend continuous messages
 	private final int port; // Port number
 
@@ -171,7 +171,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 		switch (type) {
 			case "getAll":
 			{
-			VentilatorService.vs_getAll(msg, client, reqnum);
+			VentilatorService.vs_getAll(msg, client, breathCtrl, reqnum);
 			} break;
 
 			case "getHumidity":
@@ -191,7 +191,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 			case "setProfile":
 			{
-			VentilatorService.vs_setProfile(msg, client, breathController, reqnum);
+			VentilatorService.vs_setProfile(msg, client, breathCtrl, reqnum);
 			} break;
 
 			case "getTime":
@@ -201,7 +201,7 @@ public class VentilatorController extends WebSocketServer implements ActionListe
 
 			case "getResp":
 			{
-			VentilatorService.vs_getResp(msg, client, breathController, reqnum);
+			VentilatorService.vs_getResp(msg, client, breathCtrl, reqnum);
 			} break;
 
 			default:
