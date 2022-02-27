@@ -153,7 +153,7 @@ public class Test {
 		int time = Integer.parseInt(args[2]);
 		for (;;) {
 			// down first
-			sc.forward(rate, time);
+			sc.backward(rate, time);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
