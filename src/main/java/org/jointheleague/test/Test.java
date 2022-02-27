@@ -147,73 +147,63 @@ public class Test {
 	void simpleStepperTest(String[] args) {
 		String direction = args[0];
 
-		StepperInterface sc = new StepperController();
-
 		int rate = Integer.parseInt(args[1]);
 		int time = Integer.parseInt(args[2]);
-		for (;;) {
-			// down first
-			sc.backward(rate, time);
+		StepperInterface sc = new StepperController();
+
+		Runnable r = () -> {
 			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				lidarTest();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
 			}
+		};
+
+		Thread t = new Thread(r);
+		t.start();
+
+		Signal.handle(new Signal("INT"), // SIGINT
+				signal -> {
+					System.out.println("ctrl c pressed");
+					sc.stop();
+					System.exit(0);
+				});
+		if (direction.equals("forward")) {
+			for (;;) {
+				// down first
+				sc.forward(rate, time);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				sc.backward(rate, time);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+			}
+		} else {
+			for (;;) {
+				// up first
+				sc.backward(rate, time);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				sc.forward(rate, time);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+			}
+
 		}
-
-		// Runnable r = () -> {
-		// try {
-		// lidarTest();
-		// } catch (InterruptedException e1) {
-		// e1.printStackTrace();
-		// }
-		// };
-
-		// Thread t = new Thread(r);
-		// t.start();
-
-		// Signal.handle(new Signal("INT"), // SIGINT
-		// signal -> {
-		// System.out.println("ctrl c pressed");
-		// sc.stop();
-		// System.exit(0);
-		// });
-		// if (direction.equals("forward")) {
-		// for (;;) {
-		// // down first
-		// sc.forward(rate, time);
-		// try {
-		// Thread.sleep(500);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-		// sc.backward(rate, time);
-		// try {
-		// Thread.sleep(500);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-
-		// }
-		// } else {
-		// for (;;) {
-		// // up first
-		// sc.backward(rate, time);
-		// try {
-		// Thread.sleep(500);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-		// sc.forward(rate, time);
-		// try {
-		// Thread.sleep(500);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
-
-		// }
-
-		// }
 	}
 }
 
