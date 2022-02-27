@@ -23,9 +23,9 @@ public class Test {
 	public static double startTime = System.currentTimeMillis();
 
 	@SuppressWarnings("restriction")
-	public Test(String... args) {
+	public Test(String... args) throws InterruptedException {
 
-		System.out.println("running simple tests v20220220F");
+		System.out.println("running simple tests v20220227A");
 		// setPin();
 		if (args.length > 0) {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
@@ -52,34 +52,39 @@ public class Test {
 	}
 
 	/**
-	 * Prints an average of the last four LIDAR values read, dropping any zeroes.
+	 * This method reads one LIDAR value every 100 ms, and if it's a zero, skips it and looks for another.
+	 * It prints the average of the last ten values read every time it reads five new values.
+	 * @throws InterruptedException
 	*/
-	private void lidarTest() {
+	private void lidarTest() throws InterruptedException {
 		SensorReader sr = new SensorReader();
 
 		int lastValue = -1;
-		while (1 == 1) {
-			int sum = 0;
-			int count = 0;
-			for (int i = 0; i < 4; i++) {
+		int[] values = new int[10];
+
+		int sum1 = 0;
+		int sum2 = 0;
+
+		while (true) {
+			for (int i = 0; values.length < 5; Thread.sleep(100)) {
 				int reading = sr.readLidar();
 				if (reading != 0) {
-					sum += reading;
-					count++;
+					values[i] = reading;
+					sum2 += reading;
+					i++;
 				}
 			}
 
-			if (count == 0) {
-				System.out.println("AaaaAAAAAaagh! My _LIDAR_ is on FIRE");
+			int avg = (sum1 + sum2)/20;
+			if (avg > lastValue) {
+				System.out.println("LIDAR: \u001B[32m ⬆" + avg + "\u001B[0m");
 			} else {
-				if (sum/count > lastValue) {
-					System.out.println("LIDAR: \u001B[32m⬆" + sum/count + "\u001B[0m");
-				} else {
-					System.out.println("LIDAR: \u001B[31m⬇" + sum/count + "\u001B[0m");
-				}
-
-				lastValue = sum/count;
+				System.out.println("LIDAR: \u001B[31m ⬇" + avg + "\u001B[0m");
 			}
+
+			lastValue = avg;
+			sum1 = sum2;
+			sum2 = 0;
 		}
 	}
 
@@ -143,7 +148,13 @@ public class Test {
 		int time = Integer.parseInt(args[2]);
 		StepperInterface sc = new StepperController();
 
-		Runnable r = () -> lidarTest();
+		Runnable r = () -> {
+			try {
+				lidarTest();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		};
 
 		Thread t = new Thread(r);
 		t.start();
