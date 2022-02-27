@@ -147,6 +147,8 @@ public class Test {
 	void simpleStepperTest(String[] args) {
 		String direction = args[0];
 
+		StepperInterface sc = new StepperController();
+
 		int rate = Integer.parseInt(args[1]);
 		int time = Integer.parseInt(args[2]);
 		for (;;) {
@@ -158,8 +160,6 @@ public class Test {
 				e.printStackTrace();
 			}
 		}
-
-		// StepperInterface sc = new StepperController();
 
 		// Runnable r = () -> {
 		// try {
