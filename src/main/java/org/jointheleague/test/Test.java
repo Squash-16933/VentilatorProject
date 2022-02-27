@@ -52,10 +52,13 @@ public class Test {
 	}
 
 	/**
-	 * This method reads one LIDAR value every 100 ms, and if it's a zero, skips it and looks for another.
-	 * It prints the average of the last ten values read every time it reads five new values.
+	 * This method reads one LIDAR value every 100 ms, and if it's a zero, skips it
+	 * and looks for another.
+	 * It prints the average of the last ten values read every time it reads five
+	 * new values.
+	 * 
 	 * @throws InterruptedException
-	*/
+	 */
 	private void lidarTest() throws InterruptedException {
 		SensorReader sr = new SensorReader();
 
@@ -75,7 +78,7 @@ public class Test {
 				}
 			}
 
-			int avg = (sum1 + sum2)/20;
+			int avg = (sum1 + sum2) / 20;
 			if (avg > lastValue) {
 				System.out.println("LIDAR: \u001B[32m ⬆" + avg + "\u001B[0m");
 			} else {
@@ -146,61 +149,71 @@ public class Test {
 
 		int rate = Integer.parseInt(args[1]);
 		int time = Integer.parseInt(args[2]);
-		StepperInterface sc = new StepperController();
-
-		Runnable r = () -> {
+		for (;;) {
+			// down first
+			sc.forward(rate, time);
 			try {
-				lidarTest();
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-		};
-
-		Thread t = new Thread(r);
-		t.start();
-
-		Signal.handle(new Signal("INT"), // SIGINT
-				signal -> {
-					System.out.println("ctrl c pressed");
-					sc.stop();
-					System.exit(0);
-				});
-		if (direction.equals("forward")) {
-			for (;;) {
-				// down first
-				sc.forward(rate, time);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				sc.backward(rate, time);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-			}
-		} else {
-			for (;;) {
-				// up first
-				sc.backward(rate, time);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				sc.forward(rate, time);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-			}
-
 		}
+
+		// StepperInterface sc = new StepperController();
+
+		// Runnable r = () -> {
+		// try {
+		// lidarTest();
+		// } catch (InterruptedException e1) {
+		// e1.printStackTrace();
+		// }
+		// };
+
+		// Thread t = new Thread(r);
+		// t.start();
+
+		// Signal.handle(new Signal("INT"), // SIGINT
+		// signal -> {
+		// System.out.println("ctrl c pressed");
+		// sc.stop();
+		// System.exit(0);
+		// });
+		// if (direction.equals("forward")) {
+		// for (;;) {
+		// // down first
+		// sc.forward(rate, time);
+		// try {
+		// Thread.sleep(500);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// sc.backward(rate, time);
+		// try {
+		// Thread.sleep(500);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+
+		// }
+		// } else {
+		// for (;;) {
+		// // up first
+		// sc.backward(rate, time);
+		// try {
+		// Thread.sleep(500);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+		// sc.forward(rate, time);
+		// try {
+		// Thread.sleep(500);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
+
+		// }
+
+		// }
 	}
 }
 
