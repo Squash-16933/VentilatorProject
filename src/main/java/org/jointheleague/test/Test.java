@@ -125,15 +125,15 @@ public class Test {
 					System.exit(0);
 				});
 		for (int i = 0; i < 5; i++) {
-			System.out.println("running forward");
-			sc.forward(600, 100);
+			System.out.println("running down");
+			sc.down(600, 100);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println("running backward");
-			sc.backward(600, 10);
+			System.out.println("running up");
+			sc.up(600, 10);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {
@@ -168,16 +168,16 @@ public class Test {
 					sc.stop();
 					System.exit(0);
 				});
-		if (direction.equals("forward")) {
+		if (direction.equals("down")) {
 			for (;;) {
 				// down first
-				sc.forward(rate, time);
+				sc.down(rate, time);
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				sc.backward(rate, time);
+				sc.up(rate, time);
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
@@ -188,13 +188,13 @@ public class Test {
 		} else {
 			for (;;) {
 				// up first
-				sc.backward(rate, time);
+				sc.up(rate, time);
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				sc.forward(rate, time);
+				sc.down(rate, time);
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
@@ -228,6 +228,6 @@ class TimerTask2 extends TimerTask {
 	public double[] getLidarVals() {
 		return lidNums;
 	}
-	// mvn command mvn spring-boot:run -Dspring-boot.run.arguments="forward 500 200"
+	// mvn command mvn spring-boot:run -Dspring-boot.run.arguments="down 500 200"
 
 }

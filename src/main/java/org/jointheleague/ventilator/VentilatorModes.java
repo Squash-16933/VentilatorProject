@@ -51,7 +51,7 @@ public class VentilatorModes {
 			}
 			if (phase.equals("expiratory")) { //once threshold is reached NOTE: could add pressure checker to see when patient initiates a breath
 				try {
-					if(p.runPeep(vs.peep).equals("forward")) {
+					if(p.runPeep(vs.peep).equals("down")) {
 						phase = "inspiratory";
 					}
 				} catch (Exception e) {

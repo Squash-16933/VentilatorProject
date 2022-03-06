@@ -9,20 +9,20 @@ public interface StepperInterface {
 	 * @param rate Rate in steps per second
 	 * @param time Time in seconds
 	 */
-	void forward(double rate, double time);
+	void down(double rate, double time);
 
 	/**
 	 * TODO explain what does
 	 * @param rate Rate in steps per second
 	 * @param time Time in seconds
 	 */
-	void backward(double rate, double time);
+	void up(double rate, double time);
 
 	// TODO add docs
-	void forwardStep();
+	void downStep();
 
 	// TODO add docs
-	void backwardStep();
+	void upStep();
 	
 	void setPin15High();
 	void stop();
