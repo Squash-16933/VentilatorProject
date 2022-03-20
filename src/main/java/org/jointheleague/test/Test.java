@@ -25,7 +25,7 @@ public class Test {
 	@SuppressWarnings("restriction")
 	public Test(String... args) throws InterruptedException {
 
-		System.out.println("running simple tests v20220320A");
+		System.out.println("running simple tests v20220320B");
 		// setPin();
 		if (args.length > 0) {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
@@ -90,7 +90,7 @@ public class Test {
 		// 	sum2 = 0;
 		// }
 		
-		int lastValue;
+		int lastValue = 0;
 		while (true) {
 			int value = sr.readLidar();
 			if (value > lastValue) {
