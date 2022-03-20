@@ -93,8 +93,8 @@ public class Test {
 		int lastValue = 0;
 		while (true) {
 			int value = sr.readLidar();
-			if (value == 0) continue;
-
+			if (value == 0) { continue; }
+			
 			if (value > lastValue) {
 				System.out.println("LIDAR: \u001B[32m ⬆" + value + "\u001B[0m");
 			} else {
@@ -102,7 +102,6 @@ public class Test {
 			}
 
 			lastValue = value;
-			Thread.sleep(200);
 		}
 	}
 
