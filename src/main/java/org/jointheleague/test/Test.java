@@ -25,7 +25,7 @@ public class Test {
 	@SuppressWarnings("restriction")
 	public Test(String... args) throws InterruptedException {
 
-		System.out.println("running simple tests v20220227A");
+		System.out.println("running simple tests v20220320A");
 		// setPin();
 		if (args.length > 0) {
 			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
@@ -62,32 +62,42 @@ public class Test {
 	private void lidarTest() throws InterruptedException {
 		SensorReader sr = new SensorReader();
 
-		int lastValue = -1;
-		int[] values = new int[10];
+		// int lastValue = -1;
+		// int[] values = new int[10];
 
-		int sum1 = 0;
-		int sum2 = 0;
+		// int sum1 = 0;
+		// int sum2 = 0;
 
+		// while (true) {
+		// 	for (int i = 0; values.length < 5; Thread.sleep(100)) {
+		// 		int reading = sr.readLidar();
+		// 		if (reading != 0) {
+		// 			values[i] = reading;
+		// 			sum2 += reading;
+		// 			i++;
+		// 		}
+		// 	}
+
+		// 	int avg = (sum1 + sum2) / 20;
+		// 	if (avg > lastValue) {
+		// 		System.out.println("LIDAR: \u001B[32m ⬆" + avg + "\u001B[0m");
+		// 	} else {
+		// 		System.out.println("LIDAR: \u001B[31m ⬇" + avg + "\u001B[0m");
+		// 	}
+
+		// 	lastValue = avg;
+		// 	sum1 = sum2;
+		// 	sum2 = 0;
+		// }
+		
+		int lastValue;
 		while (true) {
-			for (int i = 0; values.length < 5; Thread.sleep(100)) {
-				int reading = sr.readLidar();
-				if (reading != 0) {
-					values[i] = reading;
-					sum2 += reading;
-					i++;
-				}
-			}
-
-			int avg = (sum1 + sum2) / 20;
-			if (avg > lastValue) {
-				System.out.println("LIDAR: \u001B[32m ⬆" + avg + "\u001B[0m");
+			int value = sr.readLidar();
+			if (value > lastValue) {
+				System.out.println("LIDAR: \u001B[32m ⬆" + value + "\u001B[0m");
 			} else {
-				System.out.println("LIDAR: \u001B[31m ⬇" + avg + "\u001B[0m");
+				System.out.println("LIDAR: \u001B[31m ⬇" + value + "\u001B[0m");
 			}
-
-			lastValue = avg;
-			sum1 = sum2;
-			sum2 = 0;
 		}
 	}
 
