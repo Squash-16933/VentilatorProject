@@ -12,7 +12,7 @@ public class Launcher {
 	public static final int LOCAL_PORT = 5001; // Port to connect on
 	private static long LAUNCH_TIME;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		String[] springArgs = new String[0];
 		SpringApplication.run(Launcher.class, springArgs);
 

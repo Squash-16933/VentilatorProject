@@ -11,8 +11,8 @@ import org.jointheleague.ventilator.stepper.StepperController;
  * Determines where to inhale or exhale.
  */
 public class BreathState {
-	public static final String FORWARD = "forward"; //inhalation
-	public static final String BACKWARD = "backward"; //exhalation
+	public static final String DOWN = "down"; //inhalation
+	public static final String UP = "up"; //exhalation
 	public static final String NOT_READY = "not ready"; //none
 	public ArrayList<Float> pressures;
 	public SensorReader sr;
@@ -26,7 +26,7 @@ public class BreathState {
 	/**
 	 * Checks whether the patient should be inhaling, exhaling, or doing nothing.
 	 * @param peep PEEP value (default: 40)
-	 * @return BreathState.FORWARD (inhalation), BreathState.BACKWARD (exhalation), or BreathState.NOT_READY (none)
+	 * @return BreathState.DOWN (inhalation), BreathState.UP (exhalation), or BreathState.NOT_READY (none)
 	 */
 	public String runPeep(double peep) {
 		double pip = 40 + peep; //default IP = 40, PIP= IP + PEEP
@@ -39,12 +39,12 @@ public class BreathState {
 			avgp = avgp / 5;
 
 			if (avgp > peep) {
-				// sc.backwardStep();
-				return BACKWARD;
+				// sc.upStep();
+				return UP;
 			} else {
 				if (avgp < pip) {
-					// sc.forwardStep();
-					return FORWARD;
+					// sc.downStep();
+					return DOWN;
 				}
 			}
 		} else {

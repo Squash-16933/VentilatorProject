@@ -12,13 +12,12 @@ import com.pi4j.io.gpio.RaspiPin;
  * Manages the stepper motor, see StepperInterface.
  */
 public class StepperController implements StepperInterface {
-
+	// http://wiringpi.com/pins/
 	private final GpioController gpio = GpioFactory.getInstance();
-	private final GpioPinDigitalInput pin07 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07, "Raspi pin 07",
-			PinPullResistance.PULL_UP);//
-	private final GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "BCM 17", PinState.LOW);// Dir
+	private final GpioPinDigitalInput pin07 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07, "Raspi pin 07", PinPullResistance.PULL_UP);//
+	private final GpioPinDigitalOutput pin11 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "BCM 17", PinState.LOW);// Dir (low=up=up)
 	private final GpioPinDigitalOutput pin13 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02, "BCM 27", PinState.LOW);// Pul
-	private final GpioPinDigitalOutput pin15 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "BCM 22", PinState.LOW);// En
+	private final GpioPinDigitalOutput pin15 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "BCM 22", PinState.LOW);// En (low=enabled)
 
 	
 	public void setPin15High() {
@@ -37,18 +36,18 @@ public class StepperController implements StepperInterface {
 		}
 	}
 	
-	public void forward(double rate, double time) {
+	public void down(double rate, double time) {
 		// TODO TBD converting breaths per min to steps per sec
 		
 		pin15.low();// EN invalid, motor under control
 		
-			pin11.high();// DIR forward
-		System.out.println("forward");
+			pin11.high();// DIR down
+		System.out.println("down");
 		//long nanos = (long)(1.0 / (rate * 2d) * 1000*1000);
 		long nanos = 100000;
-		System.out.println("Sleep time:" + nanos);
+		//System.out.println("Sleep time:" + nanos);
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
-					//System.out.println("FORWARD");
+					//System.out.println("DOWN");
 					pin13.high();// step
 					nanoSleep(nanos);
 					pin13.low();
@@ -59,15 +58,15 @@ public class StepperController implements StepperInterface {
 
 	}
 
-	public void backward(double rate, double time) {
+	public void up(double rate, double time) {
 		pin15.low();// EN invalid, motor under control
 		
-			pin11.low();// DIR backward
+			pin11.low();// DIR up
 		//long nanos = (long)(1.0 / (rate * 2d) * 1000*1000);
 		long nanos = 100000;
-		System.out.println("Sleep time:" + nanos);
+		//System.out.println("Sleep time:" + nanos);
 			for (int k = 0; k < rate * time; k++) { // rate*time = #steps in total
-					//System.out.println("FORWARD");
+					//System.out.println("DOWN");
 					pin13.high();// step
 					nanoSleep(nanos);
 					pin13.low();
@@ -103,10 +102,10 @@ public class StepperController implements StepperInterface {
 	}
 
 	@Override
-	public void forwardStep() {
+	public void downStep() {
 		pin15.low();// EN invalid, motor under control
 		{
-			pin11.high();// DIR forward
+			pin11.high();// DIR down
 			try {
 				pin13.high();// step
 				Thread.sleep(500);// arbitrary aka this method sucks
@@ -120,10 +119,10 @@ public class StepperController implements StepperInterface {
 	}
 
 	@Override
-	public void backwardStep() {
+	public void upStep() {
 		pin15.low();// EN invalid, motor under control
 		
-			pin11.low();// DIR backward
+			pin11.low();// DIR up
 			try {
 				pin13.high();// step
 				Thread.sleep(500);// arbitrary aka this method sucks
@@ -137,10 +136,17 @@ public class StepperController implements StepperInterface {
 	}
 	public void stop(){
 
-		pin15.low();
+		pin15.high();
+		System.out.println(pin15);
+		System.out.println(pin15.getState());
 
-
-
+		
+		
+		
+		
+		
+		
+		
 
 	}
 }
