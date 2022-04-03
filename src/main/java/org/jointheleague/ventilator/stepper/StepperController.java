@@ -78,6 +78,21 @@ public class StepperController implements StepperInterface {
 		
 	}
 	
+	public void sendByte(byte byt) {
+		long nanos = 100000;
+		System.out.println("Sleep time:" + nanos);
+		
+		String bits = Integer.toBinaryString(byt);
+		
+		for (int k = 0; k < 8; k++) {
+			pin13.low();
+			nanoSleep(nanos);
+			
+			if (bits.charAt(k) == '1') pin13.high();
+			nanoSleep(nanos);
+		}
+	}
+	
 	public void nanoSleep(long nanos){
 		long start = System.nanoTime();
 		long end = System.nanoTime();

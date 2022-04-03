@@ -108,6 +108,7 @@ public class Test {
 			}
 	}
 }
+}
 
 class TimerTask2 extends TimerTask{
 	double[] lidNums;
