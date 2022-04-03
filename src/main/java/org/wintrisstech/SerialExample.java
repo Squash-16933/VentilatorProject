@@ -33,7 +33,7 @@ public class SerialExample {
      * @throws InterruptedException
      * @throws IOException
      */
-	SerialExample(String [] args) throws IOException, InterruptedException{
+	public SerialExample(String [] args) throws IOException, InterruptedException{
 
         // !! ATTENTION !!
         // By default, the serial port is configured as a console port
