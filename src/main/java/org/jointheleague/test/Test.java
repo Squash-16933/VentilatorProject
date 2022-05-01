@@ -1,8 +1,10 @@
 package org.jointheleague.test;
 
 import org.jointheleague.ventilator.stepper.StepperInterface;
+import org.wintrisstech.SerialExample;
 import org.jointheleague.ventilator.stepper.StepperController;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,15 +29,21 @@ public class Test {
 
 		System.out.println("running simple tests v20220320B");
 		// setPin();
-		if (args.length > 0) {
-			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
-			simpleStepperTest(args);
-		} else {
-			// simpleStepperTest();
-			lidarTest();
-			// pressureTest();
-		}
+//		if (args.length > 0) {
+//			System.out.println("Running ventilator at " + args[0] + " steps per second for " + args[1] + " seconds.");
+//			simpleStepperTest(args);
+//		} else {
+//			// simpleStepperTest();
+//			lidarTest();
+//			// pressureTest();
+//		}
 
+		try {
+			SerialExample se = new SerialExample(args);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void setPin() {
@@ -220,6 +228,7 @@ public class Test {
 		}
 	}
 }
+
 
 class TimerTask2 extends TimerTask {
 	double[] lidNums;
