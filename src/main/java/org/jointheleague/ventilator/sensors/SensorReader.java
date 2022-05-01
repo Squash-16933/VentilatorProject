@@ -45,7 +45,7 @@ public class SensorReader {
 	 * @return LIDAR distance (mm)
 	 */
 	public int readLidar() {
-		// Using Lidar
+		// Using LIDAR, LIDAR is 0x29.
 		try {
 			if(sensor == null) {
 				sensor = new VL53L0XDevice(0x29, 30);
