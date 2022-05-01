@@ -123,8 +123,10 @@ public class SerialExample {
                     byte[] yummy = serial.read();
 
                     for (byte yum : yummy) {
-                        System.out.print(Integer.toBinaryString(yum) + " ");
+                        console.print(Integer.toBinaryString(yum) + " ");
                     }
+
+                    console.print("\n");
                 } catch (IllegalStateException ex) {
                     ex.printStackTrace();
                 }
