@@ -113,8 +113,8 @@ public class SerialExample {
             // continuous loop to keep the program running until the user terminates the program
             while(console.isRunning()) {
                 try {
-                    console.println("Hello folks! Me is cookie momster. Me will now write 0000 0101, 0000 0000, 0000 0111, 0000 0000.");
-                    serial.write(new byte[] {0b0000_0101, 0b0000_0000, 0b0000_0000, 0b0000_0000});
+                    console.println("Hello folks! Me is cookie momster. Me will now write 0000 0000, 0000 0000, 0000 0000, 0000 0101.");
+                    serial.write(new byte[] {0b0000_0000, 0b0000_0000, 0b0000_0000, 0b0000_0101});
 		            serial.flush();
 
                     byte[] yummy = serial.read();
