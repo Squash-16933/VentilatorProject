@@ -113,12 +113,9 @@ public class SerialExample {
             // continuous loop to keep the program running until the user terminates the program
             while(console.isRunning()) {
                 try {
-                    serial.write((byte) 0b0000_0101);
-                    serial.write((byte) 0b0000_0000);
-                    serial.write((byte) 0b0000_0111);
-                    serial.write((byte) 0b0000_0000);
-
-                    Thread.sleep(1000);
+                    console.println("Hello folks! Me is cookie momster. Me will now write 0000 0000, 0000 0000, 0000 0000, 0000 0101.");
+                    serial.write(new byte[] {0b0000_0000, 0b0000_0000, 0b0000_0000, 0b0000_0101});
+		            serial.flush();
 
                     byte[] yummy = serial.read();
 
